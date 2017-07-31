@@ -24,6 +24,8 @@
 		BF2841971F27F3EB005AF797 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2841961F27F3EB005AF797 /* CircleView.swift */; };
 		BF2841991F27F418005AF797 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2841981F27F418005AF797 /* PostCell.swift */; };
 		BF28419B1F27FD9B005AF797 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF28419A1F27FD9B005AF797 /* GoogleService-Info.plist */; };
+		BF28419D1F282090005AF797 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF28419C1F282090005AF797 /* ProfileVC.swift */; };
+		BF28419F1F282D35005AF797 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF28419E1F282D35005AF797 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,8 @@
 		BF2841961F27F3EB005AF797 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		BF2841981F27F418005AF797 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		BF28419A1F27FD9B005AF797 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BF28419C1F282090005AF797 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		BF28419E1F282D35005AF797 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FE51FD196821DA5829BB0144 /* Pods_SocPrac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SocPrac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -120,6 +124,7 @@
 			children = (
 				BF28416F1F27C6A6005AF797 /* SignInVC.swift */,
 				BF28418E1F27F293005AF797 /* FeedVC.swift */,
+				BF28419C1F282090005AF797 /* ProfileVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -141,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				BF28418C1F27F248005AF797 /* Post.swift */,
+				BF28419E1F282D35005AF797 /* User.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -292,8 +298,10 @@
 				BF28418F1F27F293005AF797 /* FeedVC.swift in Sources */,
 				BF2841851F27D3A6005AF797 /* RoundBtn.swift in Sources */,
 				BF2841701F27C6A6005AF797 /* SignInVC.swift in Sources */,
+				BF28419F1F282D35005AF797 /* User.swift in Sources */,
 				BF2841971F27F3EB005AF797 /* CircleView.swift in Sources */,
 				BF28418D1F27F248005AF797 /* Post.swift in Sources */,
+				BF28419D1F282090005AF797 /* ProfileVC.swift in Sources */,
 				BF28416E1F27C6A6005AF797 /* AppDelegate.swift in Sources */,
 				BF2841911F27F2C2005AF797 /* FancyView.swift in Sources */,
 				BF2841881F27F1A8005AF797 /* DataService.swift in Sources */,

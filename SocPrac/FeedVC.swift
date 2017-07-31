@@ -17,6 +17,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     @IBOutlet weak var captionField: FancyField!
     
     var posts = [Post]()
+    var user: User!
     var imagePicker: UIImagePickerController!
     //static var imageCache: Cache<NSString, UIImage> = Cache()
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
@@ -48,6 +49,10 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             }
             self.tableView.reloadData()
         })
+        
+//        DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
+//            <#code#>
+//        })
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -65,7 +70,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell {
             
             if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
-                cell.configureCell(post: post, img: img)
+                cell.configureCell(post: post)
             } else {
                 cell.configureCell(post: post)
             }
@@ -82,7 +87,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             imageAdd.image = image
             imageSelected = true
         } else {
-            print("JESS: A valid image wasn't selected")
+            print("AllenError: A valid image wasn't selected")
         }
         imagePicker.dismiss(animated: true, completion: nil)
     }
