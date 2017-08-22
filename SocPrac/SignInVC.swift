@@ -21,11 +21,41 @@ class SignInVC: UIViewController {
         super.viewDidLoad()
     }
     
+    
+    //TODO - return the let to _ when done testing
     override func viewDidAppear(_ animated: Bool) {
-        if let _ = KeychainWrapper.standard.string(forKey: KEY_UID) {
+        if let keychainString = KeychainWrapper.standard.string(forKey: KEY_UID) {
+            print("HERE IS THE KEYCHAIN STRING THAT IS CHECKED WHEN PAGE LOADS: \(keychainString)")
             print("AllenData: ID found in keychain")
             performSegue(withIdentifier: "goToFeed", sender: nil)
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToFeed" {
+            let nextScene = segue.destination as! FeedVC
+            
+            if let userId = KeychainWrapper.standard.string(forKey: KEY_UID) {
+                let currentUserId = userId
+                nextScene.currentUserId = currentUserId
+                
+            }
+            
+        }
+        
+        if segue.identifier == "noUsername" {
+            
+            let nextScene = segue.destination as! ProfileVC
+            
+            if let userId = KeychainWrapper.standard.string(forKey: KEY_UID) {
+                let currentUserId = userId
+                nextScene.currentUserId = currentUserId
+                
+            }
+            
+            
+        }
+        
     }
     
     @IBAction func facebookBtnTapped(_ sender: AnyObject) {
@@ -90,6 +120,7 @@ class SignInVC: UIViewController {
         //let keychainResult = KeychainWrapper.setString(id, forKey: KEY_UID)
         let keychainResult = KeychainWrapper.standard.set(id, forKey: KEY_UID)
         print("AllenData: Data saved to keychain \(keychainResult)")
+
         if userData["username"] == nil {
             print("Hi the username is: \(userData["username"])")
             print("Hi the user is: \(userData)")
@@ -100,6 +131,6 @@ class SignInVC: UIViewController {
         }
         
     }
-    
+   
 }
 

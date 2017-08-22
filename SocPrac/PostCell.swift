@@ -21,6 +21,8 @@ class PostCell: UITableViewCell {
     var post: Post!
     var user: User!
     var likesRef: DatabaseReference!
+    var postRef: DatabaseReference!
+    var userRef: DatabaseReference!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,15 +33,22 @@ class PostCell: UITableViewCell {
         likeImg.isUserInteractionEnabled = true
     }
     
-    func configureCell(post: Post, /*user: User, */img: UIImage? = nil, profileImg: UIImage? = nil) {
+    func configureCell(post: Post, username: String? = nil, img: UIImage? = nil, userProfileImg: UIImage? = nil) {
         self.post = post
-        //self.user = user
+
         likesRef = DataService.ds.REF_USER_CURRENT.child("likes").child(post.postKey)
-        //self.usernameLbl.text = user.username
+
         self.caption.text = post.caption
         self.likesLbl.text = "\(post.likes)"
+        if username != nil {
+            self.usernameLbl.text = "\(username!)"
+        }
         
-        if img != nil {
+        if userProfileImg != nil {
+            self.profileImg.image = userProfileImg
+            print(userProfileImg)
+        }
+                    if img != nil {
             self.postImg.image = img
         } else {
             let ref = Storage.storage().reference(forURL: post.imageUrl)
@@ -61,28 +70,6 @@ class PostCell: UITableViewCell {
             
         }
         
-        /*if profileImg != nil {
-            self.profileImg.image = profileImg
-        } else {
-            let ref = Storage.storage().reference(forURL: user.profileImg)
-            ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                
-                if error != nil {
-                    print("AllenError: Unable to download image from Firebase storage")
-                } else {
-                    print("AllenData: Image downloaded from Firebase storage")
-                    if let imgData = data {
-                        if let profileImg = UIImage(data: imgData) {
-                            self.profileImg.image = profileImg
-                            FeedVC.imageCache.setObject(profileImg, forKey: self.user.profileImg as NSString)
-                        }
-                    }
-                }
-                
-            })
-            
-        }
-        */
         likesRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if let _ = snapshot.value as? NSNull {
                 self.likeImg.image = UIImage(named: "empty-heart")

@@ -139,7 +139,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b5M-e9-8ap" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="431" y="135"/>
+            <point key="canvasLocation" x="238" y="-340"/>
         </scene>
         <!--FeedVC-->
         <scene sceneID="9n3-Wz-dsZ">
@@ -515,7 +515,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2028" y="133.5832083958021"/>
+            <point key="canvasLocation" x="2161" y="-405"/>
         </scene>
     </scenes>
     <resources>

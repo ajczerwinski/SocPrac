@@ -17,14 +17,21 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     @IBOutlet weak var captionField: FancyField!
     
     var posts = [Post]()
-    var user: User!
+
+    var usernameDict: [String: String] = [:]
     var imagePicker: UIImagePickerController!
-    //static var imageCache: Cache<NSString, UIImage> = Cache()
+    var currentUserId: String!
+    var currentUserProvider: String!
+    
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     var imageSelected = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if currentUserId != nil {
+            print("HERE IS THE CURRENT USER ID \(currentUserId!)")
+        }
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -40,6 +47,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in snapshot {
                     print("SNAP: \(snap)")
+                    
                     if let postDict = snap.value as? Dictionary<String, AnyObject> {
                         let key = snap.key
                         let post = Post(postKey: key, postData: postDict)
@@ -50,9 +58,41 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             self.tableView.reloadData()
         })
         
-//        DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
-//            <#code#>
-//        })
+        DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
+            
+            if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                for snap in snapshot {
+                    print("SNAP: \(snap)")
+                    if let userDict = snap.value as? Dictionary<String, AnyObject> {
+                        let key = snap.key
+                        var postingUsername = ""
+                        if let username = userDict["username"] as? String {
+                            postingUsername = username
+                        }
+                        
+                        self.usernameDict[key] = postingUsername
+                        
+                    }
+                }
+            }
+            print("HERE IS THE FULL USERNAME DICTIONARY \(self.usernameDict)")
+            self.tableView.reloadData()
+        })
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "feedToProfile" {
+            
+            let nextScene = segue.destination as! ProfileVC
+            
+            if let userId = currentUserId {
+                let currentUserId = userId
+                nextScene.currentUserId = currentUserId
+                
+            }
+            
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -66,20 +106,26 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let post = posts[indexPath.row]
+        let postingUserId = post.userId
+        let username = usernameDict[postingUserId]
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell {
-            
             if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
-                cell.configureCell(post: post)
+                if username != nil {
+                    cell.configureCell(post: post, username: username!, img: img)
+                }
+                
+        
+                
             } else {
-                cell.configureCell(post: post)
+                
+                cell.configureCell(post: post/*, username: username*/)
             }
             return cell
         } else {
             return PostCell()
         }
     }
-    
     
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -113,13 +159,15 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             let imgUid = NSUUID().uuidString
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
+            let profileMetadata = StorageMetadata()
+            profileMetadata.contentType = "image/jpeg"
+            
             DataService.ds.REF_POST_IMAGES.child(imgUid).putData(imgData, metadata: metadata) { (metadata, error) in
                 if error != nil {
                     print("AllenError: Unable to upload image to Firebase storage")
                 } else {
                     print("AllenData: Successfully uploaded image to Firebase storage")
                     let downloadURL = metadata?.downloadURL()?.absoluteString
-                    
                     if let url = downloadURL {
                         self.postToFirebase(imgUrl: url)
                     }
@@ -130,20 +178,25 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     }
     
     func postToFirebase(imgUrl: String) {
-        let post: Dictionary<String, AnyObject> = [
-            "caption": captionField.text! as AnyObject,
-            "imageUrl": imgUrl as AnyObject,
-            "likes": 0 as AnyObject
-        ]
         
-        let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
-        firebasePost.setValue(post)
+        if currentUserId != nil {
+            let post: Dictionary<String, AnyObject> = [
+                "caption": captionField.text! as AnyObject,
+                "imageUrl": imgUrl as AnyObject,
+                "likes": 0 as AnyObject,
+                "userId": currentUserId as AnyObject
+            ]
+            
+            let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
+            firebasePost.setValue(post)
+            
+            captionField.text = ""
+            imageSelected = false
+            imageAdd.image = UIImage(named: "add-image")
+            
+            tableView.reloadData()
+        }
         
-        captionField.text = ""
-        imageSelected = false
-        imageAdd.image = UIImage(named: "add-image")
-        
-        tableView.reloadData()
     }
     
     @IBAction func signOutTapped(_ sender: AnyObject) {
