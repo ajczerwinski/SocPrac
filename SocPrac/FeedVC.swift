@@ -17,8 +17,10 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     @IBOutlet weak var captionField: FancyField!
     
     var posts = [Post]()
+    var user: User!
 
     var usernameDict: [String: String] = [:]
+    var profileImgDict: [String: String] = [:]
     var imagePicker: UIImagePickerController!
     var currentUserId: String!
     var currentUserProvider: String!
@@ -66,16 +68,23 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                     if let userDict = snap.value as? Dictionary<String, AnyObject> {
                         let key = snap.key
                         var postingUsername = ""
+                        var postingUserProfileImg = ""
                         if let username = userDict["username"] as? String {
                             postingUsername = username
                         }
                         
+                        if let profileImg = userDict["profileImg"] as? String {
+                            postingUserProfileImg = profileImg
+                        }
+                        
                         self.usernameDict[key] = postingUsername
+                        self.profileImgDict[key] = postingUserProfileImg
                         
                     }
                 }
             }
             print("HERE IS THE FULL USERNAME DICTIONARY \(self.usernameDict)")
+            print("HERE IS THE FULL PROFILEIMG DICTIONARY: \(self.profileImgDict)")
             self.tableView.reloadData()
         })
         
@@ -105,14 +114,68 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        var postingUserProfileImg: UIImage?
+        var postingUserProfileImgUrl: String?
+        
         let post = posts[indexPath.row]
         let postingUserId = post.userId
         let username = usernameDict[postingUserId]
         
+        
+//        let userRef = ref.child(postingUserId).child("profileImg")
+//        print("HERE IS THE USERREF IN ALL ITS GLORY: \(userRef)")
+//        
+//        print("HERE IS THE WILEY REF IN ALL ITS GLORY: \(ref)")
+        
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell {
-            if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
+            
+//            userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+//                if !snapshot.exists() { return }
+//                
+//                let profileImgUrl = snapshot.value as! String
+//                print("BELOW ME IS THE USERINFO FOR THE PROFILE IMAGE")
+//                print(profileImgUrl)
+//                
+//                
+//                let storageRef = STORAGE_BASE.child("profile-pics")
+//                
+//                print("HERE IS THE STORAGE REF: \(storageRef)")
+//                
+//                storageRef.downloadURL(completion: { (url, error) in
+//                    if url != nil {
+//                        let data = NSData(contentsOf: url!)
+//                        postingUserProfileImg = UIImage(data: data! as Data)
+//                    }
+//                })
+//                
+//            })
+            
+            if let userProfileImgUrl = profileImgDict[postingUserId] {
+                postingUserProfileImgUrl = userProfileImgUrl
+                print("HERE ISF:LEKJFPOIJEPFOIJEFIJ THE USERPROFILEIMGURL: \(postingUserProfileImgUrl!)")
+                if postingUserProfileImgUrl! != "" {
+                    let ref = Storage.storage().reference(forURL: postingUserProfileImgUrl!)
+                    ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                        if error != nil {
+                            print("AllenError: Unable to download userProfileImage from Firebase storage")
+                        } else {
+                            print("AllenData: userProfileImage successfully downloaded from Firebase storage")
+                            if let imgData = data {
+                                if let profileImg = UIImage(data: imgData) {
+                                    FeedVC.imageCache.setObject(profileImg, forKey: postingUserProfileImgUrl! as NSString)
+                                    postingUserProfileImg = profileImg
+                                    print("HEY I FOUND THE POSTINGUSERPROFILEIMG IT IS HERE: \(postingUserProfileImg!)")
+                                }
+                            }
+                        }
+                    })
+                }
+                
+            }
+            
+            if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString), let postingUserProfileImg = FeedVC.imageCache.object(forKey: postingUserProfileImgUrl as! NSString) {
                 if username != nil {
-                    cell.configureCell(post: post, username: username!, img: img)
+                    cell.configureCell(post: post, username: username!, img: img, userProfileImg: postingUserProfileImg)
                 }
                 
         
