@@ -121,34 +121,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         let postingUserId = post.userId
         let username = usernameDict[postingUserId]
         
-        
-//        let userRef = ref.child(postingUserId).child("profileImg")
-//        print("HERE IS THE USERREF IN ALL ITS GLORY: \(userRef)")
-//        
-//        print("HERE IS THE WILEY REF IN ALL ITS GLORY: \(ref)")
-        
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell {
-            
-//            userRef.observeSingleEvent(of: .value, with: { (snapshot) in
-//                if !snapshot.exists() { return }
-//                
-//                let profileImgUrl = snapshot.value as! String
-//                print("BELOW ME IS THE USERINFO FOR THE PROFILE IMAGE")
-//                print(profileImgUrl)
-//                
-//                
-//                let storageRef = STORAGE_BASE.child("profile-pics")
-//                
-//                print("HERE IS THE STORAGE REF: \(storageRef)")
-//                
-//                storageRef.downloadURL(completion: { (url, error) in
-//                    if url != nil {
-//                        let data = NSData(contentsOf: url!)
-//                        postingUserProfileImg = UIImage(data: data! as Data)
-//                    }
-//                })
-//                
-//            })
             
             if let userProfileImgUrl = profileImgDict[postingUserId] {
                 postingUserProfileImgUrl = userProfileImgUrl
@@ -188,6 +161,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         } else {
             return PostCell()
         }
+        
     }
     
     
@@ -265,6 +239,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     @IBAction func signOutTapped(_ sender: AnyObject) {
         //let keychainResult = KeychainWrapper.removeObjectForKey(KEY_UID)
         KeychainWrapper.standard.removeObject(forKey: KEY_UID)
+        KeychainWrapper.standard.removeObject(forKey: "username")
         print("AllenData: ID removed from keychain")
         try! Auth.auth().signOut()
         performSegue(withIdentifier: "goToSignIn", sender: nil)
