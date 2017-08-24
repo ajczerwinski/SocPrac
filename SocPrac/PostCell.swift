@@ -51,7 +51,7 @@ class PostCell: UITableViewCell {
         if img != nil {
             self.postImg.image = img
         } else {
-            print("HERE IS THE POST IMAGEURL: \(post.imageUrl)")
+//            print("HERE IS THE POST IMAGEURL: \(post.imageUrl)")
             let ref = Storage.storage().reference(forURL: post.imageUrl)
             ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
                 

@@ -34,7 +34,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
         if currentUserId != nil {
             
-            print("I'M IN THE PROFILEVC AND HERE IS THE CURRENT USER ID \(currentUserId!)")
+//            print("I'M IN THE PROFILEVC AND HERE IS THE CURRENT USER ID \(currentUserId!)")
         }
         
         if KeychainWrapper.standard.string(forKey: "username") == nil {
@@ -120,17 +120,12 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         ]
         
         
-        print("HEY HERE SDFJPWOIEJFPOWIEJFPOWIJEFPOIJEWF)*@)(@#()(@#)(@()#()()#)(()@#)()(@()#()@#:\(user)")
+//        print("HEY HERE SDFJPWOIEJFPOWIEJFPOWIJEFPOIJEWF)*@)(@#()(@#)(@()#()()#)(()@#)()(@()#()@#:\(user)")
         if currentUserId != nil {
             let firebasePost = DataService.ds.REF_USERS.child(currentUserId!)
-            print("HEY HERE SDFJPWOIEJFPOWIEJFPOWIJEFPOIJEWF)*@)(@#()(@#)(@()#()()#)(()@#)()(@()#()@#:\(firebasePost)")
-            //let currentUsername = user["username"] as String
-            //print(currentUsername)
+//            print("HEY HERE SDFJPWOIEJFPOWIEJFPOWIJEFPOIJEWF)*@)(@#()(@#)(@()#()()#)(()@#)()(@()#()@#:\(firebasePost)")
             _ = KeychainWrapper.standard.set(user["username"] as! String, forKey: "username")
-            
-//            if let keychainUsernameResult = KeychainWrapper.standard.string(forKey: "username") {
-//                print("EPWOIEFJPWEFI)WFWEJ \(keychainUsernameResult)")
-//            }
+
             
             firebasePost.updateChildValues(user)
         } else {

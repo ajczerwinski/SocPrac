@@ -48,7 +48,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             
             if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in snapshot {
-                    print("SNAP: \(snap)")
+//                    print("SNAP: \(snap)")
                     
                     if let postDict = snap.value as? Dictionary<String, AnyObject> {
                         let key = snap.key
@@ -64,7 +64,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             
             if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in snapshot {
-                    print("SNAP: \(snap)")
+//                    print("SNAP: \(snap)")
                     if let userDict = snap.value as? Dictionary<String, AnyObject> {
                         let key = snap.key
                         var postingUsername = ""
@@ -83,8 +83,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                     }
                 }
             }
-            print("HERE IS THE FULL USERNAME DICTIONARY \(self.usernameDict)")
-            print("HERE IS THE FULL PROFILEIMG DICTIONARY: \(self.profileImgDict)")
+//            print("HERE IS THE FULL USERNAME DICTIONARY \(self.usernameDict)")
+//            print("HERE IS THE FULL PROFILEIMG DICTIONARY: \(self.profileImgDict)")
             self.tableView.reloadData()
         })
         
@@ -125,7 +125,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             
             if let userProfileImgUrl = profileImgDict[postingUserId] {
                 postingUserProfileImgUrl = userProfileImgUrl
-                print("HERE ISF:LEKJFPOIJEPFOIJEFIJ THE USERPROFILEIMGURL: \(postingUserProfileImgUrl!)")
+//                print("HERE ISF:LEKJFPOIJEPFOIJEFIJ THE USERPROFILEIMGURL: \(postingUserProfileImgUrl!)")
                 if postingUserProfileImgUrl! != "" {
                     let ref = Storage.storage().reference(forURL: postingUserProfileImgUrl!)
                     ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
@@ -137,7 +137,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                                 if let profileImg = UIImage(data: imgData) {
                                     FeedVC.imageCache.setObject(profileImg, forKey: postingUserProfileImgUrl! as NSString)
                                     postingUserProfileImg = profileImg
-                                    print("HEY I FOUND THE POSTINGUSERPROFILEIMG IT IS HERE: \(postingUserProfileImg!)")
+//                                    print("HEY I FOUND THE POSTINGUSERPROFILEIMG IT IS HERE: \(postingUserProfileImg!)")
                                 }
                             }
                         }

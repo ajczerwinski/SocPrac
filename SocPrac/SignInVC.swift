@@ -25,7 +25,7 @@ class SignInVC: UIViewController {
     //TODO - return the let to _ when done testing
     override func viewDidAppear(_ animated: Bool) {
         if let keychainString = KeychainWrapper.standard.string(forKey: KEY_UID) {
-            print("HERE IS THE KEYCHAIN STRING THAT IS CHECKED WHEN PAGE LOADS: \(keychainString)")
+//            print("HERE IS THE KEYCHAIN STRING THAT IS CHECKED WHEN PAGE LOADS: \(keychainString)")
             print("AllenData: ID found in keychain")
             performSegue(withIdentifier: "goToFeed", sender: nil)
         }
@@ -122,9 +122,9 @@ class SignInVC: UIViewController {
         print("AllenData: Data saved to keychain \(keychainResult)")
 
         if userData["username"] == nil {
-            print("Hi the username is: \(userData["username"])")
-            print("Hi the user is: \(userData)")
-            print("\(id)")
+//            print("Hi the username is: \(userData["username"])")
+//            print("Hi the user is: \(userData)")
+//            print("\(id)")
             self.performSegue(withIdentifier: "noUsername", sender: nil)
         } else {
             self.performSegue(withIdentifier: "goToFeed", sender: nil)

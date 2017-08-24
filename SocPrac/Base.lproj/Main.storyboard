@@ -258,7 +258,7 @@
                                                     <rect key="frame" x="16" y="8" width="343" height="323"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cJd-ek-8LM">
-                                                            <rect key="frame" x="8" y="8" width="327" height="299"/>
+                                                            <rect key="frame" x="8" y="8" width="327" height="277"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63R-bk-faa">
                                                                     <rect key="frame" x="0.0" y="0.0" width="327" height="60"/>
@@ -286,10 +286,10 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="oQ1-oZ-l0K">
-                                                                    <rect key="frame" x="0.0" y="68" width="327" height="0.0"/>
+                                                                    <rect key="frame" x="0.0" y="68" width="327" height="8"/>
                                                                 </imageView>
                                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="w01-eU-S9z">
-                                                                    <rect key="frame" x="0.0" y="76" width="327" height="223"/>
+                                                                    <rect key="frame" x="0.0" y="84" width="327" height="193"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="OUD-D9-5uZ"/>
@@ -301,20 +301,32 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="PR6-vB-0xf">
-                                                            <rect key="frame" x="258.5" y="315" width="76.5" height="0.0"/>
+                                                            <rect key="frame" x="258.5" y="293" width="76.5" height="22"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Likes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eR9-04-qek">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="35.5" height="0.0"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="35.5" height="22"/>
                                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8888" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVR-Gx-Igw">
-                                                                    <rect key="frame" x="40.5" y="0.0" width="36" height="0.0"/>
+                                                                    <rect key="frame" x="40.5" y="0.0" width="36" height="22"/>
                                                                     <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VBk-JM-WsV">
+                                                            <rect key="frame" x="8" y="293" width="45" height="22"/>
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JNd-KX-RD6">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="45" height="22"/>
+                                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <state key="normal" title="Delete">
+                                                                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    </state>
+                                                                </button>
                                                             </subviews>
                                                         </stackView>
                                                     </subviews>
@@ -325,7 +337,10 @@
                                                         <constraint firstItem="PR6-vB-0xf" firstAttribute="top" secondItem="cJd-ek-8LM" secondAttribute="bottom" constant="8" id="IhM-tA-gzT"/>
                                                         <constraint firstItem="cJd-ek-8LM" firstAttribute="top" secondItem="Ibx-Xy-EaU" secondAttribute="top" constant="8" id="L7C-2P-yM8"/>
                                                         <constraint firstItem="cJd-ek-8LM" firstAttribute="leading" secondItem="Ibx-Xy-EaU" secondAttribute="leading" constant="8" id="Nk4-X4-Lah"/>
+                                                        <constraint firstAttribute="bottom" secondItem="VBk-JM-WsV" secondAttribute="bottom" constant="8" id="SIG-VU-dLz"/>
                                                         <constraint firstAttribute="trailing" secondItem="PR6-vB-0xf" secondAttribute="trailing" constant="8" id="bZC-nf-9Qf"/>
+                                                        <constraint firstItem="VBk-JM-WsV" firstAttribute="leading" secondItem="Ibx-Xy-EaU" secondAttribute="leading" constant="8" id="sjm-hk-8z2"/>
+                                                        <constraint firstItem="VBk-JM-WsV" firstAttribute="top" secondItem="cJd-ek-8LM" secondAttribute="bottom" constant="8" id="uMa-EX-oy5"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
