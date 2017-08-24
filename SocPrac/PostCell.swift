@@ -17,6 +17,7 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var caption: UITextView!
     @IBOutlet weak var likesLbl: UILabel!
     @IBOutlet weak var likeImg: UIImageView!
+    @IBOutlet weak var deleteBtnLbl: UIButton!
     
     var post: Post!
     var user: User!
@@ -31,6 +32,7 @@ class PostCell: UITableViewCell {
         tap.numberOfTapsRequired = 1
         likeImg.addGestureRecognizer(tap)
         likeImg.isUserInteractionEnabled = true
+        
     }
     
     func configureCell(post: Post, username: String? = nil, img: UIImage? = nil, userProfileImg: UIImage? = nil) {
@@ -42,6 +44,12 @@ class PostCell: UITableViewCell {
         self.likesLbl.text = "\(post.likes)"
         if username != nil {
             self.usernameLbl.text = "\(username!)"
+        }
+        
+        if post.userId == Auth.auth().currentUser?.uid {
+            deleteBtnLbl.isHidden = false
+        } else {
+            deleteBtnLbl.isHidden = true
         }
         
         if userProfileImg != nil {

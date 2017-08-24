@@ -146,7 +146,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 
             }
             
-            if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString), let postingUserProfileImg = FeedVC.imageCache.object(forKey: postingUserProfileImgUrl as! NSString) {
+            if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString), let postingUserProfileImg = FeedVC.imageCache.object(forKey: postingUserProfileImgUrl! as NSString) {
                 if username != nil {
                     cell.configureCell(post: post, username: username!, img: img, userProfileImg: postingUserProfileImg)
                 }
