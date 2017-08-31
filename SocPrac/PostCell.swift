@@ -30,10 +30,13 @@ class PostCell: UITableViewCell {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(likeTapped))
         tap.numberOfTapsRequired = 1
+        tap.cancelsTouchesInView = false
         likeImg.addGestureRecognizer(tap)
         likeImg.isUserInteractionEnabled = true
         
+        
     }
+    
     
     func configureCell(post: Post, username: String? = nil, img: UIImage? = nil, userProfileImg: UIImage? = nil) {
         self.post = post
@@ -90,7 +93,11 @@ class PostCell: UITableViewCell {
     }
     
     func likeTapped(sender: UITapGestureRecognizer) {
-        likesRef.observeSingleEvent(of: .value, with: { (snapshot) in
+        likesRef.observeSingleEvent(of: .value, with: {
+            (snapshot) in
+            
+            sender.cancelsTouchesInView = false
+            
             if let _ = snapshot.value as? NSNull {
                 self.likeImg.image = UIImage(named: "filled-heart")
                 self.post.adjustLikes(addLike: true)
@@ -101,6 +108,31 @@ class PostCell: UITableViewCell {
                 self.likesRef.removeValue()
             }
         })
+        
     }
+    
+//    @IBAction func deleteBtnTapped(_ sender: Any) {
+//        
+//        let postKey = post.postKey
+//        print("HI I AM THE POSTKEY: \(postKey)")
+//        
+//        deletePost(childToDelete: postKey)
+//        
+//    }
+//    
+//    
+//    func deletePost(childToDelete: String) {
+//        
+//        let firebaseRef = Database.database().reference().child(childToDelete)
+//        print("HELLO THERE I AM THE POSTKEY: \(firebaseRef)")
+//        firebaseRef.removeValue { (error, ref) in
+//            if error != nil {
+//                print("Here's the error output when I tried to delete: \(error)")
+//            } else {
+//                print("Looks like we successfully deleted the object. Sad!")
+//            }
+//        }
+//        
+//    }
     
 }

@@ -18,11 +18,12 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     var posts = [Post]()
     var user: User!
+    var selectedPost: Post?
 
     var usernameDict: [String: String] = [:]
     var profileImgDict: [String: String] = [:]
     var imagePicker: UIImagePickerController!
-    var currentUserId: String!
+    //var currentUserId: String!
     var currentUserProvider: String!
     
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
@@ -31,8 +32,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if currentUserId != nil {
-            print("HERE IS THE CURRENT USER ID \(currentUserId!)")
+        
+        if let currentUserId = Auth.auth().currentUser?.uid {
+            print("HERE IS THE CURRENT USER ID \(currentUserId)")
         }
         
         tableView.delegate = self
@@ -41,6 +43,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         imagePicker = UIImagePickerController()
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
+        
         
         DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
             
@@ -68,7 +71,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                     if let userDict = snap.value as? Dictionary<String, AnyObject> {
                         let key = snap.key
                         var postingUsername = ""
-                        var postingUserProfileImg = ""
+                        var postingUserProfileImg: String?
                         if let username = userDict["username"] as? String {
                             postingUsername = username
                         }
@@ -92,15 +95,12 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "feedToProfile" {
-            
-            let nextScene = segue.destination as! ProfileVC
-            
-            if let userId = currentUserId {
-                let currentUserId = userId
-                nextScene.currentUserId = currentUserId
-                
-            }
-            
+            _ = segue.destination as! ProfileVC
+            print("HEY WE USED THE FEED TO PROFILE SEGUE")
+        } else if segue.identifier == "goToPostDetailVC" {
+            let nextScene = segue.destination as! PostDetailVC
+            nextScene.post = selectedPost
+            print("HEY WE ARE PREPARING FOR POSTDETAILVC SEGUE")
         }
     }
     
@@ -146,11 +146,15 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 
             }
             
-            if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString), let postingUserProfileImg = FeedVC.imageCache.object(forKey: postingUserProfileImgUrl! as NSString) {
-                if username != nil {
-                    cell.configureCell(post: post, username: username!, img: img, userProfileImg: postingUserProfileImg)
+            // TODO - look at postingUserProfileImgUrl section here to figure out why it was crashing after first creating a username after new user creation
+            if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
+                if postingUserProfileImgUrl != nil {
+                    if let postingUserUserProfileImg = FeedVC.imageCache.object(forKey: postingUserProfileImgUrl! as NSString) {
+                        if username != nil {
+                            cell.configureCell(post: post, username: username!, img: img, userProfileImg: postingUserUserProfileImg)
+                        }
+                    }
                 }
-                
         
                 
             } else {
@@ -164,6 +168,17 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let post = self.posts[indexPath.row]
+        
+        print("HI I AM THE POST: \(post)")
+        self.selectedPost = post
+        print(selectedPost)
+        self.performSegue(withIdentifier: "goToPostDetailVC", sender: nil)
+        
+        
+    }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
@@ -215,8 +230,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     }
     
     func postToFirebase(imgUrl: String) {
-        
-        if currentUserId != nil {
+        if let currentUserId = Auth.auth().currentUser?.uid {
             let post: Dictionary<String, AnyObject> = [
                 "caption": captionField.text! as AnyObject,
                 "imageUrl": imgUrl as AnyObject,

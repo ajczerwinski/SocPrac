@@ -37,7 +37,7 @@ class SignInVC: UIViewController {
             
             if let userId = KeychainWrapper.standard.string(forKey: KEY_UID) {
                 let currentUserId = userId
-                nextScene.currentUserId = currentUserId
+                //nextScene.currentUserId = currentUserId
                 
             }
             

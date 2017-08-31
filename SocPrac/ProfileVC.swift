@@ -88,6 +88,9 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             let imgUid = NSUUID().uuidString
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
+            let profileMetadata = StorageMetadata()
+            profileMetadata.contentType = "image/jpeg"
+            
             DataService.ds.REF_USER_IMAGES.child(imgUid).putData(imgData, metadata: metadata) { (metadata, error) in
                 if error != nil {
                     print("AllenError: Unable to upload image to Firebase storage")
@@ -161,7 +164,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             
             if let userId = currentUserId {
                 let currentUserId = userId
-                nextScene.currentUserId = currentUserId
+                //nextScene.currentUserId = currentUserId
                 
             }
         }
