@@ -25,15 +25,21 @@ class PostDetailVC: UIViewController {
         super.viewDidLoad()
 
         caption.text = post?.caption
+        usernameLbl.text = "Hi there"
+        if let numberOfLikes = post?.likes {
+            likesLbl.text = "\(numberOfLikes)"
+        }
+        
 //        postImg.image =
         
         
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "detailToFeed" {
+            let nextScene = segue.destination as! FeedVC
+        }
     }
     
 

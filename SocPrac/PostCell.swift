@@ -30,7 +30,7 @@ class PostCell: UITableViewCell {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(likeTapped))
         tap.numberOfTapsRequired = 1
-        tap.cancelsTouchesInView = false
+        //tap.cancelsTouchesInView = false
         likeImg.addGestureRecognizer(tap)
         likeImg.isUserInteractionEnabled = true
         
@@ -96,7 +96,7 @@ class PostCell: UITableViewCell {
         likesRef.observeSingleEvent(of: .value, with: {
             (snapshot) in
             
-            sender.cancelsTouchesInView = false
+            //sender.cancelsTouchesInView = false
             
             if let _ = snapshot.value as? NSNull {
                 self.likeImg.image = UIImage(named: "filled-heart")

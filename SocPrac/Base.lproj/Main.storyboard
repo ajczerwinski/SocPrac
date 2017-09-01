@@ -427,10 +427,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XQe-cK-T15" customClass="FancyView" customModule="SocPrac" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="80" width="375" height="587"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="X4u-H6-DDb">
-                                        <rect key="frame" x="8" y="8" width="359" height="613"/>
+                                        <rect key="frame" x="8" y="8" width="359" height="541"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1av-9b-Wu7">
                                                 <rect key="frame" x="0.0" y="0.0" width="359" height="60"/>
@@ -458,10 +458,10 @@
                                                 </subviews>
                                             </stackView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="24j-q0-OCH">
-                                                <rect key="frame" x="0.0" y="68" width="359" height="297"/>
+                                                <rect key="frame" x="0.0" y="68" width="359" height="225"/>
                                             </imageView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eU7-S8-MLo">
-                                                <rect key="frame" x="0.0" y="373" width="359" height="240"/>
+                                                <rect key="frame" x="0.0" y="301" width="359" height="240"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="FrF-5f-fCj"/>
@@ -473,16 +473,16 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="iYu-nY-J9C">
-                                        <rect key="frame" x="290.5" y="629" width="76.5" height="30"/>
+                                        <rect key="frame" x="290.5" y="557" width="76.5" height="22"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Likes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FBa-D8-EZ8">
-                                                <rect key="frame" x="0.0" y="0.0" width="35.5" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="35.5" height="22"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8888" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PzE-Bu-UhE">
-                                                <rect key="frame" x="40.5" y="0.0" width="36" height="30"/>
+                                                <rect key="frame" x="40.5" y="0.0" width="36" height="22"/>
                                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="16"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -490,10 +490,10 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dJs-GC-DRy">
-                                        <rect key="frame" x="8" y="629" width="45" height="30"/>
+                                        <rect key="frame" x="8" y="557" width="45" height="22"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74v-Wn-HK4">
-                                                <rect key="frame" x="0.0" y="0.0" width="45" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="45" height="22"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="Delete">
                                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -515,12 +515,25 @@
                                     <constraint firstItem="X4u-H6-DDb" firstAttribute="top" secondItem="XQe-cK-T15" secondAttribute="top" constant="8" id="kSl-8y-G9a"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2t1-ED-sLC">
+                                <rect key="frame" x="16" y="20" width="63" height="43"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="63" id="OU9-qO-n0h"/>
+                                    <constraint firstAttribute="height" constant="43" id="dRc-Lc-1hi"/>
+                                </constraints>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <segue destination="CST-g8-HZr" kind="show" identifier="detailToFeed" id="ZWm-1l-9Be"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XQe-cK-T15" firstAttribute="leading" secondItem="YKs-JH-YqE" secondAttribute="leading" id="5Nb-kA-qxi"/>
-                            <constraint firstItem="XQe-cK-T15" firstAttribute="top" secondItem="YKs-JH-YqE" secondAttribute="top" id="OdZ-41-u3i"/>
+                            <constraint firstItem="XQe-cK-T15" firstAttribute="top" secondItem="YKs-JH-YqE" secondAttribute="top" constant="80" id="OdZ-41-u3i"/>
+                            <constraint firstItem="2t1-ED-sLC" firstAttribute="leading" secondItem="YKs-JH-YqE" secondAttribute="leadingMargin" id="QVk-xf-tTM"/>
                             <constraint firstAttribute="trailing" secondItem="XQe-cK-T15" secondAttribute="trailing" id="Wsy-HK-jfU"/>
+                            <constraint firstItem="2t1-ED-sLC" firstAttribute="top" secondItem="WuL-oX-b2U" secondAttribute="bottom" id="dh7-Qi-uJn"/>
                             <constraint firstItem="Me0-tw-RKJ" firstAttribute="top" secondItem="XQe-cK-T15" secondAttribute="bottom" id="tmC-ke-n4M"/>
                         </constraints>
                     </view>
@@ -536,7 +549,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="krX-q8-v3J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2318" y="104"/>
+            <point key="canvasLocation" x="2317.5999999999999" y="103.89805097451276"/>
         </scene>
         <!--ProfileVC-->
         <scene sceneID="VQD-1G-iqC">
@@ -25123,7 +25136,7 @@ AEEAAAAAAAAAAAAAAAAAAFbcA
         <image name="sign-out" width="92" height="65"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="S9O-IT-Jc0"/>
+        <segue reference="ZWm-1l-9Be"/>
         <segue reference="PeZ-i7-AQA"/>
     </inferredMetricsTieBreakers>
 </document>
