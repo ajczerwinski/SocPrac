@@ -100,6 +100,21 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         } else if segue.identifier == "goToPostDetailVC" {
             let nextScene = segue.destination as! PostDetailVC
             nextScene.post = selectedPost
+            if let username = usernameDict[(selectedPost?.userId)!] {
+                nextScene.username = username
+            }
+//            if let postImg = UIImage(selectedPost?.imageUrl) {
+//                nextScene.postImg = postImg
+//            }
+            
+            if let postImgUrl = selectedPost?.imageUrl {
+                nextScene.postImgUrl = postImgUrl
+            }
+            
+            if let postingUserImgUrl = profileImgDict[(selectedPost?.userId)!] {
+                nextScene.postingUserImgUrl = postingUserImgUrl
+            }
+            
             print("HEY WE ARE PREPARING FOR POSTDETAILVC SEGUE")
         }
     }

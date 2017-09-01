@@ -20,20 +20,64 @@ class PostDetailVC: UIViewController {
     @IBOutlet weak var deleteBtnLbl: UIButton!
     
     var post: Post?
+    var username: String?
+    var postImgUrl: String?
+    var postingUserImgUrl: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         caption.text = post?.caption
-        usernameLbl.text = "Hi there"
+        usernameLbl.text = username
         if let numberOfLikes = post?.likes {
             likesLbl.text = "\(numberOfLikes)"
         }
         
-//        postImg.image =
+        
+        if let postImageUrl = postImgUrl {
+            let postImgRef = Storage.storage().reference(forURL: postImageUrl)
+            postImgRef.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                if error != nil {
+                    print("AllenError: Unable to download postImage from Firebase storage")
+                } else {
+                    print("AllenData: postImage successfully downloaded from Firebase storage")
+                    if let postImgData = data {
+                        if let postImage = UIImage(data: postImgData) {
+                            self.postImg.image = postImage
+                        }
+                    }
+                }
+            })
+            print("HI I AM THE POST IMAGE URL: \(postImageUrl)")
+        }
         
         
-        // Do any additional setup after loading the view.
+        
+        
+        
+        
+        
+        if let profileImageUrl = postingUserImgUrl {
+            let profileImageRef = Storage.storage().reference(forURL: profileImageUrl)
+            profileImageRef.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                if error != nil {
+                    print("AllenError: Unable to download userProfileImage from Firebase storage")
+                } else {
+                    print("AllenData: userProfileImage successfully downloaded from Firebase storage")
+                    if let profileImageData = data {
+                        if let profileImage = UIImage(data: profileImageData) {
+                            self.profileImg.image = profileImage
+                        }
+                    }
+                }
+            })
+            print("HI I AM THE POST IMAGE URL: \(profileImageUrl)")
+        }
+        
+//        if let userProfileUrl = postingUserImgUrl {
+//            print("HI I AM THE USER PROFILE URL: \(userProfileUrl)")
+//        }
+        
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
