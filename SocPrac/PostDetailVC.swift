@@ -14,10 +14,13 @@ class PostDetailVC: UIViewController {
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var usernameLbl: UILabel!
     @IBOutlet weak var postImg: UIImageView!
-    @IBOutlet weak var caption: UITextView!
+    
+    @IBOutlet weak var nonValidatedUserCaption: UILabel!
+    @IBOutlet weak var validatedUserCaption: UITextView!
     @IBOutlet weak var likesLbl: UILabel!
     @IBOutlet weak var likeImg: UIImageView!
     @IBOutlet weak var deleteBtnLbl: UIButton!
+    @IBOutlet weak var editImgBtnLbl: UIButton!
     
     var post: Post?
     var username: String?
@@ -29,11 +32,19 @@ class PostDetailVC: UIViewController {
 
         if Auth.auth().currentUser?.uid == post?.userId {
             deleteBtnLbl.isHidden = false
+            validatedUserCaption.isHidden = false
+            nonValidatedUserCaption.isHidden = true
+            editImgBtnLbl.isHidden = false
         } else {
             deleteBtnLbl.isHidden = true
+            validatedUserCaption.isHidden = true
+            nonValidatedUserCaption.isHidden = false
+            editImgBtnLbl.isHidden = true
+            
         }
         
-        caption.text = post?.caption
+        validatedUserCaption.text = post?.caption
+        nonValidatedUserCaption.text = post?.caption
         usernameLbl.text = username
         if let numberOfLikes = post?.likes {
             likesLbl.text = "\(numberOfLikes)"
@@ -130,5 +141,12 @@ class PostDetailVC: UIViewController {
         performSegue(withIdentifier: "detailToFeed", sender: nil)
         
     }
+    
+    @IBAction func editImgBtnPressed(_ sender: Any) {
+        
+        print("yay it looks like this button is active")
+        
+    }
+    
 
 }

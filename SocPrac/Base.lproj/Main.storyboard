@@ -458,10 +458,16 @@
                                                 </subviews>
                                             </stackView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="24j-q0-OCH">
-                                                <rect key="frame" x="0.0" y="68" width="359" height="225"/>
+                                                <rect key="frame" x="0.0" y="68" width="359" height="280"/>
                                             </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOV-jE-JOU">
+                                                <rect key="frame" x="0.0" y="356" width="359" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="eU7-S8-MLo">
-                                                <rect key="frame" x="0.0" y="301" width="359" height="240"/>
+                                                <rect key="frame" x="0.0" y="381" width="359" height="160"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="FrF-5f-fCj"/>
@@ -504,18 +510,29 @@
                                             </button>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WKs-Sc-T1V">
+                                        <rect key="frame" x="8" y="76" width="359" height="280"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <connections>
+                                            <action selector="editImgBtnPressed:" destination="rTe-hH-bph" eventType="touchUpInside" id="Tai-V2-XZv"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="WKs-Sc-T1V" firstAttribute="top" secondItem="24j-q0-OCH" secondAttribute="top" id="3nj-Yj-pbE"/>
                                     <constraint firstAttribute="trailing" secondItem="X4u-H6-DDb" secondAttribute="trailing" constant="8" id="Bju-ZU-C9g"/>
                                     <constraint firstAttribute="bottom" secondItem="iYu-nY-J9C" secondAttribute="bottom" constant="8" id="FUg-W3-oFC"/>
+                                    <constraint firstItem="WKs-Sc-T1V" firstAttribute="bottom" secondItem="24j-q0-OCH" secondAttribute="bottom" id="KrJ-Jd-QEv"/>
                                     <constraint firstAttribute="bottom" secondItem="dJs-GC-DRy" secondAttribute="bottom" constant="8" id="LAu-Fo-vt1"/>
                                     <constraint firstItem="X4u-H6-DDb" firstAttribute="leading" secondItem="XQe-cK-T15" secondAttribute="leading" constant="8" id="Odn-wj-hWH"/>
                                     <constraint firstAttribute="trailing" secondItem="iYu-nY-J9C" secondAttribute="trailing" constant="8" id="Sam-9w-4TB"/>
+                                    <constraint firstItem="WKs-Sc-T1V" firstAttribute="leading" secondItem="24j-q0-OCH" secondAttribute="leading" id="UHz-5z-RpU"/>
                                     <constraint firstItem="iYu-nY-J9C" firstAttribute="top" secondItem="X4u-H6-DDb" secondAttribute="bottom" constant="8" id="Wcr-YV-UgX"/>
                                     <constraint firstItem="dJs-GC-DRy" firstAttribute="leading" secondItem="XQe-cK-T15" secondAttribute="leading" constant="8" id="XS2-2c-lIa"/>
                                     <constraint firstItem="dJs-GC-DRy" firstAttribute="top" secondItem="X4u-H6-DDb" secondAttribute="bottom" constant="8" id="fcR-G5-V8b"/>
                                     <constraint firstItem="X4u-H6-DDb" firstAttribute="top" secondItem="XQe-cK-T15" secondAttribute="top" constant="8" id="kSl-8y-G9a"/>
+                                    <constraint firstItem="WKs-Sc-T1V" firstAttribute="trailing" secondItem="24j-q0-OCH" secondAttribute="trailing" id="x4k-QH-WZJ"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2t1-ED-sLC">
@@ -541,13 +558,15 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="caption" destination="eU7-S8-MLo" id="1BY-4u-Ptf"/>
                         <outlet property="deleteBtnLbl" destination="74v-Wn-HK4" id="Xwj-2v-VM1"/>
+                        <outlet property="editImgBtnLbl" destination="WKs-Sc-T1V" id="PFy-4o-LFS"/>
                         <outlet property="likeImg" destination="jhx-y6-yxc" id="qMA-tg-qRR"/>
                         <outlet property="likesLbl" destination="PzE-Bu-UhE" id="ht9-MO-qhE"/>
+                        <outlet property="nonValidatedUserCaption" destination="HOV-jE-JOU" id="VLg-oJ-YaX"/>
                         <outlet property="postImg" destination="24j-q0-OCH" id="1br-GO-SEM"/>
                         <outlet property="profileImg" destination="rR1-hW-Esy" id="e5v-EZ-22s"/>
                         <outlet property="usernameLbl" destination="mWP-qM-6Qm" id="QeJ-pg-SHm"/>
+                        <outlet property="validatedUserCaption" destination="eU7-S8-MLo" id="ud2-fH-Wfy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="krX-q8-v3J" userLabel="First Responder" sceneMemberID="firstResponder"/>
