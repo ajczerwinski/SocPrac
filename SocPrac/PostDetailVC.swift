@@ -39,7 +39,22 @@ class PostDetailVC: UIViewController {
             likesLbl.text = "\(numberOfLikes)"
         }
         
+        // Create Firebase Database reference to check if post is liked by user
+        let likesRef = DataService.ds.REF_USER_CURRENT.child("likes").child((post?.postKey)!)
         
+        
+        likesRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let _ = snapshot.value as? NSNull {
+                self.likeImg.image = UIImage(named: "empty-heart")
+            } else {
+                self.likeImg.image = UIImage(named: "filled-heart")
+            }
+        })
+        
+        
+        
+        
+        // Create Firebase Storage reference to display Post Image
         if let postImageUrl = postImgUrl {
             let postImgRef = Storage.storage().reference(forURL: postImageUrl)
             postImgRef.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
@@ -58,11 +73,7 @@ class PostDetailVC: UIViewController {
         }
         
         
-        
-        
-        
-        
-        
+        // Create Firebase Storage reference to display User Profile Image
         if let profileImageUrl = postingUserImgUrl {
             let profileImageRef = Storage.storage().reference(forURL: profileImageUrl)
             profileImageRef.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
