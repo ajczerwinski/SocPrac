@@ -27,6 +27,12 @@ class PostDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if Auth.auth().currentUser?.uid == post?.userId {
+            deleteBtnLbl.isHidden = false
+        } else {
+            deleteBtnLbl.isHidden = true
+        }
+        
         caption.text = post?.caption
         usernameLbl.text = username
         if let numberOfLikes = post?.likes {
@@ -86,15 +92,32 @@ class PostDetailVC: UIViewController {
         }
     }
     
+    @IBAction func deleteBtnTapped(_ sender: Any) {
+        
+        if let postKey = post?.postKey {
+            print("HI I AM THE POSTKEY: \(postKey)")
+                deletePost(childToDelete: postKey)
+        }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
+
+
+    func deletePost(childToDelete: String) {
+
+        let firebaseRef = Database.database().reference().child("posts").child(childToDelete)
+        
+        print("HELLO THERE I AM THE POSTKEY: \(firebaseRef)")
+        firebaseRef.removeValue { (error, ref) in
+            if error != nil {
+                print("Here's the error output when I tried to delete: \(error)")
+            } else {
+                print("Looks like we successfully deleted the object: \(firebaseRef). Sad!")
+            }
+            
+        }
+        
+        performSegue(withIdentifier: "detailToFeed", sender: nil)
+        
+    }
 
 }

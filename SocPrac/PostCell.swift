@@ -110,29 +110,4 @@ class PostCell: UITableViewCell {
         })
         
     }
-    
-//    @IBAction func deleteBtnTapped(_ sender: Any) {
-//        
-//        let postKey = post.postKey
-//        print("HI I AM THE POSTKEY: \(postKey)")
-//        
-//        deletePost(childToDelete: postKey)
-//        
-//    }
-//    
-//    
-//    func deletePost(childToDelete: String) {
-//        
-//        let firebaseRef = Database.database().reference().child(childToDelete)
-//        print("HELLO THERE I AM THE POSTKEY: \(firebaseRef)")
-//        firebaseRef.removeValue { (error, ref) in
-//            if error != nil {
-//                print("Here's the error output when I tried to delete: \(error)")
-//            } else {
-//                print("Looks like we successfully deleted the object. Sad!")
-//            }
-//        }
-//        
-//    }
-    
 }

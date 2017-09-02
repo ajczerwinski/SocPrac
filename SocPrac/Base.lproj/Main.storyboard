@@ -498,6 +498,9 @@
                                                 <state key="normal" title="Delete">
                                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="deleteBtnTapped:" destination="rTe-hH-bph" eventType="touchUpInside" id="KS2-TC-xMt"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
