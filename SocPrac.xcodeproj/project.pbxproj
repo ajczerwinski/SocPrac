@@ -27,6 +27,7 @@
 		BF28419D1F282090005AF797 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF28419C1F282090005AF797 /* ProfileVC.swift */; };
 		BF28419F1F282D35005AF797 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF28419E1F282D35005AF797 /* User.swift */; };
 		BFA47E5A1F4F8764009C7208 /* PostDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA47E591F4F8763009C7208 /* PostDetailVC.swift */; };
+		BFA97A9B1F5B3D85005203B5 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA97A9A1F5B3D83005203B5 /* CommentCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		BF28419C1F282090005AF797 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		BF28419E1F282D35005AF797 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BFA47E591F4F8763009C7208 /* PostDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailVC.swift; sourceTree = "<group>"; };
+		BFA97A9A1F5B3D83005203B5 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		FE51FD196821DA5829BB0144 /* Pods_SocPrac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SocPrac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -141,6 +143,7 @@
 				BF2841941F27F3BF005AF797 /* FancyBtn.swift */,
 				BF2841961F27F3EB005AF797 /* CircleView.swift */,
 				BF2841981F27F418005AF797 /* PostCell.swift */,
+				BFA97A9A1F5B3D83005203B5 /* CommentCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				BF2841911F27F2C2005AF797 /* FancyView.swift in Sources */,
 				BF2841881F27F1A8005AF797 /* DataService.swift in Sources */,
 				BF2841991F27F418005AF797 /* PostCell.swift in Sources */,
+				BFA97A9B1F5B3D85005203B5 /* CommentCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

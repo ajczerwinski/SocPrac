@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class PostDetailVC: UIViewController {
+class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var usernameLbl: UILabel!
@@ -21,6 +21,8 @@ class PostDetailVC: UIViewController {
     @IBOutlet weak var likeImg: UIImageView!
     @IBOutlet weak var deleteBtnLbl: UIButton!
     @IBOutlet weak var editImgBtnLbl: UIButton!
+    @IBOutlet weak var tableView: UITableView!
+    
     
     var post: Post?
     var username: String?
@@ -102,9 +104,11 @@ class PostDetailVC: UIViewController {
             print("HI I AM THE POST IMAGE URL: \(profileImageUrl)")
         }
         
-//        if let userProfileUrl = postingUserImgUrl {
-//            print("HI I AM THE USER PROFILE URL: \(userProfileUrl)")
-//        }
+        self.tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
         
     }
 
@@ -146,6 +150,15 @@ class PostDetailVC: UIViewController {
         
         print("yay it looks like this button is active")
         
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = CommentCell()
+        return cell
     }
     
 
