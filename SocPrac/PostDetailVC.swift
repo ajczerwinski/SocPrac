@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var usernameLbl: UILabel!
@@ -28,6 +28,9 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     var username: String?
     var postImgUrl: String?
     var postingUserImgUrl: String?
+    
+    var imagePicker: UIImagePickerController!
+    var imageSelected = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,7 +112,22 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        imagePicker = UIImagePickerController()
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
         
+        
+    }
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+            postImg.image = image
+            imageSelected = true
+        } else {
+            print("AllenError: A valid image wasn't selected")
+        }
+        imagePicker.dismiss(animated: true, completion: nil)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -148,7 +166,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     @IBAction func editImgBtnPressed(_ sender: Any) {
         
-        print("yay it looks like this button is active")
+        present(imagePicker, animated: true, completion: nil)
         
     }
     
