@@ -543,7 +543,7 @@
                                 </constraints>
                                 <state key="normal" title="Back"/>
                                 <connections>
-                                    <segue destination="CST-g8-HZr" kind="show" identifier="detailToFeed" id="ZWm-1l-9Be"/>
+                                    <action selector="backOrSaveBtnPressed:" destination="rTe-hH-bph" eventType="touchUpInside" id="XZe-jJ-kaI"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3aJ-te-U8N">
@@ -595,6 +595,7 @@
                         <outlet property="tableView" destination="3aJ-te-U8N" id="KYs-QE-oTE"/>
                         <outlet property="usernameLbl" destination="mWP-qM-6Qm" id="QeJ-pg-SHm"/>
                         <outlet property="validatedUserCaption" destination="eU7-S8-MLo" id="ud2-fH-Wfy"/>
+                        <segue destination="CST-g8-HZr" kind="show" identifier="detailToFeed" id="UxQ-2x-QR7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="krX-q8-v3J" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -25186,7 +25187,7 @@ AEEAAAAAAAAAAAAAAAAAAFbcA
         <image name="sign-out" width="92" height="65"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZWm-1l-9Be"/>
+        <segue reference="UxQ-2x-QR7"/>
         <segue reference="PeZ-i7-AQA"/>
     </inferredMetricsTieBreakers>
 </document>

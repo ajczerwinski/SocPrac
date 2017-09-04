@@ -132,9 +132,70 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detailToFeed" {
+            
             let nextScene = segue.destination as! FeedVC
         }
     }
+    
+    func postToFirebase(imgUrl: String) {
+    
+        let userPost: Dictionary<String, AnyObject> = [
+            
+            "imageUrl": imgUrl as AnyObject,
+            "caption": validatedUserCaption.text! as AnyObject
+            
+        ]
+        
+        let postId = post?.postKey
+        
+            
+        let firebasePost = DataService.ds.REF_POSTS.child(postId!)
+        firebasePost.updateChildValues(userPost)
+        
+    }
+    
+    @IBAction func backOrSaveBtnPressed(_ sender: Any) {
+        
+        if imageSelected == true {
+            
+            guard let img = postImg.image else {
+                print("AllenError: Post image wasn't selected")
+                return
+            }
+            
+            if let imgData = UIImageJPEGRepresentation(img, 0.2) {
+                
+                let imgUid = NSUUID().uuidString
+                let metadata = StorageMetadata()
+                metadata.contentType = "image/jpeg"
+                
+                DataService.ds.REF_USER_IMAGES.child(imgUid).putData(imgData, metadata: metadata) { (metadata, error) in
+                    if error != nil {
+                        print("AllenError: Unable to upload image to Firebase storage")
+                    } else {
+                        print("AllenData: Successfully uploaded image to Firebase storage")
+                        let downloadURL = metadata?.downloadURL()?.absoluteString
+                        
+                        if let url = downloadURL {
+                            self.postToFirebase(imgUrl: url)
+                        }
+                        self.performSegue(withIdentifier: "detailToFeed", sender: nil)
+                    }
+                    
+                }
+                
+            }
+            
+        } else {
+            
+            self.postToFirebase(imgUrl: (post?.imageUrl)!)
+            
+            self.performSegue(withIdentifier: "detailToFeed", sender: nil)
+            
+        }
+        
+    }
+    
     
     @IBAction func deleteBtnTapped(_ sender: Any) {
         
