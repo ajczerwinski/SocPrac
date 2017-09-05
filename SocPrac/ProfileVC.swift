@@ -65,6 +65,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     }
     
     @IBAction func noUsernameBackBtn(_ sender: Any) {
+        // TODO - make this an alert
         print("Hey, you need to enter a username and profile photo")
     }
     

@@ -175,6 +175,25 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
     }
     
+    func postCommentToFirebase() {
+    
+        let userComment: Dictionary<String, AnyObject> = [
+            
+            "userId": Auth.auth().currentUser?.uid as AnyObject,
+            "commentText": commentTextField.text! as AnyObject
+            
+        ]
+        
+        let firebaseCommentPost = DataService.ds.REF_POSTS.child((post?.postKey)!).child("comments").childByAutoId()
+        
+        firebaseCommentPost.setValue(userComment)
+        
+        commentTextField.text = ""
+        
+        //tableView.reloadData()
+    
+    }
+    
     @IBAction func backOrSaveBtnPressed(_ sender: Any) {
         
         if imageSelected == true {
@@ -277,7 +296,21 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
     }
     @IBAction func postCommentBtnPressed(_ sender: Any) {
+        
+        guard let commentText = commentTextField.text, commentText != "" else {
+            
+            // TODO - Will want to add an error notification or something here if invalid data is entered
+            print("AllenError: Comment text must be entered")
+            return
+        }
+        
+        postCommentToFirebase()
+        
+        
+        
     }
+    
+    
     
 
 }
