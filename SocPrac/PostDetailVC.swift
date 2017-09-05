@@ -23,6 +23,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var editImgBtnLbl: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var commentTextField: FancyField!
     
     var post: Post?
     var username: String?
@@ -274,6 +275,8 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             return CommentCell()
         }
         
+    }
+    @IBAction func postCommentBtnPressed(_ sender: Any) {
     }
     
 
