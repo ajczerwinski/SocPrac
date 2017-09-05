@@ -29,6 +29,8 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     var postImgUrl: String?
     var postingUserImgUrl: String?
     
+    var comments = [Comment]()
+    
     var imagePicker: UIImagePickerController!
     var imageSelected = false
 
@@ -107,7 +109,25 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             print("HI I AM THE POST IMAGE URL: \(profileImageUrl)")
         }
         
-        self.tableView.register(CommentCell.self, forCellReuseIdentifier: "CommentCell")
+        // Observe snapshot of Comments Firebase object to populate comments array
+    
+    
+        DataService.ds.REF_POSTS.child((post?.postKey)!).child("comments").observe(.value, with: { (snapshot) in
+            
+            if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                
+                for snap in snapshot {
+                    print("HI I AM THE COMMENT SNAPSHOT: \(snap)")
+                    if let commentDict = snap.value as? Dictionary<String, AnyObject> {
+                        
+                        let key = snap.key
+                        let comment = Comment(commentKey: key, commentData: commentDict)
+                        self.comments.append(comment)
+                    }
+                }
+            }
+            self.tableView.reloadData()
+        })
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -116,7 +136,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         
-        
+        tableView.reloadData()
     }
     
     
@@ -232,12 +252,28 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return comments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = CommentCell()
-        return cell
+        
+        if self.comments.count > 0 {
+            let comment = self.comments[indexPath.row]
+            
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as? CommentCell {
+                
+                cell.configureCell(comment: comment)
+                
+                return cell
+                
+            } else {
+                return CommentCell()
+            }
+            
+        } else {
+            return CommentCell()
+        }
+        
     }
     
 

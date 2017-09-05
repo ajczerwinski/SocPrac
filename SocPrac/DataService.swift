@@ -21,7 +21,7 @@ class DataService {
     private var _REF_BASE = DB_BASE
     private var _REF_POSTS = DB_BASE.child("posts")
     private var _REF_USERS = DB_BASE.child("users")
-    private var _REF_COMMENTS = DB_BASE.child("comments")
+    //private var _REF_COMMENTS = DB_BASE.child("posts").child()
     
     // Storage references
     private var _REF_POST_IMAGES = STORAGE_BASE.child("post-pics")
@@ -39,9 +39,9 @@ class DataService {
         return _REF_USERS
     }
     
-    var REF_COMMENTS: DatabaseReference {
-        return _REF_COMMENTS
-    }
+//    var REF_COMMENTS: DatabaseReference {
+//        return _REF_COMMENTS
+//    }
     
     var REF_USER_CURRENT: DatabaseReference {
         //let uid = KeychainWrapper.stringForKey(KEY_UID)
