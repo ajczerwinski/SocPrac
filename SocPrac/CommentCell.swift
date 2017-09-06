@@ -33,7 +33,7 @@ class CommentCell: UITableViewCell {
     
     func configureCell(comment: Comment) {
         
-        self.comment = comment
+        //self.comment = comment
         print("HI I am the comment: \(comment.commentText)")
         self.commentText.text = ("\(comment.commentText) by \(comment.userId)")
         

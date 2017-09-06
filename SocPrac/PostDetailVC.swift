@@ -116,7 +116,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         DataService.ds.REF_POSTS.child((post?.postKey)!).child("comments").observe(.value, with: { (snapshot) in
             
             if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-                
+                self.comments = [] // clear out comments array to avoid double posting
                 for snap in snapshot {
                     print("HI I AM THE COMMENT SNAPSHOT: \(snap)")
                     if let commentDict = snap.value as? Dictionary<String, AnyObject> {
@@ -137,7 +137,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         
-        tableView.reloadData()
+        //tableView.reloadData()
     }
     
     
