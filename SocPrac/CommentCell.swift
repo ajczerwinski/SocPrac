@@ -31,7 +31,7 @@ class CommentCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(comment: Comment) {
+    func configureCell(comment: Comment, commenterUsername: String, commenterUserProfileImgUrl: String) {
         
         //self.comment = comment
         print("HI I am the comment: \(comment.commentText)")

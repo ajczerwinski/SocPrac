@@ -30,6 +30,9 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     var postImgUrl: String?
     var postingUserImgUrl: String?
     
+    var usernameDict: [String: String] = [:]
+    var profileImgDict: [String: String] = [:]
+    
     var comments = [Comment]()
     
     var imagePicker: UIImagePickerController!
@@ -70,6 +73,46 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             }
         })
         
+        // Create Firebase Database reference to grab usernames and profileUrls
+        // from users who left comments and store in dictionary
+        // TODO add search query terms to limit the number of users that this 
+        // reference observes (shouldn't be all users)
+        DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
+            
+            if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                
+                for snap in snapshot {
+                    print("HERE IS THE USER SNAPSHOT: \(snap)")
+                    
+                    if let commentUserDict = snap.value as? Dictionary<String, AnyObject> {
+                        
+                        let key = snap.key
+                        var commentingUsername = ""
+                        var commentingUserProfileImg: String?
+                        
+                        if let username = commentUserDict["username"] as? String {
+                            commentingUsername = username
+                        }
+                        
+                        if let profileImg = commentUserDict["profileImg"] as? String {
+                            commentingUserProfileImg = profileImg
+                        }
+                        
+                        self.usernameDict[key] = commentingUsername
+                        self.profileImgDict[key] = commentingUserProfileImg
+                        
+                    }
+                    
+                    
+                }
+                
+            }
+            
+            print("HERE IS THE FULL USERNAME DICTIONARY \(self.usernameDict)")
+            print("HERE IS THE FULL PROFILEIMG DICTIONARY: \(self.profileImgDict)")
+            self.tableView.reloadData()
+            
+        })
         
         
         
@@ -277,12 +320,26 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        var commenterUsername: String?
+        var commenterUserProfileImgUrl: String?
+        
         if self.comments.count > 0 {
             let comment = self.comments[indexPath.row]
+            let userId = comment.userId
+            
+            if let commentingUsername = usernameDict[userId] {
+                commenterUsername = commentingUsername
+            }
+            if let commentingProfileImgUrl = profileImgDict[userId] {
+                commenterUserProfileImgUrl = commentingProfileImgUrl
+            }
+            
+            print("Here is the commenter's username: \(commenterUsername!)")
+            print("Here is the commenter's profileImgUrl: \(commenterUserProfileImgUrl!)")
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as? CommentCell {
                 
-                cell.configureCell(comment: comment)
+                cell.configureCell(comment: comment, commenterUsername: commenterUsername!, commenterUserProfileImgUrl: commenterUserProfileImgUrl!)
                 
                 return cell
                 
