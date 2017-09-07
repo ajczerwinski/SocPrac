@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var usernameLbl: UILabel!
@@ -37,6 +37,8 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     var imagePicker: UIImagePickerController!
     var imageSelected = false
+    
+    var frameView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -180,6 +182,12 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         
+        self.frameView = UIView(frame: CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height))
+        
+        let center: NotificationCenter = NotificationCenter.default
+        center.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
         //tableView.reloadData()
     }
     
@@ -232,6 +240,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         firebaseCommentPost.setValue(userComment)
         
         commentTextField.text = ""
+        commentTextField.resignFirstResponder()
         
         //tableView.reloadData()
     
@@ -367,7 +376,70 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
     }
     
+    // TextField delegate methods
     
+    func textFieldDidBeginEditing(textField: UITextField) {
+        
+        commentTextField.text = ""
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        return true
+        
+    }
+    
+    
+    // Turn on observers to listen for keyboard
+    // show and hide functions
+    
+    func subscribeToKeyboardNotifications() {
+        
+        NotificationCenter.default.addObserver(self, selector: Selector("keyboardWillShow:"), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: Selector("keyboardWillHide:"), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+    }
+    
+    // Turn off observers
+    
+    func unsubscribeFromKeyboardNotifications() {
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if commentTextField.isFirstResponder {
+            view.frame.origin.y += getKeyboardHeight(notification: notification) * -1
+        }
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        
+        if commentTextField.isFirstResponder {
+            view.frame.origin.y = 0
+        }
+        
+    }
+    
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
+        
+        return keyboardSize.cgRectValue.height
+        
+    }
+    
+    func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {
+        return CGRect(x: x, y: y, width: width, height: height)
+    }
     
 
 }
