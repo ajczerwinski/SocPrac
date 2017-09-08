@@ -435,7 +435,7 @@
                                             <constraint firstAttribute="width" constant="63" id="OU9-qO-n0h"/>
                                             <constraint firstAttribute="height" constant="43" id="dRc-Lc-1hi"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <state key="normal" title="Back">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -687,115 +687,144 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8I-j5-KrI">
-                                <rect key="frame" x="16" y="20" width="70" height="45"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="70" id="PU3-JA-np5"/>
-                                </constraints>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <action selector="backBtnPressed:" destination="uzi-TH-n2R" eventType="touchUpInside" id="Ecw-xX-Srk"/>
-                                    <segue destination="CST-g8-HZr" kind="show" identifier="backToFeed" id="S9O-IT-Jc0"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MzS-At-sim" customClass="FancyBtn" customModule="SocPrac" customModuleProvider="target">
-                                <rect key="frame" x="137.5" y="235" width="100" height="70"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="OiW-ME-g8J"/>
-                                    <constraint firstAttribute="width" constant="100" id="j0t-9B-sxb"/>
-                                </constraints>
-                                <state key="normal" title="Save"/>
-                                <connections>
-                                    <action selector="profileSaveBtnPressed:" destination="uzi-TH-n2R" eventType="touchUpInside" id="Cq4-LJ-uxo"/>
-                                </connections>
-                            </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="DpL-zw-jzt">
-                                <rect key="frame" x="16" y="115" width="343" height="110"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOn-Pc-gRZ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="63"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="N4S-MM-RUO">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7TM-hr-XNI">
-                                                <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="150" id="pdf-P8-cWj"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kNX-9o-7cn" customClass="FancyField" customModule="SocPrac" customModuleProvider="target">
-                                                <rect key="frame" x="155" y="0.0" width="188" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="hk0-Tf-1gN"/>
-                                                </constraints>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                        </subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B36-xJ-18i">
+                                        <rect key="frame" x="8" y="10" width="63" height="43"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="w7i-hk-p2n"/>
+                                            <constraint firstAttribute="height" constant="43" id="9z8-xo-eDe"/>
                                         </constraints>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="qxo-jR-MWT">
-                                        <rect key="frame" x="0.0" y="60" width="343" height="50"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update profile pic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mhr-2R-GEc">
-                                                <rect key="frame" x="0.0" y="0.0" width="278" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="yhC-xq-52a"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile-img" translatesAutoresizingMaskIntoConstraints="NO" id="6Yh-cm-txI" customClass="CircleView" customModule="SocPrac" customModuleProvider="target">
-                                                <rect key="frame" x="283" y="0.0" width="60" height="50"/>
-                                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <gestureRecognizers/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="60" id="YCT-ta-YZA"/>
-                                                </constraints>
-                                                <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="biA-kf-aLA" appends="YES" id="RHv-LK-Kw2"/>
-                                                </connections>
-                                            </imageView>
-                                        </subviews>
+                                        <state key="normal" title="Back"/>
+                                        <connections>
+                                            <action selector="noUsernameBackBtn:" destination="uzi-TH-n2R" eventType="touchUpInside" id="Hmv-OY-dcP"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8I-j5-KrI">
+                                        <rect key="frame" x="8" y="10" width="63" height="43"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="D9f-Om-j13"/>
+                                            <constraint firstAttribute="width" constant="63" id="PU3-JA-np5"/>
                                         </constraints>
-                                    </stackView>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <state key="normal" title="Back">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backBtnPressed:" destination="uzi-TH-n2R" eventType="touchUpInside" id="Ecw-xX-Srk"/>
+                                            <segue destination="CST-g8-HZr" kind="show" identifier="backToFeed" id="S9O-IT-Jc0"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.73725490199999999" blue="0.83137254900000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="qxo-jR-MWT" secondAttribute="trailing" id="Hxy-O1-mj8"/>
-                                    <constraint firstItem="qxo-jR-MWT" firstAttribute="leading" secondItem="DpL-zw-jzt" secondAttribute="leading" id="Mf5-vi-bkh"/>
-                                    <constraint firstAttribute="trailing" secondItem="N4S-MM-RUO" secondAttribute="trailing" id="SDq-Sn-970"/>
+                                    <constraint firstItem="l8I-j5-KrI" firstAttribute="leading" secondItem="KOn-Pc-gRZ" secondAttribute="leading" constant="8" id="2aY-Jq-7QX"/>
+                                    <constraint firstAttribute="height" constant="63" id="CFt-Xr-axc"/>
+                                    <constraint firstItem="B36-xJ-18i" firstAttribute="top" secondItem="l8I-j5-KrI" secondAttribute="top" id="c2F-L1-ppU"/>
+                                    <constraint firstItem="B36-xJ-18i" firstAttribute="bottom" secondItem="l8I-j5-KrI" secondAttribute="bottom" id="ecu-r8-1cq"/>
+                                    <constraint firstItem="B36-xJ-18i" firstAttribute="leading" secondItem="l8I-j5-KrI" secondAttribute="leading" id="hS7-Ld-JgA"/>
+                                    <constraint firstItem="l8I-j5-KrI" firstAttribute="centerY" secondItem="KOn-Pc-gRZ" secondAttribute="centerY" id="lpF-FB-FXR"/>
+                                    <constraint firstItem="B36-xJ-18i" firstAttribute="trailing" secondItem="l8I-j5-KrI" secondAttribute="trailing" id="pxb-tF-CUy"/>
                                 </constraints>
-                            </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B36-xJ-18i">
-                                <rect key="frame" x="16" y="20" width="70" height="45"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <action selector="noUsernameBackBtn:" destination="uzi-TH-n2R" eventType="touchUpInside" id="Hmv-OY-dcP"/>
-                                </connections>
-                            </button>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6PG-Zq-H8X" customClass="FancyView" customModule="SocPrac" customModuleProvider="target">
+                                <rect key="frame" x="16" y="79" width="343" height="572"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="DpL-zw-jzt">
+                                        <rect key="frame" x="8" y="8" width="327" height="110"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="N4S-MM-RUO">
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="50"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7TM-hr-XNI">
+                                                        <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="150" id="pdf-P8-cWj"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kNX-9o-7cn" customClass="FancyField" customModule="SocPrac" customModuleProvider="target">
+                                                        <rect key="frame" x="155" y="0.0" width="172" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="hk0-Tf-1gN"/>
+                                                        </constraints>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="w7i-hk-p2n"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="qxo-jR-MWT">
+                                                <rect key="frame" x="0.0" y="60" width="327" height="50"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update profile pic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mhr-2R-GEc">
+                                                        <rect key="frame" x="0.0" y="0.0" width="262" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="yhC-xq-52a"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile-img" translatesAutoresizingMaskIntoConstraints="NO" id="6Yh-cm-txI" customClass="CircleView" customModule="SocPrac" customModuleProvider="target">
+                                                        <rect key="frame" x="267" y="0.0" width="60" height="50"/>
+                                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <gestureRecognizers/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="60" id="YCT-ta-YZA"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <outletCollection property="gestureRecognizers" destination="biA-kf-aLA" appends="YES" id="RHv-LK-Kw2"/>
+                                                        </connections>
+                                                    </imageView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="D9f-Om-j13"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="qxo-jR-MWT" secondAttribute="trailing" id="Hxy-O1-mj8"/>
+                                            <constraint firstItem="qxo-jR-MWT" firstAttribute="leading" secondItem="DpL-zw-jzt" secondAttribute="leading" id="Mf5-vi-bkh"/>
+                                            <constraint firstAttribute="trailing" secondItem="N4S-MM-RUO" secondAttribute="trailing" id="SDq-Sn-970"/>
+                                        </constraints>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MzS-At-sim" customClass="FancyBtn" customModule="SocPrac" customModuleProvider="target">
+                                        <rect key="frame" x="121.5" y="134" width="100" height="70"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="OiW-ME-g8J"/>
+                                            <constraint firstAttribute="width" constant="100" id="j0t-9B-sxb"/>
+                                        </constraints>
+                                        <state key="normal" title="Save"/>
+                                        <connections>
+                                            <action selector="profileSaveBtnPressed:" destination="uzi-TH-n2R" eventType="touchUpInside" id="Cq4-LJ-uxo"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="DpL-zw-jzt" firstAttribute="leading" secondItem="6PG-Zq-H8X" secondAttribute="leading" constant="8" id="2Cp-ds-2GR"/>
+                                    <constraint firstItem="DpL-zw-jzt" firstAttribute="top" secondItem="6PG-Zq-H8X" secondAttribute="top" constant="8" id="RIu-ZP-iZm"/>
+                                    <constraint firstItem="MzS-At-sim" firstAttribute="centerX" secondItem="6PG-Zq-H8X" secondAttribute="centerX" id="bGD-oo-gVm"/>
+                                    <constraint firstItem="MzS-At-sim" firstAttribute="top" secondItem="DpL-zw-jzt" secondAttribute="bottom" constant="16" id="dSC-iP-63J"/>
+                                    <constraint firstAttribute="trailing" secondItem="DpL-zw-jzt" secondAttribute="trailing" constant="8" id="ezZ-8U-FQ0"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.81176470590000005" green="0.84705882349999995" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="B36-xJ-18i" firstAttribute="top" secondItem="l8I-j5-KrI" secondAttribute="top" id="DCH-uD-iyd"/>
-                            <constraint firstItem="l8I-j5-KrI" firstAttribute="leading" secondItem="uTB-5c-cjp" secondAttribute="leadingMargin" id="DMQ-Bn-ZsX"/>
-                            <constraint firstItem="B36-xJ-18i" firstAttribute="trailing" secondItem="l8I-j5-KrI" secondAttribute="trailing" id="GW3-RR-R0y"/>
-                            <constraint firstItem="MzS-At-sim" firstAttribute="top" secondItem="DpL-zw-jzt" secondAttribute="bottom" constant="10" id="Qn5-kZ-kzB"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="DpL-zw-jzt" secondAttribute="trailing" id="R5H-VJ-nxU"/>
-                            <constraint firstItem="B36-xJ-18i" firstAttribute="leading" secondItem="l8I-j5-KrI" secondAttribute="leading" id="Rj0-tz-nK7"/>
-                            <constraint firstItem="WBO-5l-ACK" firstAttribute="top" secondItem="l8I-j5-KrI" secondAttribute="bottom" constant="602" id="b6B-Mn-AnF"/>
-                            <constraint firstItem="DpL-zw-jzt" firstAttribute="leading" secondItem="uTB-5c-cjp" secondAttribute="leadingMargin" id="f5g-Yf-yYM"/>
-                            <constraint firstItem="B36-xJ-18i" firstAttribute="bottom" secondItem="l8I-j5-KrI" secondAttribute="bottom" id="gFF-4W-BJW"/>
-                            <constraint firstItem="l8I-j5-KrI" firstAttribute="top" secondItem="8L5-Vi-UJY" secondAttribute="bottom" id="hqy-ml-2wA"/>
-                            <constraint firstItem="MzS-At-sim" firstAttribute="centerX" secondItem="uTB-5c-cjp" secondAttribute="centerX" id="nGG-4d-W36"/>
-                            <constraint firstItem="DpL-zw-jzt" firstAttribute="top" secondItem="l8I-j5-KrI" secondAttribute="bottom" constant="50" id="oxH-xM-DU7"/>
+                            <constraint firstItem="6PG-Zq-H8X" firstAttribute="top" secondItem="KOn-Pc-gRZ" secondAttribute="bottom" constant="16" id="0VK-ZW-V4I"/>
+                            <constraint firstItem="KOn-Pc-gRZ" firstAttribute="leading" secondItem="uTB-5c-cjp" secondAttribute="leading" id="9Yz-m5-ooY"/>
+                            <constraint firstAttribute="trailing" secondItem="KOn-Pc-gRZ" secondAttribute="trailing" id="W7X-2Q-Ekm"/>
+                            <constraint firstItem="KOn-Pc-gRZ" firstAttribute="top" secondItem="uTB-5c-cjp" secondAttribute="top" id="Wbw-q2-fIy"/>
+                            <constraint firstItem="WBO-5l-ACK" firstAttribute="top" secondItem="6PG-Zq-H8X" secondAttribute="bottom" constant="16" id="bdT-Fd-m0I"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6PG-Zq-H8X" secondAttribute="trailing" id="ifO-7F-5Dm"/>
+                            <constraint firstItem="6PG-Zq-H8X" firstAttribute="leading" secondItem="uTB-5c-cjp" secondAttribute="leadingMargin" id="lHW-Td-6xj"/>
                         </constraints>
                     </view>
                     <connections>
@@ -812,7 +841,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2318" y="-724"/>
+            <point key="canvasLocation" x="2317.5999999999999" y="-724.58770614692662"/>
         </scene>
     </scenes>
     <resources>
@@ -25260,7 +25289,7 @@ AEEAAAAAAAAAAAAAAAAAAFbcA
         <image name="sign-out" width="92" height="65"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UxQ-2x-QR7"/>
+        <segue reference="S9O-IT-Jc0"/>
         <segue reference="PeZ-i7-AQA"/>
     </inferredMetricsTieBreakers>
 </document>
