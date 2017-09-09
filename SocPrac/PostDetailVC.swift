@@ -338,13 +338,15 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             
             if let commentingUsername = usernameDict[userId] {
                 commenterUsername = commentingUsername
+                print("Here is the commenter's username: \(commenterUsername!)")
             }
             if let commentingProfileImgUrl = profileImgDict[userId] {
                 commenterUserProfileImgUrl = commentingProfileImgUrl
+                print("Here is the commenter's profileImgUrl: \(commenterUserProfileImgUrl!)")
             }
             
-            print("Here is the commenter's username: \(commenterUsername!)")
-            print("Here is the commenter's profileImgUrl: \(commenterUserProfileImgUrl!)")
+            
+            
             
             if let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as? CommentCell {
                 

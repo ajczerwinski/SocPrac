@@ -15,6 +15,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageAdd: CircleView!
     @IBOutlet weak var captionField: FancyField!
+    @IBOutlet weak var greetingLbl: UILabel!
     
     var posts = [Post]()
     var user: User!
@@ -37,6 +38,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             print("HERE IS THE CURRENT USER ID \(currentUserId)")
         }
         
+        greetingLbl.text = "Hello, " + KeychainWrapper.standard.string(forKey: "username")!
+
         tableView.delegate = self
         tableView.dataSource = self
         
