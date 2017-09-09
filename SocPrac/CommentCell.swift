@@ -41,7 +41,7 @@ class CommentCell: UITableViewCell {
         let commenterImageRef = Storage.storage().reference(forURL: commenterUserProfileImgUrl)
         commenterImageRef.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
             if error != nil {
-                print("AllenError: Unable to download userProfileImage from Firebase storage")
+                print("AllenError: Unable to download commenterProfileImage from Firebase storage")
             } else {
                 print("AllenData: commenterProfileImage successfully downloaded from Firebase storage")
                 if let commenterImageData = data {

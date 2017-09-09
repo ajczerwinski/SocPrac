@@ -93,6 +93,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "feedToProfile" {
             _ = segue.destination as! ProfileVC
@@ -165,16 +166,33 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
                 if postingUserProfileImgUrl != nil {
                     if let postingUserUserProfileImg = FeedVC.imageCache.object(forKey: postingUserProfileImgUrl! as NSString) {
-                        if username != nil {
-                            cell.configureCell(post: post, username: username!, img: img, userProfileImg: postingUserUserProfileImg)
-                        }
+                        
+                        cell.configureCell(post: post, username: username!, img: img, userProfileImg: postingUserUserProfileImg)
+                        //tableView.reloadData()
+                        
                     }
                 }
         
                 
             } else {
-                
-                cell.configureCell(post: post/*, username: username*/)
+                if let userProfileUrl = postingUserProfileImgUrl {
+                    let userProfileImgRef = Storage.storage().reference(forURL: userProfileUrl)
+                    userProfileImgRef.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                        if error != nil {
+                            
+                            print("AllenError: Unable to download userProfileImage from Firebase storage")
+                            
+                        } else {
+                            print("AllenData: userProfileImage successfully downloaded from Firebase storage")
+                            if let userProfileImgData = data {
+                                if let userProfileImg = UIImage(data: userProfileImgData) {
+                                    cell.configureCell(post: post, username: username, userProfileImg: userProfileImg)
+                                }
+                            }
+                        }
+                    })
+                }
+                cell.configureCell(post: post, username: username)
             }
             return cell
         } else {
