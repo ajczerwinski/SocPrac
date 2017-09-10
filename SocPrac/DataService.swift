@@ -53,7 +53,7 @@ class DataService {
         return _REF_USER_IMAGES
     }
     
-    func createFirbaseDBUser(uid: String, userData: Dictionary<String, String>) {
+    func createFirebaseDBUser(uid: String, userData: Dictionary<String, String>) {
         REF_USERS.child(uid).updateChildValues(userData)
     }
     

@@ -20,6 +20,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     var posts = [Post]()
     var user: User!
     var selectedPost: Post?
+//    var currentUsername: String!
 
     var usernameDict: [String: String] = [:]
     var profileImgDict: [String: String] = [:]
@@ -33,12 +34,22 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        //print("HI I'M THE CURRENT USERNAME: \(currentUsername)")
         if let currentUserId = Auth.auth().currentUser?.uid {
             print("HERE IS THE CURRENT USER ID \(currentUserId)")
+            
+            DataService.ds.REF_USERS.child(currentUserId).observe(.value, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                let username = value?["username"] as? String ?? ""
+                //keychainUsername = username
+                print("HERE IS THE KEYCHAIN USERNAME: \(username)")
+                self.greetingLbl.text = "Hello, " + username
+            })
+            
         }
         
-        greetingLbl.text = "Hello, " + KeychainWrapper.standard.string(forKey: "username")!
+        
+        //greetingLbl.text = "Hello, " + KeychainWrapper.standard.string(forKey: "username")!
 
         tableView.delegate = self
         tableView.dataSource = self

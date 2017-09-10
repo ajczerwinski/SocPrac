@@ -33,7 +33,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
         if currentUserId != nil {
             
-//            print("I'M IN THE PROFILEVC AND HERE IS THE CURRENT USER ID \(currentUserId!)")
+            print("I'M IN THE PROFILEVC AND HERE IS THE CURRENT USER ID \(currentUserId!)")
         }
         
         if KeychainWrapper.standard.string(forKey: "username") == nil {

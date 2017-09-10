@@ -73,7 +73,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="oM8-s0-dXZ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="22"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -25308,7 +25308,7 @@ AEEAAAAAAAAAAAAAAAAAAFbcA
         <image name="social-icon" width="600" height="600"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UxQ-2x-QR7"/>
-        <segue reference="PeZ-i7-AQA"/>
+        <segue reference="867-R0-VK9"/>
+        <segue reference="UnS-dA-v0J"/>
     </inferredMetricsTieBreakers>
 </document>
