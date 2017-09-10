@@ -338,7 +338,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             
             if let commentingUsername = usernameDict[userId] {
                 commenterUsername = commentingUsername
-                print("Here is the commenter's username: \(commenterUsername!)")
+                print("Here is the commenter's username: \(commenterUsername)")
             }
             if let commentingProfileImgUrl = profileImgDict[userId] {
                 commenterUserProfileImgUrl = commentingProfileImgUrl

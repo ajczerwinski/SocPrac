@@ -11,34 +11,20 @@ import Firebase
 
 class CommentCell: UITableViewCell {
     
-//    @IBOutlet weak var commentText: UILabel!
-//
-//    @IBOutlet weak var commentingUserProfileImg: UIImageView!
-    
     @IBOutlet weak var commentText: UILabel!
     
     
     @IBOutlet weak var commentingUserProfileImg: UIImageView!
     var comment: Comment?
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
     func configureCell(comment: Comment, commenterUsername: String, commenterUserProfileImgUrl: String) {
+
+        //print("HI I am the comment: \(comment.commentText)")
         
-        //self.comment = comment
-        print("HI I am the comment: \(comment.commentText)")
-        self.commentText.text = ("\(comment.commentText) by \(commenterUsername)")
+        self.commentText.text = comment.commentText + " @" + commenterUsername
         
         let commenterImageRef = Storage.storage().reference(forURL: commenterUserProfileImgUrl)
+        
         commenterImageRef.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
             if error != nil {
                 print("AllenError: Unable to download commenterProfileImage from Firebase storage")
@@ -53,9 +39,8 @@ class CommentCell: UITableViewCell {
         })
         
         
-        print("HI I AM THE POST IMAGE URL: \(commenterUserProfileImgUrl)")
+        //print("HI I AM THE POST IMAGE URL: \(commenterUserProfileImgUrl)")
         
-        print("hi")
     }
 
 }

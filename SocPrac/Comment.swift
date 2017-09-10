@@ -12,7 +12,7 @@ import Firebase
 class Comment {
     
     private var _commentText: String!
-//    private var _postId: String!
+
     private var _userId: String!
     
     private var _commentKey: String!
@@ -22,10 +22,6 @@ class Comment {
     var commentText: String {
         return _commentText
     }
-    
-//    var postId: String {
-//        return _postId
-//    }
     
     var userId: String {
         return _userId
@@ -48,19 +44,11 @@ class Comment {
             self._commentText = commentText
         }
         
-//        if let postId = commentData["postId"] as? String {
-//            self._postId = postId
-//        }
-        
         if let userId = commentData["userId"] as? String {
             self._userId = userId
         }
         
-//        _commentRef = DataService.ds.REF_POSTS.child("comments").child(_commentKey)
-        
     }
-    
-    
     
 }
 

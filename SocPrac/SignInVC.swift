@@ -35,7 +35,6 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     //TODO - return the let to _ when done testing
     override func viewDidAppear(_ animated: Bool) {
         if let keychainString = KeychainWrapper.standard.string(forKey: KEY_UID) {
-//            print("HERE IS THE KEYCHAIN STRING THAT IS CHECKED WHEN PAGE LOADS: \(keychainString)")
             print("AllenData: ID found in keychain")
             performSegue(withIdentifier: "goToFeed", sender: nil)
         }
@@ -45,11 +44,6 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         if segue.identifier == "goToFeed" {
             let nextScene = segue.destination as! FeedVC
             
-            if let userId = KeychainWrapper.standard.string(forKey: KEY_UID) {
-                let currentUserId = userId
-                //nextScene.currentUserId = currentUserId
-                
-            }
             
         }
         
@@ -127,14 +121,12 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     
     func completeSignIn(id: String, userData: Dictionary<String, String>) {
         DataService.ds.createFirbaseDBUser(uid: id, userData: userData)
-        //let keychainResult = KeychainWrapper.setString(id, forKey: KEY_UID)
+        
         let keychainResult = KeychainWrapper.standard.set(id, forKey: KEY_UID)
         print("AllenData: Data saved to keychain \(keychainResult)")
 
         if userData["username"] == nil {
-//            print("Hi the username is: \(userData["username"])")
-//            print("Hi the user is: \(userData)")
-//            print("\(id)")
+            
             self.performSegue(withIdentifier: "noUsername", sender: nil)
         } else {
             self.performSegue(withIdentifier: "goToFeed", sender: nil)

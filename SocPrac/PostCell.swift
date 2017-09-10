@@ -28,15 +28,14 @@ class PostCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        // Tap gesture recognizer for like button
         let tap = UITapGestureRecognizer(target: self, action: #selector(likeTapped))
         tap.numberOfTapsRequired = 1
-        //tap.cancelsTouchesInView = false
         likeImg.addGestureRecognizer(tap)
         likeImg.isUserInteractionEnabled = true
         
         
     }
-    
     
     func configureCell(post: Post, username: String? = nil, img: UIImage? = nil, userProfileImg: UIImage? = nil) {
         self.post = post
@@ -62,7 +61,7 @@ class PostCell: UITableViewCell {
         if img != nil {
             self.postImg.image = img
         } else {
-//            print("HERE IS THE POST IMAGEURL: \(post.imageUrl)")
+
             let ref = Storage.storage().reference(forURL: post.imageUrl)
             ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
                 
@@ -82,6 +81,7 @@ class PostCell: UITableViewCell {
             
         }
         
+        // Get likeImg value to set in configure cell
         likesRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if let _ = snapshot.value as? NSNull {
                 self.likeImg.image = UIImage(named: "empty-heart")
@@ -92,11 +92,10 @@ class PostCell: UITableViewCell {
         
     }
     
+    // Firebase - toggle likeImg on/off
     func likeTapped(sender: UITapGestureRecognizer) {
         likesRef.observeSingleEvent(of: .value, with: {
             (snapshot) in
-            
-            //sender.cancelsTouchesInView = false
             
             if let _ = snapshot.value as? NSNull {
                 self.likeImg.image = UIImage(named: "filled-heart")

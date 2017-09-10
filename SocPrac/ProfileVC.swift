@@ -20,7 +20,6 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     var imagePicker: UIImagePickerController!
  
     var imageSelected = false
-    
     var currentUserId: String!
     var currentUserUsername: String?
     
