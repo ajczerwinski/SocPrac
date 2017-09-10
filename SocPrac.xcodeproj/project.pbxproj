@@ -29,6 +29,7 @@
 		BFA47E5A1F4F8764009C7208 /* PostDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA47E591F4F8763009C7208 /* PostDetailVC.swift */; };
 		BFA97A9B1F5B3D85005203B5 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA97A9A1F5B3D83005203B5 /* CommentCell.swift */; };
 		BFA97A9D1F5DBFCB005203B5 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA97A9C1F5DBFCB005203B5 /* Comment.swift */; };
+		BFA97A9F1F65C93E005203B5 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA97A9E1F65C93E005203B5 /* SignUpVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		BFA47E591F4F8763009C7208 /* PostDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailVC.swift; sourceTree = "<group>"; };
 		BFA97A9A1F5B3D83005203B5 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		BFA97A9C1F5DBFCB005203B5 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		BFA97A9E1F65C93E005203B5 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		FE51FD196821DA5829BB0144 /* Pods_SocPrac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SocPrac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -132,6 +134,7 @@
 				BF28418E1F27F293005AF797 /* FeedVC.swift */,
 				BF28419C1F282090005AF797 /* ProfileVC.swift */,
 				BFA47E591F4F8763009C7208 /* PostDetailVC.swift */,
+				BFA97A9E1F65C93E005203B5 /* SignUpVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				BF28419F1F282D35005AF797 /* User.swift in Sources */,
 				BFA47E5A1F4F8764009C7208 /* PostDetailVC.swift in Sources */,
 				BF2841971F27F3EB005AF797 /* CircleView.swift in Sources */,
+				BFA97A9F1F65C93E005203B5 /* SignUpVC.swift in Sources */,
 				BF28418D1F27F248005AF797 /* Post.swift in Sources */,
 				BF28419D1F282090005AF797 /* ProfileVC.swift in Sources */,
 				BF28416E1F27C6A6005AF797 /* AppDelegate.swift in Sources */,
