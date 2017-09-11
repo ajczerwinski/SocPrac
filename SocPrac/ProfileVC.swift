@@ -22,6 +22,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     var imageSelected = false
     var currentUserId: String!
     var currentUserUsername: String?
+    var currentUserImage: UIImage?
     
     
     override func viewDidLoad() {
@@ -42,8 +43,13 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             backBtnLbl.isHidden = true
             noUsernameBackBtnLbl.isHidden = false
         } else {
+            profileUsernameText.text = currentUserUsername!
             backBtnLbl.isHidden = false
             noUsernameBackBtnLbl.isHidden = true
+        }
+        
+        if currentUserImage != nil {
+            profileImageAdd.image = currentUserImage
         }
         // Do any additional setup after loading the view.
     }

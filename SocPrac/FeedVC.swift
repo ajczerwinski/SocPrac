@@ -21,6 +21,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     var user: User!
     var selectedPost: Post?
     var currentUsername: String!
+    var currentUserImage: UIImage?
 
     var usernameDict: [String: String] = [:]
     var profileImgDict: [String: String] = [:]
@@ -38,6 +39,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         if let currentUserId = Auth.auth().currentUser?.uid {
             print("HERE IS THE CURRENT USER ID \(currentUserId)")
             
+            
             DataService.ds.REF_USERS.child(currentUserId).observe(.value, with: { (snapshot) in
                 let value = snapshot.value as? NSDictionary
                 let username = value?["username"] as? String ?? ""
@@ -45,9 +47,27 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 self.currentUsername = username
                 print("HERE IS THE KEYCHAIN USERNAME: \(username)")
                 self.greetingLbl.text = "Hello, " + username
+                let userProfileImgUrl = value?["profileImg"] as? String ?? ""
+                if userProfileImgUrl != "" {
+                    let ref = Storage.storage().reference(forURL: userProfileImgUrl)
+                    ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                        if error != nil {
+                            print("AllenError: Unable to download userProfileImage from Firebase storage")
+                        } else {
+                            print("AllenData: userProfileImage successfully downloaded from Firebase storage")
+                            if let imgData = data {
+                                if let profileImg = UIImage(data: imgData) {
+                                    FeedVC.imageCache.setObject(profileImg, forKey: userProfileImgUrl as NSString)
+                                    self.currentUserImage = profileImg
+                                }
+                            }
+                        }
+                    })
+                }
             })
-            
         }
+
+        
         
         
         //greetingLbl.text = "Hello, " + KeychainWrapper.standard.string(forKey: "username")!
@@ -111,6 +131,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         if segue.identifier == "feedToProfile" {
             let nextScene = segue.destination as! ProfileVC
             nextScene.currentUserUsername = currentUsername
+            nextScene.currentUserImage = currentUserImage
             print("HEY WE USED THE FEED TO PROFILE SEGUE")
         } else if segue.identifier == "goToPostDetailVC" {
             let nextScene = segue.destination as! PostDetailVC
