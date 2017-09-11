@@ -497,7 +497,7 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="PR6-vB-0xf">
-                                                            <rect key="frame" x="249.5" y="295.5" width="86.5" height="19.5"/>
+                                                            <rect key="frame" x="248.5" y="295.5" width="86.5" height="19.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Likes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eR9-04-qek">
                                                                     <rect key="frame" x="0.0" y="0.0" width="40.5" height="19.5"/>
@@ -513,31 +513,15 @@
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VBk-JM-WsV">
-                                                            <rect key="frame" x="8" y="295.5" width="55" height="19.5"/>
-                                                            <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JNd-KX-RD6">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="55" height="19.5"/>
-                                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="17"/>
-                                                                    <state key="normal" title="Delete">
-                                                                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    </state>
-                                                                </button>
-                                                            </subviews>
-                                                        </stackView>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="cJd-ek-8LM" firstAttribute="top" secondItem="Ibx-Xy-EaU" secondAttribute="topMargin" id="4X3-3V-ISR"/>
+                                                        <constraint firstAttribute="bottom" secondItem="PR6-vB-0xf" secondAttribute="bottom" constant="8" id="5lX-qh-pci"/>
                                                         <constraint firstItem="cJd-ek-8LM" firstAttribute="leading" secondItem="Ibx-Xy-EaU" secondAttribute="leadingMargin" id="7iA-35-LNX"/>
-                                                        <constraint firstItem="VBk-JM-WsV" firstAttribute="bottom" secondItem="PR6-vB-0xf" secondAttribute="bottom" id="PLB-Q8-2bS"/>
-                                                        <constraint firstItem="VBk-JM-WsV" firstAttribute="top" secondItem="PR6-vB-0xf" secondAttribute="top" id="RAP-iW-UuM"/>
-                                                        <constraint firstItem="VBk-JM-WsV" firstAttribute="top" secondItem="cJd-ek-8LM" secondAttribute="bottom" constant="8" symbolic="YES" id="fOg-8q-5w1"/>
-                                                        <constraint firstAttribute="trailing" secondItem="PR6-vB-0xf" secondAttribute="trailing" constant="7" id="iFO-XC-6BD"/>
-                                                        <constraint firstItem="VBk-JM-WsV" firstAttribute="bottom" secondItem="Ibx-Xy-EaU" secondAttribute="bottomMargin" id="n9l-jg-e2B"/>
+                                                        <constraint firstAttribute="trailing" secondItem="PR6-vB-0xf" secondAttribute="trailing" constant="8" id="iFO-XC-6BD"/>
                                                         <constraint firstItem="cJd-ek-8LM" firstAttribute="trailing" secondItem="Ibx-Xy-EaU" secondAttribute="trailingMargin" id="npC-8d-jl6"/>
-                                                        <constraint firstItem="cJd-ek-8LM" firstAttribute="leading" secondItem="VBk-JM-WsV" secondAttribute="leading" id="tWQ-rN-0WR"/>
+                                                        <constraint firstItem="PR6-vB-0xf" firstAttribute="top" secondItem="cJd-ek-8LM" secondAttribute="bottom" constant="8" id="w9M-Nf-twx"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -551,7 +535,6 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="caption" destination="w01-eU-S9z" id="ycM-sV-BKT"/>
-                                            <outlet property="deleteBtnLbl" destination="JNd-KX-RD6" id="mZD-4A-3ss"/>
                                             <outlet property="likeImg" destination="xkO-PP-meW" id="B6Q-ZB-Dyd"/>
                                             <outlet property="likesLbl" destination="bVR-Gx-Igw" id="vtI-U7-ckc"/>
                                             <outlet property="postImg" destination="oQ1-oZ-l0K" id="78Y-6t-AfN"/>
@@ -25466,7 +25449,7 @@ AEEAAAAAAAAAAAAAAAAAAFbcA
         <image name="social-icon" width="600" height="600"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="e6K-Zj-VOO"/>
+        <segue reference="rMC-cq-fRT"/>
         <segue reference="S9O-IT-Jc0"/>
         <segue reference="PeZ-i7-AQA"/>
     </inferredMetricsTieBreakers>
