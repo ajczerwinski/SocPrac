@@ -75,16 +75,16 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select a sign in method" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GmN-vA-8hC">
-                                <rect key="frame" x="16" y="170" width="343" height="20"/>
+                                <rect key="frame" x="16" y="170" width="343" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="oM8-s0-dXZ"/>
+                                    <constraint firstAttribute="height" constant="30" id="oM8-s0-dXZ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="22"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wZ3-6P-4cv" customClass="RoundBtn" customModule="SocPrac" customModuleProvider="target">
-                                <rect key="frame" x="112.5" y="230" width="150" height="150"/>
+                                <rect key="frame" x="112.5" y="240" width="150" height="150"/>
                                 <color key="backgroundColor" red="0.25490196079999999" green="0.36078431370000003" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="0dJ-gW-PA9"/>
@@ -96,7 +96,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="cpM-Tj-PkV">
-                                <rect key="frame" x="46" y="420" width="283" height="88"/>
+                                <rect key="frame" x="46" y="430" width="283" height="88"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lD2-fT-UMJ" customClass="FancyField" customModule="SocPrac" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="283" height="22"/>
@@ -479,19 +479,18 @@
                                                                         <constraint firstAttribute="height" constant="60" id="X5P-5I-d6u"/>
                                                                     </constraints>
                                                                 </stackView>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="oQ1-oZ-l0K">
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="post-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="oQ1-oZ-l0K">
                                                                     <rect key="frame" x="0.0" y="68" width="327" height="153.5"/>
                                                                 </imageView>
-                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="w01-eU-S9z">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="suI-hI-Dk0">
                                                                     <rect key="frame" x="0.0" y="229.5" width="327" height="50"/>
-                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="pyd-Qz-yeg"/>
+                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="vWC-9b-1IJ"/>
                                                                     </constraints>
-                                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="17"/>
-                                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                                </textView>
+                                                                    <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="PR6-vB-0xf">
@@ -532,7 +531,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="caption" destination="w01-eU-S9z" id="ycM-sV-BKT"/>
+                                            <outlet property="caption" destination="suI-hI-Dk0" id="SIL-kJ-PD6"/>
                                             <outlet property="likeImg" destination="xkO-PP-meW" id="B6Q-ZB-Dyd"/>
                                             <outlet property="likesLbl" destination="bVR-Gx-Igw" id="vtI-U7-ckc"/>
                                             <outlet property="postImg" destination="oQ1-oZ-l0K" id="78Y-6t-AfN"/>
@@ -638,12 +637,12 @@
                                                     </imageView>
                                                 </subviews>
                                             </stackView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="24j-q0-OCH">
-                                                <rect key="frame" x="0.0" y="68" width="327" height="94.5"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="post-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="24j-q0-OCH">
+                                                <rect key="frame" x="0.0" y="68" width="327" height="93"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOV-jE-JOU">
-                                                <rect key="frame" x="0.0" y="170.5" width="327" height="17"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <rect key="frame" x="0.0" y="169" width="327" height="18.5"/>
+                                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -654,7 +653,7 @@
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="FrF-5f-fCj"/>
                                                 </constraints>
                                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                         </subviews>
@@ -693,7 +692,7 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WKs-Sc-T1V">
-                                        <rect key="frame" x="8" y="76" width="327" height="94.5"/>
+                                        <rect key="frame" x="8" y="76" width="327" height="93"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <connections>
                                             <action selector="editImgBtnPressed:" destination="rTe-hH-bph" eventType="touchUpInside" id="Tai-V2-XZv"/>
@@ -949,13 +948,13 @@
                                         </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MzS-At-sim" customClass="FancyBtn" customModule="SocPrac" customModuleProvider="target">
-                                        <rect key="frame" x="136.5" y="134" width="70" height="50"/>
+                                        <rect key="frame" x="61.5" y="134" width="220" height="50"/>
                                         <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="OiW-ME-g8J"/>
-                                            <constraint firstAttribute="width" constant="70" id="j0t-9B-sxb"/>
+                                            <constraint firstAttribute="width" constant="220" id="j0t-9B-sxb"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="19"/>
+                                        <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="20"/>
                                         <state key="normal" title="Update">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -25442,7 +25441,7 @@ VkpWU1ZYVmBWY1ZoVndWe1aCVopWl1acVp5WoFalVq1WsFa1Vr1WwFbSVtVW2gAAAAAAAAIBAAAAAAAA
 AEEAAAAAAAAAAAAAAAAAAFbcA
 </mutableData>
         </image>
-        <image name="placeholder" width="496" height="297"/>
+        <image name="post-placeholder" width="600" height="600"/>
         <image name="profile" width="600" height="600"/>
         <image name="profile-Img-static" width="44" height="45"/>
         <image name="profile-img2" width="1200" height="1200"/>
@@ -25451,7 +25450,7 @@ AEEAAAAAAAAAAAAAAAAAAFbcA
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="rMC-cq-fRT"/>
-        <segue reference="S9O-IT-Jc0"/>
-        <segue reference="PeZ-i7-AQA"/>
+        <segue reference="867-R0-VK9"/>
+        <segue reference="UnS-dA-v0J"/>
     </inferredMetricsTieBreakers>
 </document>
