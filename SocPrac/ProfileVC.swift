@@ -27,6 +27,8 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        currentUserId = Auth.auth().currentUser?.uid
+        
         imagePicker = UIImagePickerController()
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
@@ -35,8 +37,8 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             
             print("I'M IN THE PROFILEVC AND HERE IS THE CURRENT USER ID \(currentUserId!)")
         }
-        
-        if KeychainWrapper.standard.string(forKey: "username") == nil {
+        print("HERE IS THE CURRENT USERUSERNAME: \(currentUserUsername)")
+        if currentUserUsername == nil {
             backBtnLbl.isHidden = true
             noUsernameBackBtnLbl.isHidden = false
         } else {
@@ -125,7 +127,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
 //        print("HEY HERE SDFJPWOIEJFPOWIEJFPOWIJEFPOIJEWF)*@)(@#()(@#)(@()#()()#)(()@#)()(@()#()@#:\(user)")
         if currentUserId != nil {
-            let firebasePost = DataService.ds.REF_USERS.child(currentUserId!)
+            let firebasePost = DataService.ds.REF_USERS.child(currentUserId)
 //            print("HEY HERE SDFJPWOIEJFPOWIEJFPOWIJEFPOIJEWF)*@)(@#()(@#)(@()#()()#)(()@#)()(@()#()@#:\(firebasePost)")
             _ = KeychainWrapper.standard.set(user["username"] as! String, forKey: "username")
 

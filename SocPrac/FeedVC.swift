@@ -20,7 +20,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     var posts = [Post]()
     var user: User!
     var selectedPost: Post?
-//    var currentUsername: String!
+    var currentUsername: String!
 
     var usernameDict: [String: String] = [:]
     var profileImgDict: [String: String] = [:]
@@ -42,6 +42,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 let value = snapshot.value as? NSDictionary
                 let username = value?["username"] as? String ?? ""
                 //keychainUsername = username
+                self.currentUsername = username
                 print("HERE IS THE KEYCHAIN USERNAME: \(username)")
                 self.greetingLbl.text = "Hello, " + username
             })
@@ -108,7 +109,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "feedToProfile" {
-            _ = segue.destination as! ProfileVC
+            let nextScene = segue.destination as! ProfileVC
+            nextScene.currentUserUsername = currentUsername
             print("HEY WE USED THE FEED TO PROFILE SEGUE")
         } else if segue.identifier == "goToPostDetailVC" {
             let nextScene = segue.destination as! PostDetailVC
