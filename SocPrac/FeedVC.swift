@@ -115,6 +115,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         } else if segue.identifier == "goToPostDetailVC" {
             let nextScene = segue.destination as! PostDetailVC
             nextScene.post = selectedPost
+            
             if let username = usernameDict[(selectedPost?.userId)!] {
                 nextScene.username = username
             }
@@ -215,7 +216,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let post = self.posts[indexPath.row]
-        
         print("HI I AM THE POST: \(post)")
         self.selectedPost = post
         print(selectedPost)

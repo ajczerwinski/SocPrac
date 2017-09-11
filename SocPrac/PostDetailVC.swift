@@ -30,6 +30,8 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     var postImgUrl: String?
     var postingUserImgUrl: String?
     
+    var postHasComments = false
+    
     var usernameDict: [String: String] = [:]
     var profileImgDict: [String: String] = [:]
     
@@ -332,37 +334,44 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         var commenterUsername: String?
         var commenterUserProfileImgUrl: String?
         
-        if self.comments.count > 0 {
-            let comment = self.comments[indexPath.row]
-            let userId = comment.userId
-            
-            if let commentingUsername = usernameDict[userId] {
-                commenterUsername = commentingUsername
-                print("Here is the commenter's username: \(commenterUsername)")
-            }
-            if let commentingProfileImgUrl = profileImgDict[userId] {
-                commenterUserProfileImgUrl = commentingProfileImgUrl
-                print("Here is the commenter's profileImgUrl: \(commenterUserProfileImgUrl!)")
-            }
-            
-            
-            
-            
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as? CommentCell {
-                
-                cell.configureCell(comment: comment, commenterUsername: commenterUsername!, commenterUserProfileImgUrl: commenterUserProfileImgUrl!)
-                
-                return cell
-                
-            } else {
-                return CommentCell()
-            }
-            
-        } else {
-            return CommentCell()
+        print("HEY HERE IS THE NUMBER OF COMMENTS: \(self.comments.count)")
+        
+        if self.comments[0] == nil {
+            print("LOOKS LIKE THERE ARENT ANY COMMENTS")
         }
         
+        if self.comments.count > 0 {
+            postHasComments = true
+        }
+        
+        let comment = self.comments[indexPath.row]
+        let userId = comment.userId
+        
+        if let commentingUsername = usernameDict[userId] {
+            commenterUsername = commentingUsername
+            print("Here is the commenter's username: \(commenterUsername)")
+        }
+        if let commentingProfileImgUrl = profileImgDict[userId] {
+            commenterUserProfileImgUrl = commentingProfileImgUrl
+            print("Here is the commenter's profileImgUrl: \(commenterUserProfileImgUrl!)")
+        }
+        
+        
+        
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as? CommentCell {
+            
+            cell.configureCell(comment: comment, commenterUsername: commenterUsername!, commenterUserProfileImgUrl: commenterUserProfileImgUrl!)
+            postHasComments = false
+            
+            return cell
+        }
+        
+        
+        return CommentCell()
+        
     }
+    
     @IBAction func postCommentBtnPressed(_ sender: Any) {
         
         guard let commentText = commentTextField.text, commentText != "" else {

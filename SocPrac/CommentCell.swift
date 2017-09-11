@@ -17,13 +17,13 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var commentingUserProfileImg: UIImageView!
     var comment: Comment?
     
-    func configureCell(comment: Comment, commenterUsername: String, commenterUserProfileImgUrl: String) {
+    func configureCell(comment: Comment, commenterUsername: String? = nil, commenterUserProfileImgUrl: String? = nil) {
 
         //print("HI I am the comment: \(comment.commentText)")
         
-        self.commentText.text = comment.commentText + " @" + commenterUsername
+        self.commentText.text = comment.commentText + " @" + commenterUsername!
         
-        let commenterImageRef = Storage.storage().reference(forURL: commenterUserProfileImgUrl)
+        let commenterImageRef = Storage.storage().reference(forURL: commenterUserProfileImgUrl!)
         
         commenterImageRef.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
             if error != nil {
@@ -41,6 +41,11 @@ class CommentCell: UITableViewCell {
         
         //print("HI I AM THE POST IMAGE URL: \(commenterUserProfileImgUrl)")
         
+    }
+    
+    
+    func configureCellNoComment(comment: String) {
+        self.commentText.text = comment
     }
 
 }
