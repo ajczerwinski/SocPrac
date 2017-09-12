@@ -79,58 +79,102 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     
     @IBAction func profileSaveBtnPressed(_ sender: Any) {
         
-        guard let profileUsername = profileUsernameText.text, profileUsername != "" else {
-            // TODO - Will want to add an error notification or something here if invalid data is entered
-            print("AllenError: Profile username must be entered")
-            return
-        }
-        
-        guard let profileImg = profileImageAdd.image, imageSelected == true else {
-            print("AllenError: Must select an image")
-            return
-        }
-        
-        
-        if let imgData = UIImageJPEGRepresentation(profileImg, 0.2) {
-            
-            let imgUid = NSUUID().uuidString
-            let metadata = StorageMetadata()
-            metadata.contentType = "image/jpeg"
-            let profileMetadata = StorageMetadata()
-            profileMetadata.contentType = "image/jpeg"
-            
-            DataService.ds.REF_USER_IMAGES.child(imgUid).putData(imgData, metadata: metadata) { (metadata, error) in
-                if error != nil {
-                    print("AllenError: Unable to upload image to Firebase storage")
-                } else {
-                    print("AllenData: Successfully uploaded image to Firebase storage")
-                    let downloadURL = metadata?.downloadURL()?.absoluteString
-                    
-                    if let url = downloadURL {
-                        self.postToFirebase(imgUrl: url)
-                    }
-                    self.performSegue(withIdentifier: "backToFeed", sender: nil)
-                }
+        if imageSelected == true {
+            guard let profileUsername = profileUsernameText.text, profileUsername != "" else {
+                // TODO - Will want to add an error notification or something here if invalid data is entered
+                print("AllenError: Profile username must be entered")
+                return
             }
             
+            guard let profileImg = profileImageAdd.image else {
+                print("AllenError: Must select an image")
+                return
+            }
+            
+            if let imgData = UIImageJPEGRepresentation(profileImg, 0.2) {
+                
+                let imgUid = NSUUID().uuidString
+                let metadata = StorageMetadata()
+                metadata.contentType = "image/jpeg"
+                let profileMetadata = StorageMetadata()
+                profileMetadata.contentType = "image/jpeg"
+                
+                DataService.ds.REF_USER_IMAGES.child(imgUid).putData(imgData, metadata: metadata) { (metadata, error) in
+                    if error != nil {
+                        print("AllenError: Unable to upload image to Firebase storage")
+                    } else {
+                        print("AllenData: Successfully uploaded image to Firebase storage")
+                        let downloadURL = metadata?.downloadURL()?.absoluteString
+                        
+                        if let url = downloadURL {
+                            self.postUsernameAndProfileImgToFirebase(imgUrl: url)
+                        }
+                        self.performSegue(withIdentifier: "backToFeed", sender: nil)
+                    }
+                }
+                
+            }
+            
+        } else if currentUserImage != nil {
+            guard let profileUsername = profileUsernameText.text, profileUsername != "" else {
+                // TODO - Will want to add an error notification or something here if invalid data is entered
+                print("AllenError: Profile username must be entered")
+                return
+            }
+            
+            self.postUsernameToFirebase()
+            self.performSegue(withIdentifier: "backToFeed", sender: nil)
+            
+        } else {
+            print("AllenError: Must select an image")
+        }
+//        guard let profileUsername = profileUsernameText.text, profileUsername != "" else {
+//            // TODO - Will want to add an error notification or something here if invalid data is entered
+//            print("AllenError: Profile username must be entered")
+//            return
+//        }
+//        
+//        guard let profileImg = profileImageAdd.image, imageSelected == true else {
+//            print("AllenError: Must select an image")
+//            return
+//        }
+//        
+//        guard let profileImgExists = currentUserImage else {
+//            print("AllenError: Must select an image")
+//            return
+//        }
+        
+        
+        
+        
+    }
+    
+    func postUsernameToFirebase() {
+        
+        let user: Dictionary<String, AnyObject> = [
+
+            "username": profileUsernameText.text! as AnyObject
+
+        ]
+        
+        if currentUserId != nil {
+            let firebasePost = DataService.ds.REF_USERS.child(currentUserId)
+            _ = KeychainWrapper.standard.set(user["username"] as! String, forKey: "username")
+            
+            
+            firebasePost.updateChildValues(user)
+        } else {
+            print("OOPS, LOOKS LIKE WE COULDN'T GET THE FIREBASE POST")
         }
         
     }
     
-    func postToFirebase(imgUrl: String) {
+    func postUsernameAndProfileImgToFirebase(imgUrl: String) {
         let user: Dictionary<String, AnyObject> = [
             "username": profileUsernameText.text! as AnyObject,
             "profileImg": imgUrl as AnyObject
         ]
-        
-        let userPost: Dictionary<String, AnyObject> = [
-        
-            "username": profileUsernameText.text! as AnyObject,
-            "profileImg": imgUrl as AnyObject
-        
-        ]
-        
-        
+
 //        print("HEY HERE SDFJPWOIEJFPOWIEJFPOWIJEFPOIJEWF)*@)(@#()(@#)(@()#()()#)(()@#)()(@()#()@#:\(user)")
         if currentUserId != nil {
             let firebasePost = DataService.ds.REF_USERS.child(currentUserId)
@@ -143,7 +187,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             print("OOPS, LOOKS LIKE WE COULDN'T GET THE FIREBASE POST")
         }
         
-       
+       imageSelected = false
         
         
         
@@ -158,9 +202,9 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
         
         
-        profileUsernameText.text = ""
-        imageSelected = false
-        profileImageAdd.image = UIImage(named: "profile-image")
+        //profileUsernameText.text = ""
+        
+        //profileImageAdd.image = UIImage(named: "profile-image")
         
         //tableView.reloadData()
     }

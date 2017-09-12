@@ -39,7 +39,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         if let currentUserId = Auth.auth().currentUser?.uid {
             print("HERE IS THE CURRENT USER ID \(currentUserId)")
             
-            
             DataService.ds.REF_USERS.child(currentUserId).observe(.value, with: { (snapshot) in
                 let value = snapshot.value as? NSDictionary
                 let username = value?["username"] as? String ?? ""
@@ -66,6 +65,53 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 }
             })
         }
+        let delayInSeconds = 0.5
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + delayInSeconds) {
+            DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
+                
+                self.posts = [] // THIS IS THE NEW LINE
+                
+                if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                    for snap in snapshot {
+                        
+                        if let postDict = snap.value as? Dictionary<String, AnyObject> {
+                            let key = snap.key
+                            let post = Post(postKey: key, postData: postDict)
+                            self.posts.append(post)
+                        }
+                    }
+                }
+                self.tableView.reloadData()
+            })
+            
+            DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
+                
+                if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                    for snap in snapshot {
+                        
+                        if let userDict = snap.value as? Dictionary<String, AnyObject> {
+                            let key = snap.key
+                            var postingUsername = ""
+                            var postingUserProfileImg: String?
+                            if let username = userDict["username"] as? String {
+                                postingUsername = username
+                            }
+                            
+                            if let profileImg = userDict["profileImg"] as? String {
+                                postingUserProfileImg = profileImg
+                            }
+                            
+                            self.usernameDict[key] = postingUsername
+                            self.profileImgDict[key] = postingUserProfileImg
+                            
+                        }
+                    }
+                }
+                
+                self.tableView.reloadData()
+            })
+        }
 
         
         
@@ -78,51 +124,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         imagePicker = UIImagePickerController()
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
-        
-        
-        DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
-            
-            self.posts = [] // THIS IS THE NEW LINE
-            
-            if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-                for snap in snapshot {
-                    
-                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
-                        let key = snap.key
-                        let post = Post(postKey: key, postData: postDict)
-                        self.posts.append(post)
-                    }
-                }
-            }
-            self.tableView.reloadData()
-        })
-        
-        DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
-            
-            if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-                for snap in snapshot {
-
-                    if let userDict = snap.value as? Dictionary<String, AnyObject> {
-                        let key = snap.key
-                        var postingUsername = ""
-                        var postingUserProfileImg: String?
-                        if let username = userDict["username"] as? String {
-                            postingUsername = username
-                        }
-                        
-                        if let profileImg = userDict["profileImg"] as? String {
-                            postingUserProfileImg = profileImg
-                        }
-                        
-                        self.usernameDict[key] = postingUsername
-                        self.profileImgDict[key] = postingUserProfileImg
-                        
-                    }
-                }
-            }
-
-            self.tableView.reloadData()
-        })
         
     }
     

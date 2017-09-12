@@ -211,52 +211,12 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
     }
     
-    func postToFirebase(imgUrl: String) {
-    
-        let userPost: Dictionary<String, AnyObject> = [
-            
-            "imageUrl": imgUrl as AnyObject,
-            "caption": validatedUserCaption.text! as AnyObject
-            
-        ]
-        
-        let postId = post?.postKey
-        
-            
-        let firebasePost = DataService.ds.REF_POSTS.child(postId!)
-        firebasePost.updateChildValues(userPost)
-        
-    }
-    
-    func postCommentToFirebase() {
-    
-        let userComment: Dictionary<String, AnyObject> = [
-            
-            "userId": Auth.auth().currentUser?.uid as AnyObject,
-            "commentText": commentTextField.text! as AnyObject
-            
-        ]
-        
-        let firebaseCommentPost = DataService.ds.REF_POSTS.child((post?.postKey)!).child("comments").childByAutoId()
-        
-        firebaseCommentPost.setValue(userComment)
-        
-        commentTextField.text = ""
-        commentTextField.resignFirstResponder()
-        
-        //tableView.reloadData()
-    
-    }
-    
     @IBAction func backOrSaveBtnPressed(_ sender: Any) {
-        
         if imageSelected == true {
-            
             guard let img = postImg.image else {
                 print("AllenError: Post image wasn't selected")
                 return
             }
-            
             if let imgData = UIImageJPEGRepresentation(img, 0.2) {
                 
                 let imgUid = NSUUID().uuidString
@@ -275,18 +235,49 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                         }
                         self.performSegue(withIdentifier: "detailToFeed", sender: nil)
                     }
-                    
                 }
-                
             }
-            
         } else {
-            
             self.postToFirebase(imgUrl: (post?.imageUrl)!)
             
             self.performSegue(withIdentifier: "detailToFeed", sender: nil)
-            
         }
+    }
+    func postToFirebase(imgUrl: String) {
+        
+        let userPost: Dictionary<String, AnyObject> = [
+            
+            "imageUrl": imgUrl as AnyObject,
+            "caption": validatedUserCaption.text! as AnyObject
+        ]
+        
+        if let postId = post?.postKey {
+            let firebasePost = DataService.ds.REF_POSTS.child(postId)
+            firebasePost.updateChildValues(userPost)
+        }
+        
+        
+        
+        
+    }
+    
+    func postCommentToFirebase() {
+        
+        let userComment: Dictionary<String, AnyObject> = [
+            
+            "userId": Auth.auth().currentUser?.uid as AnyObject,
+            "commentText": commentTextField.text! as AnyObject
+            
+        ]
+        
+        let firebaseCommentPost = DataService.ds.REF_POSTS.child((post?.postKey)!).child("comments").childByAutoId()
+        
+        firebaseCommentPost.setValue(userComment)
+        
+        commentTextField.text = ""
+        commentTextField.resignFirstResponder()
+        
+        //tableView.reloadData()
         
     }
     
