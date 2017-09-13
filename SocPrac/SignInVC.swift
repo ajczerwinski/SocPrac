@@ -71,7 +71,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         
         let facebookLogin = FBSDKLoginManager()
         
-        facebookLogin.logIn(withReadPermissions: ["email"], from: self) { (result, error) in
+        facebookLogin.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (result, error) in
             if error != nil {
                 print("AllenError: Unable to authenticate with Facebook - \(error!)")
             } else if result?.isCancelled == true {
@@ -110,17 +110,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
                 } else {
                     
                     print("Invalid username and password!")
-//                    Auth.auth().createUser(withEmail: email, password: pwd, completion: { (user, error) in
-//                        if error != nil {
-//                            print("AllenError: Unable to authenticate with Firebase using email")
-//                        } else {
-//                            print("AllenData: Successfully authenticated with Firebase")
-//                            if let user = user {
-//                                let userData = ["provider": user.providerID]
-//                                self.completeSignIn(id: user.uid, userData: userData)
-//                            }
-//                        }
-//                    })
+
                 }
             })
         }
@@ -139,66 +129,6 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         
         
     }
-    
-//        DataService.ds.REF_USERS.child(id).observe(.value, with: { (snapshot) in
-//            let value = snapshot.value as? NSDictionary
-//            let username = value?["username"] as? String ?? ""
-//            keychainUsername = username
-//            print("HERE IS THE KEYCHAIN USERNAME: \(keychainUsername)")
-//            if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-//                
-//                for snap in snapshot {
-//                    if let userDict = snap.value as? Dictionary<String, AnyObject> {
-//                        
-//                        let key = snap.key
-//                        let user = User(userKey: key, userData: userDict)
-//                        print("We have a user: \(user)")
-//                        keychainUsername = user.username
-////                        var keychainUsernamePlaceholder = ""
-////                        if let username = userDict["username"] as? String {
-////                            keychainUsernamePlaceholder = username
-////                        }
-//                        
-//                    }
-//                }
-//                
-//                
-//                
-////                for snap in snapshot {
-////                    print("OH SNAP: \(snap)")
-////                    if let userDict = snap.value as? Dictionary<String, AnyObject> {
-////                        
-////                        let key = snap.key
-////                        let user = User(userKey: key, userData: userDict)
-////                        print(user)
-////                        if let username = snap.value(forKey: "username") {
-////                            keychainUsername = username as! String
-////                        }
-//////                        if let username = userDict["username"] {
-//////                            keychainUsername = username as! String
-//////                        }
-////                        
-////                    }
-////                    
-////                }
-//                
-//                //keychainUsername = snapshot["username"]
-//                
-////            }
-//        })
-        
-        
-        
-//        if keychainUsername! == nil {
-//            
-//            self.performSegue(withIdentifier: "noUsername", sender: nil)
-//        } else {
-////            print("HERE IS KEYCHAIN USERNAME: \(keychainUsername)")
-////            _ = KeychainWrapper.standard.set(keychainUsername!, forKey: "username")
-//            self.performSegue(withIdentifier: "goToFeed", sender: nil)
-//        }
-        
-//    }
     
     // TextField delegate methods
     

@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import FBSDKCoreKit
+import FBSDKLoginKit
 import SwiftKeychainWrapper
 
 class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -16,12 +18,17 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     @IBOutlet weak var imageAdd: CircleView!
     @IBOutlet weak var captionField: FancyField!
     @IBOutlet weak var greetingLbl: UILabel!
+    @IBOutlet weak var profileBtnLbl: UIButton!
+    @IBOutlet weak var profileImg: UIImageView!
     
     var posts = [Post]()
     var user: User!
     var selectedPost: Post?
     var currentUsername: String!
     var currentUserImage: UIImage?
+    
+    var facebookProfileImgUrl: String?
+    var facebookUsername: String?
 
     var usernameDict: [String: String] = [:]
     var profileImgDict: [String: String] = [:]
@@ -40,34 +47,109 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             print("HERE IS THE CURRENT USER ID \(currentUserId)")
             
             DataService.ds.REF_USERS.child(currentUserId).observe(.value, with: { (snapshot) in
+                
+                
                 let value = snapshot.value as? NSDictionary
-                let username = value?["username"] as? String ?? ""
-                //keychainUsername = username
-                self.currentUsername = username
-                print("HERE IS THE KEYCHAIN USERNAME: \(username)")
-                self.greetingLbl.text = "Hello, " + username
-                let userProfileImgUrl = value?["profileImg"] as? String ?? ""
-                if userProfileImgUrl != "" {
-                    let ref = Storage.storage().reference(forURL: userProfileImgUrl)
-                    ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                        if error != nil {
-                            print("AllenError: Unable to download userProfileImage from Firebase storage")
-                        } else {
-                            print("AllenData: userProfileImage successfully downloaded from Firebase storage")
-                            if let imgData = data {
-                                if let profileImg = UIImage(data: imgData) {
-                                    FeedVC.imageCache.setObject(profileImg, forKey: userProfileImgUrl as NSString)
-                                    self.currentUserImage = profileImg
+                let userProvider = value?["provider"] as? String ?? ""
+                
+                if userProvider == "Firebase" {
+                    let username = value?["username"] as? String ?? ""
+                    //keychainUsername = username
+                    self.currentUsername = username
+                    print("HERE IS THE KEYCHAIN USERNAME: \(username)")
+                    self.greetingLbl.text = "Hello, " + username
+                    let userProfileImgUrl = value?["profileImg"] as? String ?? ""
+                    if userProfileImgUrl != "" {
+                        let ref = Storage.storage().reference(forURL: userProfileImgUrl)
+                        ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                            if error != nil {
+                                print("AllenError: Unable to download userProfileImage from Firebase storage")
+                            } else {
+                                print("AllenData: userProfileImage successfully downloaded from Firebase storage")
+                                if let imgData = data {
+                                    if let profileImg = UIImage(data: imgData) {
+                                        FeedVC.imageCache.setObject(profileImg, forKey: userProfileImgUrl as NSString)
+                                        self.currentUserImage = profileImg
+                                    }
                                 }
                             }
-                        }
-                    })
+                        })
+                    }
+                } else if userProvider == "facebook.com" {
+                    print("Looks like the user is from Facebook")
+                    
+                    DispatchQueue.global(qos: .userInitiated).async {
+                        
+                        FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
+                            
+                            if (error == nil) {
+                                let fbDetails = result as! NSDictionary
+                                if let fbUserId = fbDetails["id"] {
+                                    print("This is the FB User ID: \(fbUserId)")
+                                    let fbUserProfileImgUrl = "https://graph.facebook.com/" + "\(fbUserId)" + "/picture?type=large&redirect=true&width=500&height=500"
+                                        print(fbUserProfileImgUrl)
+                                    
+                                    print("Begin of code")
+                                    if let checkedUrl = URL(string: fbUserProfileImgUrl) {
+                                        self.profileImg.contentMode = .scaleAspectFit
+                                        self.downloadImage(url: checkedUrl)
+                                    }
+                                    print("End of code. The image will continue downloading in the background and it will be loaded when it ends.")
+                                    if let fbUsername = fbDetails["first_name"]{
+                                        self.currentUsername = fbUsername as! String
+                                        self.greetingLbl.text = "Hello, " + (fbUsername as! String)
+                                    }
+//                                    if let filePath = Bundle.main.path(forResource: fbUserProfileImgUrl, ofType: "jpg"), let image = UIImage(contentsOfFile: filePath) {
+//                                        self.profileBtnLbl.setImage(image, for: UIControlState.normal)
+//                                        //imageView.contentMode = .scaleAspectFit
+//                                        //imageView.image = image
+//                                    }
+                                    
+//                                    self.profileBtnLbl.imageView?.image = profileImage
+                                    }
+                                } else {
+                                print("Found some kind of error in Facebook: \(error?.localizedDescription)")
+                                }
+                        })
                 }
-            })
-        }
-        let delayInSeconds = 0.5
+            }
+        })
+//                else if userProvider == "facebook.com" {
+//                    DispatchQueue.global(qos: .userInitiated).async {
+//                        FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
+//                            
+//                            if (error == nil) {
+//                                let fbDetails = result as! NSDictionary
+//                                print(fbDetails)
+//                                if let userId = fbDetails["id"] {
+//                                    print("THIS IS THE FB USER ID: \(userId)")
+//                         
+//                                }
+//                            }
+//                        }
+//                        
+//                        if self.facebookUsername != nil /*&& self.facebookProfileImgUrl != nil(*/{
+//                            
+//                            let user: Dictionary<String, AnyObject> = [
+//                            
+//                                "username": self.facebookUsername! as AnyObject,
+//                                "profileImg": self.facebookProfileImgUrl! as AnyObject
+//                                
+//                            ]
+//                            
+//                            DataService.ds.REF_USERS.child(currentUserId).updateChildValues(user)
+//                        }
+//                    }
+//                }
+//                
+
+        //let delayInSeconds = 0.5
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + delayInSeconds) {
+        DispatchQueue.global(qos: .userInitiated).async {
+                
+            
+//        DispatchQueue.main.asyncAfter(deadline: .now() + delayInSeconds) {
+            
             DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
                 
                 self.posts = [] // THIS IS THE NEW LINE
@@ -85,36 +167,36 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 self.tableView.reloadData()
             })
             
-            DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
-                
-                if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-                    for snap in snapshot {
-                        
-                        if let userDict = snap.value as? Dictionary<String, AnyObject> {
-                            let key = snap.key
-                            var postingUsername = ""
-                            var postingUserProfileImg: String?
-                            if let username = userDict["username"] as? String {
-                                postingUsername = username
+                DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
+                    
+                    if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                        for snap in snapshot {
+                            
+                            if let userDict = snap.value as? Dictionary<String, AnyObject> {
+                                let key = snap.key
+                                var postingUsername = ""
+                                var postingUserProfileImg: String?
+                                if let username = userDict["username"] as? String {
+                                    postingUsername = username
+                                }
+                                
+                                if let profileImg = userDict["profileImg"] as? String {
+                                    postingUserProfileImg = profileImg
+                                }
+                                
+                                self.usernameDict[key] = postingUsername
+                                self.profileImgDict[key] = postingUserProfileImg
+                                
                             }
-                            
-                            if let profileImg = userDict["profileImg"] as? String {
-                                postingUserProfileImg = profileImg
-                            }
-                            
-                            self.usernameDict[key] = postingUsername
-                            self.profileImgDict[key] = postingUserProfileImg
-                            
                         }
                     }
-                }
-                
-                self.tableView.reloadData()
-            })
-        }
+                    
+                    self.tableView.reloadData()
+                })
 
-        
-        
+            }
+        }
+//        }
         
         //greetingLbl.text = "Hello, " + KeychainWrapper.standard.string(forKey: "username")!
 
@@ -325,6 +407,61 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         performSegue(withIdentifier: "goToSignIn", sender: nil)
     }
     
+    func postImageToFirebase(imgUrl: String) {
+        
+        let user: Dictionary<String, AnyObject> = [
+        
+            "profileImg": imgUrl as AnyObject
+            
+        ]
+        if let currentUserId = Auth.auth().currentUser?.uid {
+            let firebasePost = DataService.ds.REF_USERS.child(currentUserId)
+            firebasePost.updateChildValues(user)
+        } else {
+            print("Somehow couldn't get currentUserId")
+        }
+        
+    }
+    
+    func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
+        URLSession.shared.dataTask(with: url) {
+            (data, response, error) in
+            completion(data, response, error)
+            }.resume()
+    }
+    
+    func downloadImage(url: URL) {
+        print("Download Started")
+        getDataFromUrl(url: url) { (data, response, error)  in
+            guard let data = data, error == nil else { return }
+            print(response?.suggestedFilename ?? url.lastPathComponent)
+            print("Download Finished")
+            DispatchQueue.main.async() { () -> Void in
+                self.profileImg.image = UIImage(data: data)
+            }
+        }
+    }
     
 }
 
+
+//extension UIImageView {
+//    func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+//        contentMode = mode
+//        URLSession.shared.dataTask(with: url) { (data, response, error) in
+//            guard
+//                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+//                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+//                let data = data, error == nil,
+//                let image = UIImage(data: data)
+//                else { return }
+//            DispatchQueue.main.async() { () -> Void in
+//                self.image = image
+//            }
+//        }.resume()
+//    }
+//    func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+//        guard let url = URL(string: link) else { return }
+//        downloadedFrom(url: url, contentMode: mode)
+//    }
+//}
