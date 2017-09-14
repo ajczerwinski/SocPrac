@@ -102,7 +102,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="283" height="22"/>
                                         <color key="textColor" white="0.0" alpha="0.87" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wc6-Ub-VE9" customClass="FancyField" customModule="SocPrac" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="27" width="283" height="22"/>
@@ -239,7 +239,7 @@
                                                         </constraints>
                                                         <color key="textColor" white="0.0" alpha="0.87" colorSpace="calibratedWhite"/>
                                                         <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="18"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                                     </textField>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bve-3X-AsB" customClass="FancyField" customModule="SocPrac" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="37" width="311" height="30"/>
@@ -25450,8 +25450,8 @@ AEEAAAAAAAAAAAAAAAAAAFbcA
         <image name="social-icon" width="600" height="600"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="rMC-cq-fRT"/>
+        <segue reference="e6K-Zj-VOO"/>
         <segue reference="867-R0-VK9"/>
-        <segue reference="PeZ-i7-AQA"/>
+        <segue reference="8vl-ms-SNR"/>
     </inferredMetricsTieBreakers>
 </document>

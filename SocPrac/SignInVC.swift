@@ -31,6 +31,8 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         center.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         center.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+        self.emailField.delegate = self
+        self.pwdField.delegate = self
         
     }
     
@@ -135,12 +137,15 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     func textFieldDidBeginEditing(textField: UITextField) {
         
         emailField.text = ""
+        pwdField.text = ""
         
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        textField.resignFirstResponder()
+        emailField.resignFirstResponder()
+        pwdField.resignFirstResponder()
+//        self.view.endEditing(true)
         
         return true
         
@@ -168,8 +173,16 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     
     func keyboardWillShow(notification: NSNotification) {
         
-        if emailField.isFirstResponder {
-            view.frame.origin.y += getKeyboardHeight(notification: notification) * -1
+        if view.frame.origin.y != 0 {
+            return
+        } else {
+            if emailField.isFirstResponder {
+                view.frame.origin.y += getKeyboardHeight(notification: notification) * -1
+            }
+            
+            if pwdField.isFirstResponder {
+                view.frame.origin.y += getKeyboardHeight(notification: notification) * -1
+            }
         }
         
     }
@@ -177,6 +190,10 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     func keyboardWillHide(notification: NSNotification) {
         
         if emailField.isFirstResponder {
+            view.frame.origin.y = 0
+        }
+        
+        if pwdField.isFirstResponder {
             view.frame.origin.y = 0
         }
         
@@ -195,6 +212,9 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         return CGRect(x: x, y: y, width: width, height: height)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
    
 }
 
