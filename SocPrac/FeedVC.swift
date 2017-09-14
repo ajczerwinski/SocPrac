@@ -12,7 +12,7 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import SwiftKeychainWrapper
 
-class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageAdd: CircleView!
@@ -35,6 +35,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     var imagePicker: UIImagePickerController!
     //var currentUserId: String!
     var currentUserProvider: String!
+    
     
     static var imageCache: NSCache<NSString, UIImage> = NSCache()
     var imageSelected = false
@@ -165,6 +166,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         }
 //        }
         
+        captionField.delegate = self
         
         //greetingLbl.text = "Hello, " + KeychainWrapper.standard.string(forKey: "username")!
 
@@ -505,6 +507,20 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 self.profileImg.image = UIImage(data: data)
             }
         }
+    }
+    
+    // TextField delegate methods
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        captionField.resignFirstResponder()
+        
+        return true
+        
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
 }

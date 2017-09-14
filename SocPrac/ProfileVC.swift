@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import SwiftKeychainWrapper
 
-class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var profileUsernameText: FancyField!
     @IBOutlet weak var profileImageAdd: CircleView!
@@ -51,7 +51,9 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         if currentUserImage != nil {
             profileImageAdd.image = currentUserImage
         }
-        // Do any additional setup after loading the view.
+        
+        profileUsernameText.delegate = self
+        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -226,6 +228,20 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
         present(imagePicker, animated: true, completion: nil)
         
+    }
+    
+    // TextField delegate methods
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        profileUsernameText.resignFirstResponder()
+        
+        return true
+        
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 
 }
