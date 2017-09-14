@@ -31,8 +31,8 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         center.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         center.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        self.emailField.delegate = self
-        self.pwdField.delegate = self
+        emailField.delegate = self
+        pwdField.delegate = self
         
     }
     
@@ -133,13 +133,6 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     }
     
     // TextField delegate methods
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        
-        emailField.text = ""
-        pwdField.text = ""
-        
-    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         

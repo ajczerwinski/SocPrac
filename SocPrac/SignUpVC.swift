@@ -10,34 +10,19 @@ import UIKit
 import Firebase
 import SwiftKeychainWrapper
 
-class SignUpVC: UIViewController {
+class SignUpVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var emailField: FancyField!
     @IBOutlet weak var pwdField: FancyField!
     
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        emailField.delegate = self
+        pwdField.delegate = self
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     @IBAction func backBtnPressed(_ sender: Any) {
         
         performSegue(withIdentifier: "backToSignIn", sender: nil)
@@ -69,7 +54,7 @@ class SignUpVC: UIViewController {
     func completeSignIn(id: String, userData: Dictionary<String, String>) {
         
         DataService.ds.createFirebaseDBUser(uid: id, userData: userData)
-        //        var keychainUsername: String? = nil
+
         print("Here is the id: \(id)")
         let keychainResult = KeychainWrapper.standard.set(id, forKey: KEY_UID)
         
@@ -80,5 +65,20 @@ class SignUpVC: UIViewController {
         
     }
     
+    // TextField delegate methods
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        emailField.resignFirstResponder()
+        pwdField.resignFirstResponder()
+        
+        return true
+        
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+
 
 }
