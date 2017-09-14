@@ -35,6 +35,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
             
             Auth.auth().createUser(withEmail: email, password: pwd, completion: { (user, error) in
                     if error != nil {
+                    self.handleSomethingWentWrong()
                     print("AllenError: Unable to authenticate with Firebase using email")
                 } else {
                     print("AllenData: Successfully authenticated with Firebase")
@@ -80,5 +81,11 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
 
+    private func handleSomethingWentWrong() {
+        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again.", preferredStyle: .alert)
+        present(alert, animated: true)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+    }
+    
 
 }

@@ -61,6 +61,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             profileImageAdd.image = image
             imageSelected = true
         } else {
+            handleSomethingWentWrong()
             print("AllenError: A valid image wasn't selected")
         }
         imagePicker.dismiss(animated: true, completion: nil)
@@ -75,6 +76,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     
     @IBAction func noUsernameBackBtn(_ sender: Any) {
         // TODO - make this an alert
+        handleEmptyUsernameOrImage()
         print("Hey, you need to enter a username and profile photo")
     }
     
@@ -84,11 +86,13 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         if imageSelected == true {
             guard let profileUsername = profileUsernameText.text, profileUsername != "" else {
                 // TODO - Will want to add an error notification or something here if invalid data is entered
+                handleEmptyUsernameOrImage()
                 print("AllenError: Profile username must be entered")
                 return
             }
             
             guard let profileImg = profileImageAdd.image else {
+                handleEmptyUsernameOrImage()
                 print("AllenError: Must select an image")
                 return
             }
@@ -120,6 +124,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         } else if currentUserImage != nil {
             guard let profileUsername = profileUsernameText.text, profileUsername != "" else {
                 // TODO - Will want to add an error notification or something here if invalid data is entered
+                handleEmptyUsernameOrImage()
                 print("AllenError: Profile username must be entered")
                 return
             }
@@ -128,6 +133,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             self.performSegue(withIdentifier: "backToFeed", sender: nil)
             
         } else {
+            handleEmptyUsernameOrImage()
             print("AllenError: Must select an image")
         }
 //        guard let profileUsername = profileUsernameText.text, profileUsername != "" else {
@@ -166,6 +172,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             
             firebasePost.updateChildValues(user)
         } else {
+            handleSomethingWentWrong()
             print("OOPS, LOOKS LIKE WE COULDN'T GET THE FIREBASE POST")
         }
         
@@ -186,18 +193,11 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             
             firebasePost.updateChildValues(user)
         } else {
+            handleSomethingWentWrong()
             print("OOPS, LOOKS LIKE WE COULDN'T GET THE FIREBASE POST")
         }
         
        imageSelected = false
-        
-        
-        
-        
-        
-        
-        
-        
         
         //firebasePost.updateChildValues(user)
         
@@ -243,5 +243,18 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+    private func handleSomethingWentWrong() {
+        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again.", preferredStyle: .alert)
+        present(alert, animated: true)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+    }
+    
+    private func handleEmptyUsernameOrImage() {
+        let alert = UIAlertController(title: "Must have username and profile image", message: "Please enter a username and add profile image.", preferredStyle: .alert)
+        present(alert, animated: true)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+    }
+    
 
 }

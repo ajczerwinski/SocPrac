@@ -301,7 +301,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 
             }
             
-            // TODO - look at postingUserProfileImgUrl section here to figure out why it was crashing after first creating a username after new user creation
             if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
                 if postingUserProfileImgUrl != nil {
                     if let postingUserUserProfileImg = FeedVC.imageCache.object(forKey: postingUserProfileImgUrl! as NSString) {
@@ -356,6 +355,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             imageAdd.image = image
             imageSelected = true
         } else {
+            handleSomethingWentWrong()
             print("AllenError: A valid image wasn't selected")
         }
         imagePicker.dismiss(animated: true, completion: nil)
@@ -394,11 +394,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         }
         guard let caption = captionField.text, caption != "" else {
             // TODO - Will want to add an error notification or something here if invalid data is entered
+            handleEmptyCaptionOrImage()
             print("AllenError: Caption must be entered")
             return
         }
         
         guard let img = imageAdd.image, imageSelected == true else {
+            handleEmptyCaptionOrImage()
             print("AllenError: Must select an image")
             return
         }
@@ -460,6 +462,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             let firebasePost = DataService.ds.REF_USERS.child(currentUserId)
             firebasePost.updateChildValues(user)
         } else {
+            handleSomethingWentWrong()
             print("Somehow couldn't get currentUserId")
         }
         
@@ -485,6 +488,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             let firebasePost = DataService.ds.REF_USERS.child(currentUserId)
             firebasePost.updateChildValues(user)
         } else {
+            handleSomethingWentWrong()
             print("Somehow couldn't get currentUserId")
         }
         
@@ -521,6 +525,18 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    private func handleSomethingWentWrong() {
+        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again.", preferredStyle: .alert)
+        present(alert, animated: true)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+    }
+    
+    private func handleEmptyCaptionOrImage() {
+        let alert = UIAlertController(title: "Post unsuccessful", message: "A caption and image is required.", preferredStyle: .alert)
+        present(alert, animated: true)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }
     
 }

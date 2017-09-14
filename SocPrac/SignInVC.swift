@@ -77,6 +77,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
             if error != nil {
                 print("AllenError: Unable to authenticate with Facebook - \(error!)")
             } else if result?.isCancelled == true {
+                self.handleFailedLogin()
                 print("AllenError: User cancelled Facebook authentication")
             } else {
                 print("AllenData: Successfully authenticated with Facebook")
@@ -90,6 +91,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     func firebaseAuth(_ credential: AuthCredential) {
         Auth.auth().signIn(with: credential, completion: { (user, error) in
             if error != nil {
+                self.handleFailedLogin()
                 print("AllenError: Unable to authenticate with Firebase - \(error!)")
             } else {
                 print("AllenData: Successfully authenticated with Firebase")
@@ -110,7 +112,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
                         self.completeSignIn(id: user.uid, userData: userData)
                     }
                 } else {
-                    
+                    self.handleInvalidUsernameOrPassword()
                     print("Invalid username and password!")
 
                 }
@@ -209,5 +211,17 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
    
+    private func handleFailedLogin() {
+        let alert = UIAlertController(title: "Failed to log in", message: "Something went wrong on login. Please try again.", preferredStyle: .alert)
+        present(alert, animated: true)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+    }
+    
+    private func handleInvalidUsernameOrPassword() {
+        let alert = UIAlertController(title: "Failed to log in", message: "Invalid username or password", preferredStyle: .alert)
+        present(alert, animated: true)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+    }
+
 }
 
