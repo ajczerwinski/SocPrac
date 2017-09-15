@@ -210,7 +210,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     }
    
     private func handleFailedLogin() {
-        let alert = UIAlertController(title: "Failed to log in", message: "Something went wrong on login. Please try again.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Failed to log in", message: "Something went wrong on login. Please try again", preferredStyle: .alert)
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }

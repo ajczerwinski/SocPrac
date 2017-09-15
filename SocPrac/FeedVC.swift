@@ -528,13 +528,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     }
     
     private func handleSomethingWentWrong() {
-        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }
     
     private func handleEmptyCaptionOrImage() {
-        let alert = UIAlertController(title: "Post unsuccessful", message: "A caption and image is required.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Post unsuccessful", message: "A caption and image is required", preferredStyle: .alert)
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }

@@ -80,18 +80,13 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let maxLength = 50
-        var currentString: NSString = ""
-        if emailField.isFirstResponder {
-            currentString = emailField.text! as NSString
-        } else if pwdField.isFirstResponder {
-            currentString = pwdField.text! as NSString
-        }
-        
+        let currentString = textField.text! as NSString
         let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+        
         return newString.length <= maxLength
     }
     
-    func isValidEmail(testStr:String) -> Bool {
+    func isValidEmail(testStr: String) -> Bool {
         // print("validate calendar: \(testStr)")
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         
@@ -133,3 +128,9 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     
 
 }
+
+//extension CharacterSet {
+//    static let customAllowedSet = CharacterSet(charactersIn: "ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ")
+//}
+
+

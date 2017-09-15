@@ -472,19 +472,19 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     private func handleEmptyCommentText() {
-        let alert = UIAlertController(title: "Comment text can't be empty", message: "Please enter comment text and try again.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Comment text can't be empty", message: "Please enter comment text and try again", preferredStyle: .alert)
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }
     
     private func handleEmptyPostCaption() {
-        let alert = UIAlertController(title: "Post caption text can't be empty", message: "Please enter caption text and try again.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Post caption text can't be empty", message: "Please enter caption text and try again", preferredStyle: .alert)
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }
     
     private func handleSomethingWentWrong() {
-        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }

@@ -83,6 +83,12 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     
     @IBAction func profileSaveBtnPressed(_ sender: Any) {
         
+        guard let profileUsernameCount = profileUsernameText.text?.characters.count, profileUsernameCount > 3, profileUsernameCount <= 15 else {
+            handleUsernameTooShort()
+            print("AllenError: Username incorrect length")
+            return
+        }
+        
         if imageSelected == true {
             guard let profileUsername = profileUsernameText.text, profileUsername != "" else {
                 // TODO - Will want to add an error notification or something here if invalid data is entered
@@ -136,23 +142,6 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             handleEmptyUsernameOrImage()
             print("AllenError: Must select an image")
         }
-//        guard let profileUsername = profileUsernameText.text, profileUsername != "" else {
-//            // TODO - Will want to add an error notification or something here if invalid data is entered
-//            print("AllenError: Profile username must be entered")
-//            return
-//        }
-//        
-//        guard let profileImg = profileImageAdd.image, imageSelected == true else {
-//            print("AllenError: Must select an image")
-//            return
-//        }
-//        
-//        guard let profileImgExists = currentUserImage else {
-//            print("AllenError: Must select an image")
-//            return
-//        }
-        
-        
         
         
     }
@@ -230,6 +219,14 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let set = CharacterSet(charactersIn: "ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789").inverted
+        return string.rangeOfCharacter(from: set) == nil
+        //        return string.rangeOfCharacter(from: set) == nil
+        
+    }
+    
     // TextField delegate methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -245,13 +242,19 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     }
     
     private func handleSomethingWentWrong() {
-        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }
     
     private func handleEmptyUsernameOrImage() {
-        let alert = UIAlertController(title: "Must have username and profile image", message: "Please enter a username and add profile image.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Must have username and profile image", message: "Please enter a username and add profile image", preferredStyle: .alert)
+        present(alert, animated: true)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+    }
+    
+    private func handleUsernameTooShort() {
+        let alert = UIAlertController(title: "Username incorrect length", message: "Username must be between 4 and 15 characters in length", preferredStyle: .alert)
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }
