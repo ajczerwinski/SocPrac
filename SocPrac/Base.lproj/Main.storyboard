@@ -1005,8 +1005,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add-image" width="88" height="88"/>
-        <image name="add-post" width="88" height="88"/>
+        <image name="add-image" width="600" height="600"/>
+        <image name="add-post" width="600" height="600"/>
         <image name="back-icon" width="600" height="600"/>
         <image name="empty-heart" width="600" height="600"/>
         <image name="f" width="352" height="328"/>
@@ -25068,7 +25068,7 @@ AAAEAQAAAAAAAABBAAAAAAAAAAAAAAAAABYDsA
         <image name="post-placeholder" width="600" height="600"/>
         <image name="profile" width="600" height="600"/>
         <image name="profile-img3" width="45" height="45"/>
-        <image name="sign-out" width="92" height="65"/>
+        <image name="sign-out" width="600" height="600"/>
         <image name="social-icon" width="600" height="600"/>
     </resources>
     <inferredMetricsTieBreakers>
