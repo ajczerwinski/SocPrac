@@ -12,7 +12,7 @@ import SwiftKeychainWrapper
 
 class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
-    @IBOutlet weak var profileUsernameText: FancyField!
+    @IBOutlet weak var profileUsernameText: UITextField!
     @IBOutlet weak var profileImageAdd: CircleView!
     @IBOutlet weak var backBtnLbl: UIButton!
     @IBOutlet weak var noUsernameBackBtnLbl: UIButton!
