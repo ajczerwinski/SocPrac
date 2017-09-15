@@ -138,9 +138,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        emailField.resignFirstResponder()
-        pwdField.resignFirstResponder()
-//        self.view.endEditing(true)
+        textField.resignFirstResponder()
         
         return true
         

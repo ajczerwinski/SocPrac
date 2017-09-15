@@ -234,7 +234,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        profileUsernameText.resignFirstResponder()
+        textField.resignFirstResponder()
         
         return true
         

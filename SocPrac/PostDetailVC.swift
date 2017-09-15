@@ -393,8 +393,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        commentTextField.resignFirstResponder()
-        validatedUserCaption.resignFirstResponder()
+        textField.resignFirstResponder()
         
         return true
         

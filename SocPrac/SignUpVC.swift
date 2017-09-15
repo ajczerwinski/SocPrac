@@ -21,6 +21,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
 
         emailField.delegate = self
         pwdField.delegate = self
+        
     }
 
     @IBAction func backBtnPressed(_ sender: Any) {
@@ -32,6 +33,16 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     @IBAction func signUpBtnPressed(_ sender: Any) {
         
         if let email = emailField.text, let pwd = pwdField.text {
+            
+            if isValidEmail(testStr: email) == false {
+                handleInvalidEmailAddress()
+                return
+            }
+            
+            if (pwdField.text?.characters.count)! < 6 {
+                handlePasswordTooShort()
+                return
+            }
             
             Auth.auth().createUser(withEmail: email, password: pwd, completion: { (user, error) in
                     if error != nil {
@@ -66,12 +77,33 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         
     }
     
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let maxLength = 50
+        var currentString: NSString = ""
+        if emailField.isFirstResponder {
+            currentString = emailField.text! as NSString
+        } else if pwdField.isFirstResponder {
+            currentString = pwdField.text! as NSString
+        }
+        
+        let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
+    }
+    
+    func isValidEmail(testStr:String) -> Bool {
+        // print("validate calendar: \(testStr)")
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
+    }
+    
     // TextField delegate methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        emailField.resignFirstResponder()
-        pwdField.resignFirstResponder()
+        textField.resignFirstResponder()
         
         return true
         
@@ -82,7 +114,19 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     }
 
     private func handleSomethingWentWrong() {
-        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
+        present(alert, animated: true)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+    }
+    
+    private func handleInvalidEmailAddress() {
+        let alert = UIAlertController(title: "Invalid email address", message: "Please use a valid email address", preferredStyle: .alert)
+        present(alert, animated: true)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+    }
+    
+    private func handlePasswordTooShort() {
+        let alert = UIAlertController(title: "Password too short", message: "Password must be at least 6 characters", preferredStyle: .alert)
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }

@@ -517,7 +517,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        captionField.resignFirstResponder()
+        textField.resignFirstResponder()
         
         return true
         
