@@ -51,7 +51,12 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                 } else {
                     print("AllenData: Successfully authenticated with Firebase")
                     if let user = user {
-                        let userData = ["provider": user.providerID]
+                        
+                        let userData = [
+                            "provider": user.providerID,
+                            "email": email
+                        ]
+                        
                         self.completeSignIn(id: user.uid, userData: userData)
                     }
                 
@@ -128,9 +133,5 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     
 
 }
-
-//extension CharacterSet {
-//    static let customAllowedSet = CharacterSet(charactersIn: "ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ")
-//}
 
 

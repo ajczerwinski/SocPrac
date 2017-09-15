@@ -25,6 +25,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     var user: User!
     var selectedPost: Post?
     var currentUsername: String!
+    var currentUserEmail: String!
     var currentUserImage: UIImage?
     
     var facebookProfileImgUrl: String?
@@ -57,7 +58,10 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                     let username = value?["username"] as? String ?? ""
                     //keychainUsername = username
                     self.currentUsername = username
-                    print("HERE IS THE KEYCHAIN USERNAME: \(username)")
+                    print("HERE IS THE FIREBASE USERNAME: \(username)")
+                    let emailAddress = value?["email"] as? String ?? ""
+                    self.currentUserEmail = emailAddress
+                    print("HERE IS THE FIREBASE USER EMAIL: \(emailAddress)")
                     self.greetingLbl.text = "Hello, " + username
                     let userProfileImgUrl = value?["profileImg"] as? String ?? ""
                     if userProfileImgUrl != "" {
@@ -97,9 +101,12 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                                         self.downloadImage(url: checkedUrl)
                                     }
                                     print("End of code. The image will continue downloading in the background and it will be loaded when it ends.")
-                                    if let fbUsername = fbDetails["first_name"]{
+                                    if let fbUsername = fbDetails["first_name"] {
                                         self.currentUsername = fbUsername as! String
                                         self.greetingLbl.text = "Hello, " + (fbUsername as! String)
+                                    }
+                                    if let fbEmail = fbDetails["email"] {
+                                        self.currentUserEmail = fbEmail as! String
                                     }
                                     }
                                 } else {
@@ -454,6 +461,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         let user: Dictionary<String, AnyObject> = [
         
             "username": self.currentUsername! as AnyObject,
+            "email": self.currentUserEmail! as AnyObject,
             "profileImg": imgUrl as AnyObject
         
         ]
