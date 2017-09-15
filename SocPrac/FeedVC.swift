@@ -34,7 +34,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     var usernameDict: [String: String] = [:]
     var profileImgDict: [String: String] = [:]
     var imagePicker: UIImagePickerController!
-    //var currentUserId: String!
     var currentUserProvider: String!
     
     
@@ -43,10 +42,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //print("HI I'M THE CURRENT USERNAME: \(currentUsername)")
+
         if let currentUserId = Auth.auth().currentUser?.uid {
-            print("HERE IS THE CURRENT USER ID \(currentUserId)")
             
             DataService.ds.REF_USERS.child(currentUserId).observe(.value, with: { (snapshot) in
                 
@@ -56,13 +53,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
 
                 if userProvider == "Firebase" {
                     let username = value?["username"] as? String ?? ""
-                    //keychainUsername = username
                     self.currentUsername = username
-                    print("HERE IS THE FIREBASE USERNAME: \(username)")
+
                     let emailAddress = value?["email"] as? String ?? ""
                     self.currentUserEmail = emailAddress
-                    print("HERE IS THE FIREBASE USER EMAIL: \(emailAddress)")
+
                     self.greetingLbl.text = "Hello, " + username
+                    
                     let userProfileImgUrl = value?["profileImg"] as? String ?? ""
                     if userProfileImgUrl != "" {
                         let ref = Storage.storage().reference(forURL: userProfileImgUrl)
@@ -82,11 +79,10 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                         })
                     }
                 } else if userProvider == "facebook.com" {
-                    print("Looks like the user is from Facebook")
                     
                     DispatchQueue.global(qos: .userInitiated).async {
                         
-                        FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name, first_name, last_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
+                        FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, first_name, email"]).start(completionHandler: { (connection, result, error) -> Void in
                             
                             if (error == nil) {
                                 let fbDetails = result as! NSDictionary
@@ -95,12 +91,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                                     let fbUserProfileImgUrl = "https://graph.facebook.com/" + "\(fbUserId)" + "/picture?type=large&redirect=true&width=500&height=500"
                                         print(fbUserProfileImgUrl)
                                     
-                                    print("Begin of code")
                                     if let checkedUrl = URL(string: fbUserProfileImgUrl) {
                                         self.profileImg.contentMode = .scaleAspectFit
                                         self.downloadImage(url: checkedUrl)
                                     }
-                                    print("End of code. The image will continue downloading in the background and it will be loaded when it ends.")
+
                                     if let fbUsername = fbDetails["first_name"] {
                                         self.currentUsername = fbUsername as! String
                                         self.greetingLbl.text = "Hello, " + (fbUsername as! String)
@@ -110,20 +105,15 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                                     }
                                     }
                                 } else {
-                                print("Found some kind of error in Facebook: \(error?.localizedDescription)")
+                                print("Found some kind of error in Facebook: \(String(describing: error?.localizedDescription))")
                                 }
                         })
                         
                 }
             }
         })
-
-        //let delayInSeconds = 0.5
         
         DispatchQueue.global(qos: .userInitiated).async {
-                
-            
-//        DispatchQueue.main.asyncAfter(deadline: .now() + delayInSeconds) {
             
             DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
                 
@@ -171,11 +161,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
 
             }
         }
-//        }
         
         captionField.delegate = self
-        
-        //greetingLbl.text = "Hello, " + KeychainWrapper.standard.string(forKey: "username")!
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -207,18 +194,16 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                             print("AllenData: Successfully uploaded image to Firebase storage")
                             let downloadURL = metadata?.downloadURL()?.absoluteString
                             if let url = downloadURL {
-                                print("HERE IS THE IMAGE URL I HAVE BEEN TRYING TO MAKE: \(url)")
                                 self.postUsernameAndProfileImgToFirebase(imgUrl: url)
                             }
                         }
                     }
                 }
-                
             }
             let nextScene = segue.destination as! ProfileVC
             nextScene.currentUserUsername = currentUsername
             nextScene.currentUserImage = currentUserImage
-            print("HEY WE USED THE FEED TO PROFILE SEGUE")
+
         } else if segue.identifier == "goToPostDetailVC" {
             
             if let profileImg = self.profileImg.image {
@@ -238,7 +223,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                             print("AllenData: Successfully uploaded image to Firebase storage")
                             let downloadURL = metadata?.downloadURL()?.absoluteString
                             if let url = downloadURL {
-                                print("HERE IS THE IMAGE URL I HAVE BEEN TRYING TO MAKE: \(url)")
                                 self.postUsernameAndProfileImgToFirebase(imgUrl: url)
                             }
                         }
@@ -261,8 +245,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             if let postingUserImgUrl = profileImgDict[(selectedPost?.userId)!] {
                 nextScene.postingUserImgUrl = postingUserImgUrl
             }
-            
-            print("HEY WE ARE PREPARING FOR POSTDETAILVC SEGUE")
         }
     }
     
@@ -276,7 +258,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var postingUserProfileImg: UIImage?
         var postingUserProfileImgUrl: String?
         
         let post = posts[indexPath.row]
@@ -298,8 +279,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                             if let imgData = data {
                                 if let profileImg = UIImage(data: imgData) {
                                     FeedVC.imageCache.setObject(profileImg, forKey: postingUserProfileImgUrl! as NSString)
-                                    postingUserProfileImg = profileImg
-//                                    print("HEY I FOUND THE POSTINGUSERPROFILEIMG IT IS HERE: \(postingUserProfileImg!)")
+                                   
                                 }
                             }
                         }
@@ -313,7 +293,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                     if let postingUserUserProfileImg = FeedVC.imageCache.object(forKey: postingUserProfileImgUrl! as NSString) {
                         
                         cell.configureCell(post: post, username: username!, img: img, userProfileImg: postingUserUserProfileImg)
-                        //tableView.reloadData()
                         
                     }
                 }
@@ -349,9 +328,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let post = self.posts[indexPath.row]
-        print("HI I AM THE POST: \(post)")
         self.selectedPost = post
-        print(selectedPost)
         self.performSegue(withIdentifier: "goToPostDetailVC", sender: nil)
         
         
@@ -391,7 +368,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                         print("AllenData: Successfully uploaded image to Firebase storage")
                         let downloadURL = metadata?.downloadURL()?.absoluteString
                         if let url = downloadURL {
-                            print("HERE IS THE IMAGE URL I HAVE BEEN TRYING TO MAKE: \(url)")
                             self.postUsernameAndProfileImgToFirebase(imgUrl: url)
                         }
                     }
@@ -400,7 +376,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             
         }
         guard let caption = captionField.text, caption != "" else {
-            // TODO - Will want to add an error notification or something here if invalid data is entered
             handleEmptyCaptionOrImage()
             print("AllenError: Caption must be entered")
             return
@@ -477,7 +452,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     }
     
     @IBAction func signOutTapped(_ sender: AnyObject) {
-        //let keychainResult = KeychainWrapper.removeObjectForKey(KEY_UID)
         KeychainWrapper.standard.removeObject(forKey: KEY_UID)
         KeychainWrapper.standard.removeObject(forKey: "username")
         print("AllenData: ID removed from keychain")
@@ -510,11 +484,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     }
     
     func downloadImage(url: URL) {
-        print("Download Started")
         getDataFromUrl(url: url) { (data, response, error)  in
             guard let data = data, error == nil else { return }
             print(response?.suggestedFilename ?? url.lastPathComponent)
-            print("Download Finished")
             DispatchQueue.main.async() { () -> Void in
                 self.profileImg.image = UIImage(data: data)
             }

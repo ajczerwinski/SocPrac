@@ -86,7 +86,6 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 
                 for snap in snapshot {
-                    print("HERE IS THE USER SNAPSHOT: \(snap)")
                     
                     if let commentUserDict = snap.value as? Dictionary<String, AnyObject> {
                         
@@ -112,8 +111,6 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 
             }
             
-            print("HERE IS THE FULL USERNAME DICTIONARY \(self.usernameDict)")
-            print("HERE IS THE FULL PROFILEIMG DICTIONARY: \(self.profileImgDict)")
             self.tableView.reloadData()
             
         })
@@ -135,7 +132,6 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                     }
                 }
             })
-            print("HI I AM THE POST IMAGE URL: \(postImageUrl)")
         }
         
         
@@ -154,7 +150,6 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                     }
                 }
             })
-            print("HI I AM THE POST IMAGE URL: \(profileImageUrl)")
         }
         
         // Observe snapshot of Comments Firebase object to populate comments array
@@ -165,7 +160,6 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
                 self.comments = [] // clear out comments array to avoid double posting
                 for snap in snapshot {
-                    print("HI I AM THE COMMENT SNAPSHOT: \(snap)")
                     if let commentDict = snap.value as? Dictionary<String, AnyObject> {
                         
                         let key = snap.key
@@ -210,7 +204,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detailToFeed" {
             
-            let nextScene = segue.destination as! FeedVC
+            let _ = segue.destination as! FeedVC
         }
     }
     
@@ -287,16 +281,13 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         commentTextField.text = ""
         commentTextField.resignFirstResponder()
         
-        //tableView.reloadData()
-        
     }
     
     
     @IBAction func deleteBtnTapped(_ sender: Any) {
         
         if let postKey = post?.postKey {
-            print("HI I AM THE POSTKEY: \(postKey)")
-                deletePost(childToDelete: postKey)
+            deletePost(childToDelete: postKey)
         }
 
     }
@@ -306,10 +297,9 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 
         let firebaseRef = Database.database().reference().child("posts").child(childToDelete)
         
-        print("HELLO THERE I AM THE POSTKEY: \(firebaseRef)")
         firebaseRef.removeValue { (error, ref) in
             if error != nil {
-                print("Here's the error output when I tried to delete: \(error)")
+                print("Here's the error output when I tried to delete: \(String(describing: error))")
             } else {
                 print("Looks like we successfully deleted the object: \(firebaseRef). Sad!")
             }
@@ -335,12 +325,6 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         var commenterUsername: String?
         var commenterUserProfileImgUrl: String?
         
-        print("HEY HERE IS THE NUMBER OF COMMENTS: \(self.comments.count)")
-        
-        if self.comments[0] == nil {
-            print("LOOKS LIKE THERE ARENT ANY COMMENTS")
-        }
-        
         if self.comments.count > 0 {
             postHasComments = true
         }
@@ -350,11 +334,9 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         if let commentingUsername = usernameDict[userId] {
             commenterUsername = commentingUsername
-            print("Here is the commenter's username: \(commenterUsername)")
         }
         if let commentingProfileImgUrl = profileImgDict[userId] {
             commenterUserProfileImgUrl = commentingProfileImgUrl
-            print("Here is the commenter's profileImgUrl: \(commenterUserProfileImgUrl!)")
         }
         
         
@@ -377,7 +359,6 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         guard let commentText = commentTextField.text, commentText != "" else {
             
-            // TODO - Will want to add an error notification or something here if invalid data is entered
             handleEmptyCommentText()
             print("AllenError: Comment text must be entered")
             return
@@ -405,8 +386,8 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func subscribeToKeyboardNotifications() {
         
-        NotificationCenter.default.addObserver(self, selector: Selector("keyboardWillShow:"), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: Selector("keyboardWillHide:"), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillShow:")), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillHide:")), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
     }
     

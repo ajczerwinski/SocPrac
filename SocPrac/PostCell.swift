@@ -17,7 +17,6 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var caption: UILabel!
     @IBOutlet weak var likesLbl: UILabel!
     @IBOutlet weak var likeImg: UIImageView!
-    //@IBOutlet weak var deleteBtnLbl: UIButton!
     
     var post: Post!
     var user: User!
@@ -47,12 +46,6 @@ class PostCell: UITableViewCell {
         if username != nil {
             self.usernameLbl.text = "\(username!)"
         }
-        
-//        if post.userId == Auth.auth().currentUser?.uid {
-//            deleteBtnLbl.isHidden = false
-//        } else {
-//            deleteBtnLbl.isHidden = true
-//        }
         
         if userProfileImg != nil {
             self.profileImg.image = userProfileImg

@@ -36,10 +36,8 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         
     }
     
-    
-    //TODO - return the let to _ when done testing
     override func viewDidAppear(_ animated: Bool) {
-        if let keychainString = KeychainWrapper.standard.string(forKey: KEY_UID) {
+        if let _ = KeychainWrapper.standard.string(forKey: KEY_UID) {
             print("AllenData: ID found in keychain")
             performSegue(withIdentifier: "goToFeed", sender: nil)
         }
@@ -47,10 +45,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToFeed" {
-            //let _ = KeychainWrapper.standard.set(username, forKey: "username")
-            let nextScene = segue.destination as! FeedVC
-//            nextScene.currentUsername = username
-            
+            let _ = segue.destination as! FeedVC
             
         }
         
@@ -61,12 +56,8 @@ class SignInVC: UIViewController, UITextFieldDelegate {
             if let userId = KeychainWrapper.standard.string(forKey: KEY_UID) {
                 let currentUserId = userId
                 nextScene.currentUserId = currentUserId
-                
             }
-            
-            
         }
-        
     }
     
     @IBAction func facebookBtnTapped(_ sender: AnyObject) {
@@ -123,12 +114,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     func completeSignIn(id: String, userData: Dictionary<String, String>) {
         
         DataService.ds.createFirebaseDBUser(uid: id, userData: userData)
-//        var keychainUsername: String? = nil
-        print("Here is the id: \(id)")
-        let keychainResult = KeychainWrapper.standard.set(id, forKey: KEY_UID)
-        
-        print("AllenData: Data saved to keychain \(keychainResult)")
-        
+        let _ = KeychainWrapper.standard.set(id, forKey: KEY_UID)
         self.performSegue(withIdentifier: "goToFeed", sender: nil)
         
         
@@ -147,11 +133,10 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     
     // Turn on observers to listen for keyboard
     // show and hide functions
-    
     func subscribeToKeyboardNotifications() {
 
-        NotificationCenter.default.addObserver(self, selector: Selector("keyboardWillShow:"), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: Selector("keyboardWillHide:"), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillShow:")), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillHide:")), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 
     }
     

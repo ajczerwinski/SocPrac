@@ -34,11 +34,6 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
         
-        if currentUserId != nil {
-            
-            print("I'M IN THE PROFILEVC AND HERE IS THE CURRENT USER ID \(currentUserId!)")
-        }
-        print("HERE IS THE CURRENT USERUSERNAME: \(currentUserUsername)")
         if currentUserUsername == nil {
             backBtnLbl.isHidden = true
             noUsernameBackBtnLbl.isHidden = false
@@ -75,9 +70,8 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     }
     
     @IBAction func noUsernameBackBtn(_ sender: Any) {
-        // TODO - make this an alert
         handleEmptyUsernameOrImage()
-        print("Hey, you need to enter a username and profile photo")
+        print("AllenError: Need to enter a username and profile photo")
     }
     
     
@@ -91,7 +85,6 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
         if imageSelected == true {
             guard let profileUsername = profileUsernameText.text, profileUsername != "" else {
-                // TODO - Will want to add an error notification or something here if invalid data is entered
                 handleEmptyUsernameOrImage()
                 print("AllenError: Profile username must be entered")
                 return
@@ -129,7 +122,6 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             
         } else if currentUserImage != nil {
             guard let profileUsername = profileUsernameText.text, profileUsername != "" else {
-                // TODO - Will want to add an error notification or something here if invalid data is entered
                 handleEmptyUsernameOrImage()
                 print("AllenError: Profile username must be entered")
                 return
@@ -162,7 +154,6 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             firebasePost.updateChildValues(user)
         } else {
             handleSomethingWentWrong()
-            print("OOPS, LOOKS LIKE WE COULDN'T GET THE FIREBASE POST")
         }
         
     }
@@ -173,41 +164,26 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             "profileImg": imgUrl as AnyObject
         ]
 
-//        print("HEY HERE SDFJPWOIEJFPOWIEJFPOWIJEFPOIJEWF)*@)(@#()(@#)(@()#()()#)(()@#)()(@()#()@#:\(user)")
         if currentUserId != nil {
             let firebasePost = DataService.ds.REF_USERS.child(currentUserId)
-//            print("HEY HERE SDFJPWOIEJFPOWIEJFPOWIJEFPOIJEWF)*@)(@#()(@#)(@()#()()#)(()@#)()(@()#()@#:\(firebasePost)")
             _ = KeychainWrapper.standard.set(user["username"] as! String, forKey: "username")
 
-            
             firebasePost.updateChildValues(user)
         } else {
             handleSomethingWentWrong()
-            print("OOPS, LOOKS LIKE WE COULDN'T GET THE FIREBASE POST")
         }
         
        imageSelected = false
-        
-        //firebasePost.updateChildValues(user)
-        
-        
-        
-        
-        //profileUsernameText.text = ""
-        
-        //profileImageAdd.image = UIImage(named: "profile-image")
-        
-        //tableView.reloadData()
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "backToFeed" {
             
-            let nextScene = segue.destination as! FeedVC
+            _ = segue.destination as! FeedVC
             
             if let userId = currentUserId {
-                let currentUserId = userId
-                //nextScene.currentUserId = currentUserId
+                _ = userId
                 
             }
         }
@@ -223,7 +199,6 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
         let set = CharacterSet(charactersIn: "ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789").inverted
         return string.rangeOfCharacter(from: set) == nil
-        //        return string.rangeOfCharacter(from: set) == nil
         
     }
     

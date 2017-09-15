@@ -18,8 +18,6 @@ class CommentCell: UITableViewCell {
     var comment: Comment?
     
     func configureCell(comment: Comment, commenterUsername: String? = nil, commenterUserProfileImgUrl: String? = nil) {
-
-        //print("HI I am the comment: \(comment.commentText)")
         
         self.commentText.text = comment.commentText + " @" + commenterUsername!
         
@@ -37,9 +35,6 @@ class CommentCell: UITableViewCell {
                 }
             }
         })
-        
-        
-        //print("HI I AM THE POST IMAGE URL: \(commenterUserProfileImgUrl)")
         
     }
     

@@ -482,7 +482,7 @@
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="post-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="oQ1-oZ-l0K">
                                                                     <rect key="frame" x="0.0" y="68" width="327" height="0.0"/>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="suI-hI-Dk0">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="suI-hI-Dk0">
                                                                     <rect key="frame" x="0.0" y="76" width="327" height="203.5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="vWC-9b-1IJ"/>
@@ -25072,8 +25072,8 @@ AAAEAQAAAAAAAABBAAAAAAAAAAAAAAAAABYDsA
         <image name="social-icon" width="600" height="600"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="867-R0-VK9"/>
         <segue reference="rMC-cq-fRT"/>
-        <segue reference="S9O-IT-Jc0"/>
         <segue reference="PeZ-i7-AQA"/>
     </inferredMetricsTieBreakers>
 </document>

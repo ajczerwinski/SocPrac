@@ -72,7 +72,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         
         DataService.ds.createFirebaseDBUser(uid: id, userData: userData)
 
-        print("Here is the id: \(id)")
         let keychainResult = KeychainWrapper.standard.set(id, forKey: KEY_UID)
         
         print("AllenData: Data saved to keychain \(keychainResult)")
@@ -92,7 +91,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     }
     
     func isValidEmail(testStr: String) -> Bool {
-        // print("validate calendar: \(testStr)")
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
