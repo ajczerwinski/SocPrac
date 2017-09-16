@@ -339,7 +339,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             imageAdd.image = image
             imageSelected = true
         } else {
-            handleSomethingWentWrong()
+            handleAlert(issueType: "actionFailed")
             print("AllenError: A valid image wasn't selected")
         }
         imagePicker.dismiss(animated: true, completion: nil)
@@ -376,13 +376,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             
         }
         guard let caption = captionField.text, caption != "" else {
-            handleEmptyCaptionOrImage()
+            handleAlert(issueType: "postFailed")
             print("AllenError: Caption must be entered")
             return
         }
         
         guard let img = imageAdd.image, imageSelected == true else {
-            handleEmptyCaptionOrImage()
+            handleAlert(issueType: "postFailed")
             print("AllenError: Must select an image")
             return
         }
@@ -445,7 +445,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             let firebasePost = DataService.ds.REF_USERS.child(currentUserId)
             firebasePost.updateChildValues(user)
         } else {
-            handleSomethingWentWrong()
+            handleAlert(issueType: "actionFailed")
             print("Somehow couldn't get currentUserId")
         }
         
@@ -470,7 +470,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             let firebasePost = DataService.ds.REF_USERS.child(currentUserId)
             firebasePost.updateChildValues(user)
         } else {
-            handleSomethingWentWrong()
+            handleAlert(issueType: "actionFailed")
             print("Somehow couldn't get currentUserId")
         }
         
@@ -507,14 +507,17 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         self.view.endEditing(true)
     }
     
-    private func handleSomethingWentWrong() {
-        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
-        present(alert, animated: true)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-    }
-    
-    private func handleEmptyCaptionOrImage() {
-        let alert = UIAlertController(title: "Post unsuccessful", message: "A caption and image is required", preferredStyle: .alert)
+    // Handle alerts for various user and non-user errors
+    private func handleAlert(issueType: String) {
+        var alert = UIAlertController()
+        switch issueType {
+        case "actionFailed":
+            alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
+        case "postFailed":
+            alert = UIAlertController(title: "Post unsuccessful", message: "A caption and image is required", preferredStyle: .alert)
+        default:
+            return
+        }
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }

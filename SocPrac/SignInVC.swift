@@ -68,7 +68,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
             if error != nil {
                 print("AllenError: Unable to authenticate with Facebook - \(error!)")
             } else if result?.isCancelled == true {
-                self.handleFailedLogin()
+                self.handleAlert(issueType: "loginError")
                 print("AllenError: User cancelled Facebook authentication")
             } else {
                 print("AllenData: Successfully authenticated with Facebook")
@@ -82,7 +82,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     func firebaseAuth(_ credential: AuthCredential) {
         Auth.auth().signIn(with: credential, completion: { (user, error) in
             if error != nil {
-                self.handleFailedLogin()
+                self.handleAlert(issueType: "loginError")
                 print("AllenError: Unable to authenticate with Firebase - \(error!)")
             } else {
                 print("AllenData: Successfully authenticated with Firebase")
@@ -103,7 +103,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
                         self.completeSignIn(id: user.uid, userData: userData)
                     }
                 } else {
-                    self.handleInvalidUsernameOrPassword()
+                    self.handleAlert(issueType: "invalidCred")
                     print("Invalid username and password!")
 
                 }
@@ -193,18 +193,21 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-   
-    private func handleFailedLogin() {
-        let alert = UIAlertController(title: "Failed to log in", message: "Something went wrong on login. Please try again", preferredStyle: .alert)
+    
+    // Handle alerts for various user and non-user errors
+    private func handleAlert(issueType: String) {
+        var alert = UIAlertController()
+        switch issueType {
+        case "loginError":
+            alert = UIAlertController(title: "Failed to log in", message: "Something went wrong on login. Please try again", preferredStyle: .alert)
+        case "invalidCred":
+            alert = UIAlertController(title: "Failed to log in", message: "Invalid username or password", preferredStyle: .alert)
+        default:
+            return
+        }
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }
     
-    private func handleInvalidUsernameOrPassword() {
-        let alert = UIAlertController(title: "Failed to log in", message: "Invalid username or password", preferredStyle: .alert)
-        present(alert, animated: true)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-    }
-
 }
 

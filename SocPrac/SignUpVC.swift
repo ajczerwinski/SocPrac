@@ -35,18 +35,18 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         if let email = emailField.text, let pwd = pwdField.text {
             
             if isValidEmail(testStr: email) == false {
-                handleInvalidEmailAddress()
+                handleAlert(issueType: "invalidEmail")
                 return
             }
             
             if (pwdField.text?.characters.count)! < 6 {
-                handlePasswordTooShort()
+                handleAlert(issueType: "shortPassword")
                 return
             }
             
             Auth.auth().createUser(withEmail: email, password: pwd, completion: { (user, error) in
                     if error != nil {
-                    self.handleSomethingWentWrong()
+                    self.handleAlert(issueType: "actionFailed")
                     print("AllenError: Unable to authenticate with Firebase using email")
                 } else {
                     print("AllenData: Successfully authenticated with Firebase")
@@ -110,25 +110,23 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
-    private func handleSomethingWentWrong() {
-        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
+    
+    // Handle alerts for various user and non-user errors
+    private func handleAlert(issueType: String) {
+        var alert = UIAlertController()
+        switch issueType {
+        case "invalidEmail":
+            alert = UIAlertController(title: "Invalid email address", message: "Please use a valid email address", preferredStyle: .alert)
+        case "shortPassword":
+            alert = UIAlertController(title: "Password too short", message: "Password must be at least 6 charactersn", preferredStyle: .alert)
+        case "actionFailed":
+            alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
+        default:
+            return
+        }
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }
-    
-    private func handleInvalidEmailAddress() {
-        let alert = UIAlertController(title: "Invalid email address", message: "Please use a valid email address", preferredStyle: .alert)
-        present(alert, animated: true)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-    }
-    
-    private func handlePasswordTooShort() {
-        let alert = UIAlertController(title: "Password too short", message: "Password must be at least 6 characters", preferredStyle: .alert)
-        present(alert, animated: true)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-    }
-    
 
 }
 

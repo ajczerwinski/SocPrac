@@ -56,7 +56,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             profileImageAdd.image = image
             imageSelected = true
         } else {
-            handleSomethingWentWrong()
+            handleAlert(issueType: "actionFailed")
             print("AllenError: A valid image wasn't selected")
         }
         imagePicker.dismiss(animated: true, completion: nil)
@@ -70,7 +70,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     }
     
     @IBAction func noUsernameBackBtn(_ sender: Any) {
-        handleEmptyUsernameOrImage()
+        handleAlert(issueType: "missingFields")
         print("AllenError: Need to enter a username and profile photo")
     }
     
@@ -78,20 +78,20 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     @IBAction func profileSaveBtnPressed(_ sender: Any) {
         
         guard let profileUsernameCount = profileUsernameText.text?.characters.count, profileUsernameCount > 3, profileUsernameCount <= 15 else {
-            handleUsernameTooShort()
+            handleAlert(issueType: "wrongLength")
             print("AllenError: Username incorrect length")
             return
         }
         
         if imageSelected == true {
             guard let profileUsername = profileUsernameText.text, profileUsername != "" else {
-                handleEmptyUsernameOrImage()
+                handleAlert(issueType: "missingFields")
                 print("AllenError: Profile username must be entered")
                 return
             }
             
             guard let profileImg = profileImageAdd.image else {
-                handleEmptyUsernameOrImage()
+                handleAlert(issueType: "missingFields")
                 print("AllenError: Must select an image")
                 return
             }
@@ -122,7 +122,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             
         } else if currentUserImage != nil {
             guard let profileUsername = profileUsernameText.text, profileUsername != "" else {
-                handleEmptyUsernameOrImage()
+                handleAlert(issueType: "missingFields")
                 print("AllenError: Profile username must be entered")
                 return
             }
@@ -131,7 +131,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             self.performSegue(withIdentifier: "backToFeed", sender: nil)
             
         } else {
-            handleEmptyUsernameOrImage()
+            handleAlert(issueType: "missingFields")
             print("AllenError: Must select an image")
         }
         
@@ -153,7 +153,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             
             firebasePost.updateChildValues(user)
         } else {
-            handleSomethingWentWrong()
+            handleAlert(issueType: "actionFailed")
         }
         
     }
@@ -170,7 +170,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
 
             firebasePost.updateChildValues(user)
         } else {
-            handleSomethingWentWrong()
+            handleAlert(issueType: "actionFailed")
         }
         
        imageSelected = false
@@ -216,23 +216,21 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         self.view.endEditing(true)
     }
     
-    private func handleSomethingWentWrong() {
-        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
+    // Handle alerts for various user and non-user errors
+    private func handleAlert(issueType: String) {
+        var alert = UIAlertController()
+        switch issueType {
+        case "actionFailed":
+            alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
+        case "missingFields":
+            alert = UIAlertController(title: "Must have username and profile image", message: "Please enter a username and add profile image", preferredStyle: .alert)
+        case "wrongLength":
+            alert = UIAlertController(title: "Username incorrect length", message: "Username must be between 4 and 15 characters in length", preferredStyle: .alert)
+        default:
+            return
+        }
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }
-    
-    private func handleEmptyUsernameOrImage() {
-        let alert = UIAlertController(title: "Must have username and profile image", message: "Please enter a username and add profile image", preferredStyle: .alert)
-        present(alert, animated: true)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-    }
-    
-    private func handleUsernameTooShort() {
-        let alert = UIAlertController(title: "Username incorrect length", message: "Username must be between 4 and 15 characters in length", preferredStyle: .alert)
-        present(alert, animated: true)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-    }
-    
 
 }

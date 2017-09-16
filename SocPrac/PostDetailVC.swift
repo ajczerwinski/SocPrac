@@ -195,7 +195,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             postImg.image = image
             imageSelected = true
         } else {
-            handleSomethingWentWrong()
+            handleAlert(issueType: "actionFailed")
             print("AllenError: A valid image wasn't selected")
         }
         imagePicker.dismiss(animated: true, completion: nil)
@@ -210,14 +210,14 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     @IBAction func backOrSaveBtnPressed(_ sender: Any) {
         guard let captionText = validatedUserCaption.text, captionText != "" else {
-            handleEmptyPostCaption()
+            handleAlert(issueType: "missingCaption")
             print("AllenError: Post caption text was empty")
             return
         }
         
         if imageSelected == true {
             guard let img = postImg.image else {
-                handleNoImageSelected()
+                handleAlert(issueType: "missingImage")
                 print("AllenError: Post image wasn't selected")
                 return
             }
@@ -359,7 +359,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         guard let commentText = commentTextField.text, commentText != "" else {
             
-            handleEmptyCommentText()
+            handleAlert(issueType: "missingComment")
             print("AllenError: Comment text must be entered")
             return
         }
@@ -446,26 +446,21 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.view.endEditing(true)
     }
     
-    private func handleNoImageSelected() {
-        let alert = UIAlertController(title: "No post image selected", message: "Please select a post image and try again.", preferredStyle: .alert)
-        present(alert, animated: true)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-    }
-    
-    private func handleEmptyCommentText() {
-        let alert = UIAlertController(title: "Comment text can't be empty", message: "Please enter comment text and try again", preferredStyle: .alert)
-        present(alert, animated: true)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-    }
-    
-    private func handleEmptyPostCaption() {
-        let alert = UIAlertController(title: "Post caption text can't be empty", message: "Please enter caption text and try again", preferredStyle: .alert)
-        present(alert, animated: true)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-    }
-    
-    private func handleSomethingWentWrong() {
-        let alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
+    // Handle alerts for various user and non-user errors
+    private func handleAlert(issueType: String) {
+        var alert = UIAlertController()
+        switch issueType {
+        case "missingImage":
+            alert = UIAlertController(title: "No post image selected", message: "Please select a post image and try again", preferredStyle: .alert)
+        case "missingComment":
+            alert = UIAlertController(title: "Comment text can't be empty", message: "Please enter comment text and try again", preferredStyle: .alert)
+        case "missingCaption":
+            alert = UIAlertController(title: "Post caption text can't be empty", message: "Please enter caption text and try again", preferredStyle: .alert)
+        case "actionFailed":
+            alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
+        default:
+            return
+        }
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }
