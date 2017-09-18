@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '32EF381A88EC76BCF009D10CCB5F8B8B'
-               BlueprintName = 'SwiftKeychainWrapper'
+               BlueprintIdentifier = 'E4E660DA248D92BDA825A6ECABB46363'
+               BlueprintName = 'IODProfanityFilter'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SwiftKeychainWrapper.framework'>
+               BuildableName = 'IODProfanityFilter.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
