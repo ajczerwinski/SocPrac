@@ -255,11 +255,13 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
     }
     func postToFirebase(imgUrl: String) {
+        let lastUpdated = String(Date().inMilliseconds())
         
         let userPost: Dictionary<String, AnyObject> = [
             
             "imageUrl": imgUrl as AnyObject,
-            "caption": validatedUserCaption.text! as AnyObject
+            "caption": validatedUserCaption.text! as AnyObject,
+            "lastUpdated": lastUpdated as AnyObject
         ]
         
         if let postId = post?.postKey {
