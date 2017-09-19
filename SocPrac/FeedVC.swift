@@ -43,6 +43,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        let timestamp = Date().inMilliseconds()
+//        print("HERE IS THE TIMESTAMP IN MILLISECONDS:\(timestamp ?? 0))")
         if let currentUserId = Auth.auth().currentUser?.uid {
             
             DataService.ds.REF_USERS.child(currentUserId).observe(.value, with: { (snapshot) in
@@ -420,11 +422,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     func postToFirebase(imgUrl: String) {
         if let currentUserId = Auth.auth().currentUser?.uid {
+            let creationDate = String(Date().inMilliseconds())
             let post: Dictionary<String, AnyObject> = [
                 "caption": captionField.text! as AnyObject,
                 "imageUrl": imgUrl as AnyObject,
                 "likes": 0 as AnyObject,
-                "userId": currentUserId as AnyObject
+                "userId": currentUserId as AnyObject,
+                "creationDate": creationDate as AnyObject
             ]
             
             let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
@@ -532,4 +536,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }
     
+}
+
+// Extend Date to return timestamp in milliseconds
+extension Date {
+    func inMilliseconds() -> Int64! {
+        return Int64(self.timeIntervalSince1970 * 1000)
+    }
 }

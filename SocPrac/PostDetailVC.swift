@@ -274,10 +274,12 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func postCommentToFirebase() {
         
+        let creationDate = String(Date().inMilliseconds())
+        
         let userComment: Dictionary<String, AnyObject> = [
-            
             "userId": Auth.auth().currentUser?.uid as AnyObject,
-            "commentText": commentTextField.text! as AnyObject
+            "commentText": commentTextField.text! as AnyObject,
+            "creationDate": creationDate as AnyObject
             
         ]
         

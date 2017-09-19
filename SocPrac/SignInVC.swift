@@ -87,7 +87,8 @@ class SignInVC: UIViewController, UITextFieldDelegate {
             } else {
                 print("AllenData: Successfully authenticated with Firebase")
                 if let user = user {
-                    let userData = ["provider": credential.provider]
+                    let creationDate = String(Date().inMilliseconds())
+                    let userData = ["provider": credential.provider, "creationDate": creationDate]
                     self.completeSignIn(id: user.uid, userData: userData)
                 }
             }
