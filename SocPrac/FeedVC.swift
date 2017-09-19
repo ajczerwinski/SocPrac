@@ -375,6 +375,14 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             }
             
         }
+        
+        // Check the entered caption text for profanity
+        guard let captionWords = captionField.text?.lowercased(), SwearWords.containsSwearWord(text: captionWords, swearWords: SwearWords.hashedSwearWords) == false else {
+            print("Looks like there are swear words")
+            self.handleAlert(issueType: "swearWords")
+            return
+        }
+        
         guard let caption = captionField.text, caption != "" else {
             handleAlert(issueType: "postFailed")
             print("AllenError: Caption must be entered")
@@ -515,6 +523,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
         case "postFailed":
             alert = UIAlertController(title: "Post unsuccessful", message: "A caption and image is required", preferredStyle: .alert)
+        case "swearWords":
+            alert = UIAlertController(title: "Inappropriate language", message: "Post caption must not include inappropriate language", preferredStyle: .alert)
         default:
             return
         }

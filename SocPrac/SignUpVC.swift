@@ -21,9 +21,10 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
 
         emailField.delegate = self
         pwdField.delegate = self
-        
+    
     }
-
+    
+        
     @IBAction func backBtnPressed(_ sender: Any) {
         
         performSegue(withIdentifier: "backToSignIn", sender: nil)
@@ -129,5 +130,3 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     }
 
 }
-
-

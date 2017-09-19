@@ -29,17 +29,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>IODProfanityFilter.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-SocPrac.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>SwiftKeychainWrapper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>leveldb-library.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>nanopb.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -52,12 +57,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>32EF381A88EC76BCF009D10CCB5F8B8B</key>
+		<key>1E9CF92ECFC441AFB63D8B0EFFEEC019</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>266AE1506DAD13D34C0725E909C0C476</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>44CAD6CE523055ED339E87154473A254</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>50C510DB2BA73B5229989DDA7D282513</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +92,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E4E660DA248D92BDA825A6ECABB46363</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FD182C98B572720EC803C235E9179FBF</key>
+		<key>E4DD95323C54A78F879DAB0F1508B8E7</key>
 		<dict>
 			<key>primary</key>
 			<true/>

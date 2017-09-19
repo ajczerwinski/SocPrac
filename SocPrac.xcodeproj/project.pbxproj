@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1F40C3A5E585793AFDF50CB2 /* Pods_SocPrac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE51FD196821DA5829BB0144 /* Pods_SocPrac.framework */; };
+		BF0434361F703D61002AC1AC /* SwearWords.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0434351F703D61002AC1AC /* SwearWords.swift */; };
 		BF28416E1F27C6A6005AF797 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF28416D1F27C6A6005AF797 /* AppDelegate.swift */; };
 		BF2841701F27C6A6005AF797 /* SignInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF28416F1F27C6A6005AF797 /* SignInVC.swift */; };
 		BF2841731F27C6A6005AF797 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF2841711F27C6A6005AF797 /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 /* Begin PBXFileReference section */
 		313ED3DEB30D359664AA8E75 /* Pods-SocPrac.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocPrac.release.xcconfig"; path = "Pods/Target Support Files/Pods-SocPrac/Pods-SocPrac.release.xcconfig"; sourceTree = "<group>"; };
 		A58B1E480951482BA361C410 /* Pods-SocPrac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocPrac.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SocPrac/Pods-SocPrac.debug.xcconfig"; sourceTree = "<group>"; };
+		BF0434351F703D61002AC1AC /* SwearWords.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwearWords.swift; sourceTree = "<group>"; };
 		BF28416A1F27C6A6005AF797 /* SocPrac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocPrac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF28416D1F27C6A6005AF797 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BF28416F1F27C6A6005AF797 /* SignInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInVC.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				BF2841871F27F1A8005AF797 /* DataService.swift */,
+				BF0434351F703D61002AC1AC /* SwearWords.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				BF28419F1F282D35005AF797 /* User.swift in Sources */,
 				BFA47E5A1F4F8764009C7208 /* PostDetailVC.swift in Sources */,
 				BF2841971F27F3EB005AF797 /* CircleView.swift in Sources */,
+				BF0434361F703D61002AC1AC /* SwearWords.swift in Sources */,
 				BFA97A9F1F65C93E005203B5 /* SignUpVC.swift in Sources */,
 				BF28418D1F27F248005AF797 /* Post.swift in Sources */,
 				BF28419D1F282090005AF797 /* ProfileVC.swift in Sources */,

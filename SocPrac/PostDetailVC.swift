@@ -215,6 +215,13 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             return
         }
         
+        // Check the entered caption text for profanity
+        guard let captionWords = validatedUserCaption.text?.lowercased(), SwearWords.containsSwearWord(text: captionWords, swearWords: SwearWords.hashedSwearWords) == false else {
+            print("Looks like there are swear words")
+            self.handleAlert(issueType: "swearWords")
+            return
+        }
+        
         if imageSelected == true {
             guard let img = postImg.image else {
                 handleAlert(issueType: "missingImage")
@@ -364,6 +371,13 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             return
         }
         
+        // Check the entered caption text for profanity
+        guard let commentWords = commentTextField.text?.lowercased(), SwearWords.containsSwearWord(text: commentWords, swearWords: SwearWords.hashedSwearWords) == false else {
+            print("Looks like there are swear words")
+            self.handleAlert(issueType: "swearComment")
+            return
+        }
+        
         postCommentToFirebase()
         
         
@@ -458,6 +472,10 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             alert = UIAlertController(title: "Post caption text can't be empty", message: "Please enter caption text and try again", preferredStyle: .alert)
         case "actionFailed":
             alert = UIAlertController(title: "Action unsuccessful", message: "Something went wrong. Please try again", preferredStyle: .alert)
+        case "swearWords":
+            alert = UIAlertController(title: "Inappropriate language", message: "Post caption must not include inappropriate language", preferredStyle: .alert)
+        case "swearComment":
+            alert = UIAlertController(title: "Inappropriate language", message: "Comments must not include inappropriate language", preferredStyle: .alert)
         default:
             return
         }

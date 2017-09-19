@@ -77,9 +77,17 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     
     @IBAction func profileSaveBtnPressed(_ sender: Any) {
         
+        // Check to make sure profile username is between 4 and 15 characters
         guard let profileUsernameCount = profileUsernameText.text?.characters.count, profileUsernameCount > 3, profileUsernameCount <= 15 else {
             handleAlert(issueType: "wrongLength")
             print("AllenError: Username incorrect length")
+            return
+        }
+        
+        // Check the entered caption text for profanity
+        guard let profileWords = profileUsernameText.text?.lowercased(), SwearWords.containsSwearWord(text: profileWords, swearWords: SwearWords.hashedSwearWords) == false else {
+            print("Looks like there are swear words")
+            self.handleAlert(issueType: "swearWords")
             return
         }
         
@@ -226,6 +234,8 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
             alert = UIAlertController(title: "Must have username and profile image", message: "Please enter a username and add profile image", preferredStyle: .alert)
         case "wrongLength":
             alert = UIAlertController(title: "Username incorrect length", message: "Username must be between 4 and 15 characters in length", preferredStyle: .alert)
+        case "swearWords":
+            alert = UIAlertController(title: "Inappropriate language", message: "Username must not include inappropriate language", preferredStyle: .alert)
         default:
             return
         }
