@@ -27,6 +27,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     var currentUsername: String!
     var currentUserEmail: String!
     var currentUserImage: UIImage?
+    var blockedUserIds: [String] = []
     
     var facebookProfileImgUrl: String?
     var facebookUsername: String?
@@ -50,6 +51,21 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 
                 let value = snapshot.value as? NSDictionary
                 let userProvider = value?["provider"] as? String ?? ""
+                if let blockedUsers = value?["blockedUserIds"] as? Dictionary<String, AnyObject> {
+                    for user in blockedUsers {
+                        self.blockedUserIds.append(user.key)
+                    }
+                }
+                print(self.blockedUserIds)
+//                    print(blockedUsers)
+//                    for userId in blockedUsers {
+//                        self.blockedUserIds.append(userId)
+//                    }
+//                }
+                //print(self.blockedUserIds)
+                //print("ABOVE ME ARE THE BLOCKED USER IDS")
+//                self.blockedUserIds = value?["blockedUserIds"] as? [String] ?? []
+//                print(self.blockedUserIds)
 
                 if userProvider == "Firebase" {
                     let username = value?["username"] as? String ?? ""
@@ -112,56 +128,57 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 }
             }
         })
+            
+        // Get a Post database reference ordered by postKey
+        DataService.ds.REF_POSTS.queryOrderedByKey().observe(.value, with: { (snapshot) in
         
-        DispatchQueue.global(qos: .userInitiated).async {
+            self.posts = [] // THIS IS THE NEW LINE
             
-            // Get a Post database reference ordered by postKey
-            DataService.ds.REF_POSTS.queryOrderedByKey().observe(.value, with: { (snapshot) in
-            
-                self.posts = [] // THIS IS THE NEW LINE
-                
-                if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-                    for snap in snapshot {
-                        if let postDict = snap.value as? Dictionary<String, AnyObject> {
-                            let key = snap.key
-                            let post = Post(postKey: key, postData: postDict)
+            if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                for snap in snapshot {
+                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
+                        let key = snap.key
+                        let post = Post(postKey: key, postData: postDict)
+                        if self.blockedUserIds.contains(postDict["userId"] as! String) == false {
                             // Insert the posts in reverse order so the most recent post shows up at the top
                             self.posts.insert(post, at: 0)
                         }
-
+                        
+                        
                     }
+
                 }
-                self.tableView.reloadData()
-            })
-            
-                DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
-                    
-                    if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-                        for snap in snapshot {
-                            
-                            if let userDict = snap.value as? Dictionary<String, AnyObject> {
-                                let key = snap.key
-                                var postingUsername = ""
-                                var postingUserProfileImg: String?
-                                if let username = userDict["username"] as? String {
-                                    postingUsername = username
-                                }
-                                
-                                if let profileImg = userDict["profileImg"] as? String {
-                                    postingUserProfileImg = profileImg
-                                }
-                                
-                                self.usernameDict[key] = postingUsername
-                                self.profileImgDict[key] = postingUserProfileImg
-                                
+            }
+            self.tableView.reloadData()
+        })
+        
+            DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
+                
+                if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                    for snap in snapshot {
+                        
+                        if let userDict = snap.value as? Dictionary<String, AnyObject> {
+                            let key = snap.key
+                            var postingUsername = ""
+                            var postingUserProfileImg: String?
+                            if let username = userDict["username"] as? String {
+                                postingUsername = username
                             }
+                            
+                            if let profileImg = userDict["profileImg"] as? String {
+                                postingUserProfileImg = profileImg
+                            }
+                            
+                            self.usernameDict[key] = postingUsername
+                            self.profileImgDict[key] = postingUserProfileImg
+                            
                         }
                     }
-                    
-                    self.tableView.reloadData()
-                })
+                }
+                
+                self.tableView.reloadData()
+            })
 
-            }
         }
         
         captionField.delegate = self
@@ -172,7 +189,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         imagePicker = UIImagePickerController()
         imagePicker.allowsEditing = true
         imagePicker.delegate = self
-        
+        tableView.reloadData()
     }
     
     
