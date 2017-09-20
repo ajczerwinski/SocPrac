@@ -31,6 +31,7 @@
 		BFA97A9B1F5B3D85005203B5 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA97A9A1F5B3D83005203B5 /* CommentCell.swift */; };
 		BFA97A9D1F5DBFCB005203B5 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA97A9C1F5DBFCB005203B5 /* Comment.swift */; };
 		BFA97A9F1F65C93E005203B5 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA97A9E1F65C93E005203B5 /* SignUpVC.swift */; };
+		BFF8ABAA1F73127300E5847A /* FlagVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF8ABA91F73127300E5847A /* FlagVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 		BFA97A9A1F5B3D83005203B5 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		BFA97A9C1F5DBFCB005203B5 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		BFA97A9E1F65C93E005203B5 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		BFF8ABA91F73127300E5847A /* FlagVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagVC.swift; sourceTree = "<group>"; };
 		FE51FD196821DA5829BB0144 /* Pods_SocPrac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SocPrac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -137,6 +139,7 @@
 				BF28419C1F282090005AF797 /* ProfileVC.swift */,
 				BFA47E591F4F8763009C7208 /* PostDetailVC.swift */,
 				BFA97A9E1F65C93E005203B5 /* SignUpVC.swift */,
+				BFF8ABA91F73127300E5847A /* FlagVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				BFA97A9F1F65C93E005203B5 /* SignUpVC.swift in Sources */,
 				BF28418D1F27F248005AF797 /* Post.swift in Sources */,
 				BF28419D1F282090005AF797 /* ProfileVC.swift in Sources */,
+				BFF8ABAA1F73127300E5847A /* FlagVC.swift in Sources */,
 				BF28416E1F27C6A6005AF797 /* AppDelegate.swift in Sources */,
 				BF2841911F27F2C2005AF797 /* FancyView.swift in Sources */,
 				BF2841881F27F1A8005AF797 /* DataService.swift in Sources */,
