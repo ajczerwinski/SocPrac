@@ -43,8 +43,6 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        let timestamp = Date().inMilliseconds()
-//        print("HERE IS THE TIMESTAMP IN MILLISECONDS:\(timestamp ?? 0))")
         if let currentUserId = Auth.auth().currentUser?.uid {
             
             DataService.ds.REF_USERS.child(currentUserId).observe(.value, with: { (snapshot) in
@@ -117,18 +115,20 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         
         DispatchQueue.global(qos: .userInitiated).async {
             
-            DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
-                
+            // Get a Post database reference ordered by postKey
+            DataService.ds.REF_POSTS.queryOrderedByKey().observe(.value, with: { (snapshot) in
+            
                 self.posts = [] // THIS IS THE NEW LINE
                 
                 if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
                     for snap in snapshot {
-                        
                         if let postDict = snap.value as? Dictionary<String, AnyObject> {
                             let key = snap.key
                             let post = Post(postKey: key, postData: postDict)
-                            self.posts.append(post)
+                            // Insert the posts in reverse order so the most recent post shows up at the top
+                            self.posts.insert(post, at: 0)
                         }
+
                     }
                 }
                 self.tableView.reloadData()
@@ -293,7 +293,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
                 if postingUserProfileImgUrl != nil {
                     if let postingUserUserProfileImg = FeedVC.imageCache.object(forKey: postingUserProfileImgUrl! as NSString) {
-                        
+//                        self.posts.sort(by: {$0.creationDate > $1.creationDate})
+                        //self.posts.sorted(by: {$0.creationDate > $1.creationDate})
                         cell.configureCell(post: post, username: username!, img: img, userProfileImg: postingUserUserProfileImg)
                         
                     }
@@ -312,12 +313,16 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                             print("AllenData: userProfileImage successfully downloaded from Firebase storage")
                             if let userProfileImgData = data {
                                 if let userProfileImg = UIImage(data: userProfileImgData) {
+//                                    self.posts.sort(by: {$0.creationDate > $1.creationDate})
+                                    //self.posts.sorted(by: {$0.creationDate > $1.creationDate})
                                     cell.configureCell(post: post, username: username, userProfileImg: userProfileImg)
                                 }
                             }
                         }
                     })
                 }
+//                self.posts.sort(by: {$0.creationDate > $1.creationDate})
+                //self.posts.sorted(by: {$0.creationDate > $1.creationDate})
                 cell.configureCell(post: post, username: username)
             }
             return cell

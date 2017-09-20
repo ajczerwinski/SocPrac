@@ -14,6 +14,7 @@ class User {
     private var _username: String!
     private var _userKey: String!
     private var _profileImg: String!
+    private var _creationDate: String!
     private var _userRef: DatabaseReference!
     
     
@@ -29,9 +30,14 @@ class User {
         return _userKey
     }
     
-    init(username: String, profileImg: String) {
+    var creationDate: String {
+        return _creationDate
+    }
+    
+    init(username: String, profileImg: String, creationDate: String) {
         self._username = username
         self._profileImg = profileImg
+        self._creationDate = creationDate
     }
     
     init(userKey: String, userData: Dictionary<String, AnyObject>) {
@@ -43,6 +49,10 @@ class User {
         
         if let profileImg = userData["profileImg"] as? String {
             self._profileImg = profileImg
+        }
+        
+        if let creationDate = userData["creationDate"] as? String {
+            self._creationDate = creationDate
         }
         
         _userRef = DataService.ds.REF_USERS.child(_userKey)
