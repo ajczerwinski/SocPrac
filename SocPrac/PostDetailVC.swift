@@ -20,6 +20,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var likesLbl: UILabel!
     @IBOutlet weak var likeImg: UIImageView!
     @IBOutlet weak var deleteBtnLbl: UIButton!
+    @IBOutlet weak var flagBtnLbl: UIButton!
     @IBOutlet weak var editImgBtnLbl: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
@@ -47,11 +48,13 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 
         if Auth.auth().currentUser?.uid == post?.userId {
             deleteBtnLbl.isHidden = false
+            flagBtnLbl.isHidden = true
             validatedUserCaption.isHidden = false
             nonValidatedUserCaption.isHidden = true
             editImgBtnLbl.isHidden = false
         } else {
             deleteBtnLbl.isHidden = true
+            flagBtnLbl.isHidden = false
             validatedUserCaption.isHidden = true
             nonValidatedUserCaption.isHidden = false
             editImgBtnLbl.isHidden = true
@@ -321,6 +324,9 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
     }
     
+    
+    
+    
     @IBAction func editImgBtnPressed(_ sender: Any) {
         
         present(imagePicker, animated: true, completion: nil)
@@ -462,6 +468,26 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    @IBAction func flagBtnTapped(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "Post Flagged", message: "What would you like to do?", preferredStyle: .actionSheet)
+        let reportButton = UIAlertAction(title: "Report inappropriate", style: .default) { (action) in
+            print("Reporting inappropriate content in Post")
+        }
+        let blockPoster = UIAlertAction(title: "Block this user", style: .destructive) { (action) in
+            print("Blocking this user")
+        }
+        let cancelButton = UIAlertAction(title: "Cancel", style: .default) { (action) in
+            print("Alert canceled")
+        }
+        
+        present(alert, animated: true)
+        alert.addAction(reportButton)
+        alert.addAction(blockPoster)
+        alert.addAction(cancelButton)
+        
     }
     
     // Handle alerts for various user and non-user errors

@@ -612,7 +612,7 @@
                                 <rect key="frame" x="16" y="80" width="343" height="399"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="X4u-H6-DDb">
-                                        <rect key="frame" x="8" y="8" width="327" height="355.5"/>
+                                        <rect key="frame" x="8" y="8" width="327" height="354"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1av-9b-Wu7">
                                                 <rect key="frame" x="0.0" y="0.0" width="327" height="60"/>
@@ -640,16 +640,16 @@
                                                 </subviews>
                                             </stackView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="post-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="24j-q0-OCH">
-                                                <rect key="frame" x="0.0" y="68" width="327" height="203"/>
+                                                <rect key="frame" x="0.0" y="68" width="327" height="201.5"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOV-jE-JOU">
-                                                <rect key="frame" x="0.0" y="279" width="327" height="18.5"/>
+                                                <rect key="frame" x="0.0" y="277.5" width="327" height="18.5"/>
                                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="j71-9s-J60">
-                                                <rect key="frame" x="0.0" y="305.5" width="327" height="50"/>
+                                                <rect key="frame" x="0.0" y="304" width="327" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="rRI-fF-Hjd"/>
                                                 </constraints>
@@ -660,16 +660,16 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="iYu-nY-J9C">
-                                        <rect key="frame" x="248.5" y="371.5" width="86.5" height="19.5"/>
+                                        <rect key="frame" x="248.5" y="370" width="86.5" height="21"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Likes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FBa-D8-EZ8">
-                                                <rect key="frame" x="0.0" y="0.0" width="40.5" height="19.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="40.5" height="21"/>
                                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="16"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.54000000000000004" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8888" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PzE-Bu-UhE">
-                                                <rect key="frame" x="45.5" y="0.0" width="41" height="19.5"/>
+                                                <rect key="frame" x="45.5" y="0.0" width="41" height="21"/>
                                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="16"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.87" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -677,10 +677,10 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dJs-GC-DRy">
-                                        <rect key="frame" x="8" y="371.5" width="55" height="19.5"/>
+                                        <rect key="frame" x="8" y="370" width="89" height="21"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74v-Wn-HK4">
-                                                <rect key="frame" x="0.0" y="0.0" width="55" height="19.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="55" height="21"/>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="17"/>
                                                 <state key="normal" title="Delete">
@@ -690,10 +690,25 @@
                                                     <action selector="deleteBtnTapped:" destination="rTe-hH-bph" eventType="touchUpInside" id="KS2-TC-xMt"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ehq-cf-I1E">
+                                                <rect key="frame" x="65" y="0.0" width="24" height="21"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="24" id="3hu-WP-RBR"/>
+                                                    <constraint firstAttribute="height" constant="21" id="NIA-iC-qk0"/>
+                                                </constraints>
+                                                <state key="normal" image="flag"/>
+                                                <connections>
+                                                    <action selector="flagBtnTapped:" destination="rTe-hH-bph" eventType="touchUpInside" id="HSt-Ss-im7"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Ehq-cf-I1E" firstAttribute="top" secondItem="74v-Wn-HK4" secondAttribute="top" id="4Ci-BF-p2i"/>
+                                            <constraint firstItem="Ehq-cf-I1E" firstAttribute="bottom" secondItem="74v-Wn-HK4" secondAttribute="bottom" id="vzc-CR-pxF"/>
+                                        </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WKs-Sc-T1V">
-                                        <rect key="frame" x="8" y="76" width="327" height="203"/>
+                                        <rect key="frame" x="8" y="76" width="327" height="201.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <connections>
                                             <action selector="editImgBtnPressed:" destination="rTe-hH-bph" eventType="touchUpInside" id="Tai-V2-XZv"/>
@@ -818,6 +833,7 @@
                         <outlet property="commentTextField" destination="Sob-4G-1fi" id="vLE-Yq-sBK"/>
                         <outlet property="deleteBtnLbl" destination="74v-Wn-HK4" id="Xwj-2v-VM1"/>
                         <outlet property="editImgBtnLbl" destination="WKs-Sc-T1V" id="PFy-4o-LFS"/>
+                        <outlet property="flagBtnLbl" destination="Ehq-cf-I1E" id="8ze-Ab-tcZ"/>
                         <outlet property="likeImg" destination="jhx-y6-yxc" id="qMA-tg-qRR"/>
                         <outlet property="likesLbl" destination="PzE-Bu-UhE" id="ht9-MO-qhE"/>
                         <outlet property="nonValidatedUserCaption" destination="HOV-jE-JOU" id="VLg-oJ-YaX"/>
@@ -1028,6 +1044,7 @@
         <image name="back-icon" width="600" height="600"/>
         <image name="empty-heart" width="600" height="600"/>
         <image name="f" width="352" height="328"/>
+        <image name="flag" width="600" height="600"/>
         <image name="imageView:nF8-cP-q79:image" width="600" height="600">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
@@ -25092,6 +25109,6 @@ AAAEAQAAAAAAAABBAAAAAAAAAAAAAAAAABYDsA
     <inferredMetricsTieBreakers>
         <segue reference="8vl-ms-SNR"/>
         <segue reference="e6K-Zj-VOO"/>
-        <segue reference="867-R0-VK9"/>
+        <segue reference="UxQ-2x-QR7"/>
     </inferredMetricsTieBreakers>
 </document>
