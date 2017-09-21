@@ -8,8 +8,9 @@
 
 import UIKit
 import Firebase
+import MessageUI
 
-class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var usernameLbl: UILabel!
@@ -324,8 +325,52 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
     }
     
+    @IBAction func flagBtnTapped(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "Post Flagged", message: "What would you like to do?", preferredStyle: .actionSheet)
+        let reportButton = UIAlertAction(title: "Report inappropriate", style: .default) { (action) in
+            self.sendEmail()
+            print("Reporting inappropriate content in Post")
+        }
+        let blockPoster = UIAlertAction(title: "Block this user", style: .destructive) { (action) in
+            if let currentUserId = Auth.auth().currentUser?.uid {
+                if let postingUserId = self.post?.userId {
+                    print("Blocking this user: \(postingUserId)")
+                    DataService.ds.REF_USERS.child(currentUserId).child("blockedUserIds").updateChildValues([postingUserId: true])
+                }
+            }
+            self.performSegue(withIdentifier: "detailToFeed", sender: nil)
+        }
+        let cancelButton = UIAlertAction(title: "Cancel", style: .default) { (action) in
+            print("Alert canceled")
+        }
+        
+        present(alert, animated: true)
+        alert.addAction(reportButton)
+        alert.addAction(blockPoster)
+        alert.addAction(cancelButton)
+        
+    }
     
+    func sendEmail() {
+        
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["socpracios@gmail.com"])
+            mail.setSubject("Reporting issue in SocPrac App")
+            mail.setMessageBody("<p>Please enter details about the issue here</p>", isHTML: true)
+            
+            present(mail, animated: true)
+            
+        } else {
+            handleAlert(issueType: "actionFailed")
+        }
+    }
     
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
     
     @IBAction func editImgBtnPressed(_ sender: Any) {
         
@@ -468,26 +513,6 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
-    }
-    
-    @IBAction func flagBtnTapped(_ sender: Any) {
-        
-        let alert = UIAlertController(title: "Post Flagged", message: "What would you like to do?", preferredStyle: .actionSheet)
-        let reportButton = UIAlertAction(title: "Report inappropriate", style: .default) { (action) in
-            print("Reporting inappropriate content in Post")
-        }
-        let blockPoster = UIAlertAction(title: "Block this user", style: .destructive) { (action) in
-            print("Blocking this user")
-        }
-        let cancelButton = UIAlertAction(title: "Cancel", style: .default) { (action) in
-            print("Alert canceled")
-        }
-        
-        present(alert, animated: true)
-        alert.addAction(reportButton)
-        alert.addAction(blockPoster)
-        alert.addAction(cancelButton)
-        
     }
     
     // Handle alerts for various user and non-user errors
