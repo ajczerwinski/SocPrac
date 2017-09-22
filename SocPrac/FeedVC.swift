@@ -38,17 +38,19 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     var currentUserProvider: String!
     
     
-    static var imageCache: NSCache<NSString, UIImage> = NSCache()
+    //static var imageCache: NSCache<NSString, UIImage> = NSCache()
     var imageSelected = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // Verify we have the current signed in user, create a Firebase observer to listen for changes
         if let currentUserId = Auth.auth().currentUser?.uid {
             
             DataService.ds.REF_USERS.child(currentUserId).observe(.value, with: { (snapshot) in
                 
-                
+                // Get the userProvider value and check for blocked users, populate blockedUserIds
+                // array if any values exist and don't add them to the posts array
                 let value = snapshot.value as? NSDictionary
                 let userProvider = value?["provider"] as? String ?? ""
                 if let blockedUsers = value?["blockedUserIds"] as? Dictionary<String, AnyObject> {
@@ -56,24 +58,15 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                         self.blockedUserIds.append(user.key)
                     }
                 }
-                print(self.blockedUserIds)
-//                    print(blockedUsers)
-//                    for userId in blockedUsers {
-//                        self.blockedUserIds.append(userId)
-//                    }
-//                }
-                //print(self.blockedUserIds)
-                //print("ABOVE ME ARE THE BLOCKED USER IDS")
-//                self.blockedUserIds = value?["blockedUserIds"] as? [String] ?? []
-//                print(self.blockedUserIds)
-
+                
+                // If user comes from Firebase (email sign in), get data from Firebase db
                 if userProvider == "Firebase" {
                     let username = value?["username"] as? String ?? ""
                     self.currentUsername = username
-
+                    
                     let emailAddress = value?["email"] as? String ?? ""
                     self.currentUserEmail = emailAddress
-
+                    
                     self.greetingLbl.text = "Hello, " + username
                     
                     let userProfileImgUrl = value?["profileImg"] as? String ?? ""
@@ -86,7 +79,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                                 print("AllenData: userProfileImage successfully downloaded from Firebase storage")
                                 if let imgData = data {
                                     if let profileImg = UIImage(data: imgData) {
-                                        FeedVC.imageCache.setObject(profileImg, forKey: userProfileImgUrl as NSString)
+                                        //FeedVC.imageCache.setObject(profileImg, forKey: userProfileImgUrl as NSString)
                                         self.currentUserImage = profileImg
                                         self.profileImg.image = profileImg
                                     }
@@ -94,6 +87,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                             }
                         })
                     }
+                    
+                // If user comes from Facebook auth, get user data from FB Graph Request
                 } else if userProvider == "facebook.com" {
                     
                     DispatchQueue.global(qos: .userInitiated).async {
@@ -105,13 +100,13 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                                 if let fbUserId = fbDetails["id"] {
                                     print("This is the FB User ID: \(fbUserId)")
                                     let fbUserProfileImgUrl = "https://graph.facebook.com/" + "\(fbUserId)" + "/picture?type=large&redirect=true&width=500&height=500"
-                                        print(fbUserProfileImgUrl)
+                                    print(fbUserProfileImgUrl)
                                     
                                     if let checkedUrl = URL(string: fbUserProfileImgUrl) {
                                         self.profileImg.contentMode = .scaleAspectFit
                                         self.downloadImage(url: checkedUrl)
                                     }
-
+                                    
                                     if let fbUsername = fbDetails["first_name"] {
                                         self.currentUsername = fbUsername as! String
                                         self.greetingLbl.text = "Hello, " + (fbUsername as! String)
@@ -119,39 +114,41 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                                     if let fbEmail = fbDetails["email"] {
                                         self.currentUserEmail = fbEmail as! String
                                     }
-                                    }
-                                } else {
-                                print("Found some kind of error in Facebook: \(String(describing: error?.localizedDescription))")
                                 }
+                            } else {
+                                print("Found some kind of error in Facebook: \(String(describing: error?.localizedDescription))")
+                            }
                         })
                         
+                    }
                 }
-            }
-        })
+            })
             
-        // Get a Post database reference ordered by postKey
-        DataService.ds.REF_POSTS.queryOrderedByKey().observe(.value, with: { (snapshot) in
-        
-            self.posts = [] // THIS IS THE NEW LINE
+            // Get a Post database reference ordered by postKey
             
-            if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-                for snap in snapshot {
-                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
-                        let key = snap.key
-                        let post = Post(postKey: key, postData: postDict)
-                        if self.blockedUserIds.contains(postDict["userId"] as! String) == false {
-                            // Insert the posts in reverse order so the most recent post shows up at the top
-                            self.posts.insert(post, at: 0)
+            DataService.ds.REF_POSTS.queryOrderedByKey().observe(.value, with: { (snapshot) in
+                // Set posts array to empty to avoid duplicates
+                self.posts = []
+                
+                if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
+                    for snap in snapshot {
+                        if let postDict = snap.value as? Dictionary<String, AnyObject> {
+                            let key = snap.key
+                            let post = Post(postKey: key, postData: postDict)
+                            if self.blockedUserIds.contains(postDict["userId"] as! String) == false {
+                                // Insert the posts in reverse order so the most recent post shows up at the top
+                                self.posts.insert(post, at: 0)
+                            }
+                            
+                            
                         }
                         
-                        
                     }
-
                 }
-            }
-            self.tableView.reloadData()
-        })
-        
+                self.tableView.reloadData()
+            })
+            
+            // Get reference to users to be able to display username and profile photo to posts
             DataService.ds.REF_USERS.observe(.value, with: { (snapshot) in
                 
                 if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
@@ -178,11 +175,11 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 
                 self.tableView.reloadData()
             })
-
+            
         }
         
         captionField.delegate = self
-
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -192,8 +189,9 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         tableView.reloadData()
     }
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // Save user profile image to Firebase
         if segue.identifier == "feedToProfile" {
             
             if let profileImg = self.profileImg.image {
@@ -219,10 +217,14 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                     }
                 }
             }
+            
+            // Send current user username and image to profileVC
             let nextScene = segue.destination as! ProfileVC
             nextScene.currentUserUsername = currentUsername
             nextScene.currentUserImage = currentUserImage
 
+            
+        // Send current user info + posting user info along to PostDetailVC
         } else if segue.identifier == "goToPostDetailVC" {
             
             if let profileImg = self.profileImg.image {
@@ -296,8 +298,8 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                         } else {
                             print("AllenData: userProfileImage successfully downloaded from Firebase storage")
                             if let imgData = data {
-                                if let profileImg = UIImage(data: imgData) {
-                                    FeedVC.imageCache.setObject(profileImg, forKey: postingUserProfileImgUrl! as NSString)
+                                if let _ = UIImage(data: imgData) {
+                                    //FeedVC.imageCache.setObject(profileImg, forKey: postingUserProfileImgUrl! as NSString)
                                    
                                 }
                             }
@@ -307,39 +309,22 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 
             }
             
-            if let img = FeedVC.imageCache.object(forKey: post.imageUrl as NSString) {
-                if postingUserProfileImgUrl != nil {
-                    if let postingUserUserProfileImg = FeedVC.imageCache.object(forKey: postingUserProfileImgUrl! as NSString) {
-//                        self.posts.sort(by: {$0.creationDate > $1.creationDate})
-                        //self.posts.sorted(by: {$0.creationDate > $1.creationDate})
-                        cell.configureCell(post: post, username: username!, img: img, userProfileImg: postingUserUserProfileImg)
+            if let userProfileUrl = postingUserProfileImgUrl {
+                let userProfileImgRef = Storage.storage().reference(forURL: userProfileUrl)
+                userProfileImgRef.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                    if error != nil {
                         
-                    }
-                }
-        
-                
-            } else {
-                if let userProfileUrl = postingUserProfileImgUrl {
-                    let userProfileImgRef = Storage.storage().reference(forURL: userProfileUrl)
-                    userProfileImgRef.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                        if error != nil {
-                            
-                            print("AllenError: Unable to download userProfileImage from Firebase storage")
-                            
-                        } else {
-                            print("AllenData: userProfileImage successfully downloaded from Firebase storage")
-                            if let userProfileImgData = data {
-                                if let userProfileImg = UIImage(data: userProfileImgData) {
-//                                    self.posts.sort(by: {$0.creationDate > $1.creationDate})
-                                    //self.posts.sorted(by: {$0.creationDate > $1.creationDate})
-                                    cell.configureCell(post: post, username: username, userProfileImg: userProfileImg)
-                                }
+                        print("AllenError: Unable to download userProfileImage from Firebase storage")
+                        
+                    } else {
+                        print("AllenData: userProfileImage successfully downloaded from Firebase storage")
+                        if let userProfileImgData = data {
+                            if let userProfileImg = UIImage(data: userProfileImgData) {
+                                cell.configureCell(post: post, username: username, userProfileImg: userProfileImg)
                             }
                         }
-                    })
-                }
-//                self.posts.sort(by: {$0.creationDate > $1.creationDate})
-                //self.posts.sorted(by: {$0.creationDate > $1.creationDate})
+                    }
+                })
                 cell.configureCell(post: post, username: username)
             }
             return cell
@@ -407,18 +392,21 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             return
         }
         
+        // Make sure caption field isn't empty
         guard let caption = captionField.text, caption != "" else {
             handleAlert(issueType: "postFailed")
             print("AllenError: Caption must be entered")
             return
         }
         
+        // Make sure there's an image selected
         guard let img = imageAdd.image, imageSelected == true else {
             handleAlert(issueType: "postFailed")
             print("AllenError: Must select an image")
             return
         }
         
+        // Save post to Firebase
         if let imgData = UIImageJPEGRepresentation(img, 0.2) {
             
             let imgUid = NSUUID().uuidString
@@ -442,6 +430,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         }
     }
     
+    // Helper function to save post to Firebase
     func postToFirebase(imgUrl: String) {
         if let currentUserId = Auth.auth().currentUser?.uid {
             let creationDate = String(Date().inMilliseconds())
