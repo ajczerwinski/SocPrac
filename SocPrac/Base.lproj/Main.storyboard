@@ -886,16 +886,29 @@
                                             <segue destination="CST-g8-HZr" kind="show" identifier="backToFeed" id="S9O-IT-Jc0"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMe-u8-dDO">
+                                        <rect key="frame" x="337" y="16.5" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="EtV-Y3-nef"/>
+                                            <constraint firstAttribute="height" constant="30" id="vNi-de-YRL"/>
+                                        </constraints>
+                                        <state key="normal" image="support"/>
+                                        <connections>
+                                            <action selector="supportBtnPressed:" destination="uzi-TH-n2R" eventType="touchUpInside" id="gA2-kL-nIo"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.68235294117647061" green="0.32156862745098036" blue="0.83137254901960778" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="l8I-j5-KrI" firstAttribute="leading" secondItem="KOn-Pc-gRZ" secondAttribute="leading" constant="8" id="2aY-Jq-7QX"/>
                                     <constraint firstAttribute="height" constant="63" id="CFt-Xr-axc"/>
+                                    <constraint firstAttribute="trailing" secondItem="qMe-u8-dDO" secondAttribute="trailing" constant="8" id="GN1-Gk-I6z"/>
                                     <constraint firstItem="B36-xJ-18i" firstAttribute="top" secondItem="l8I-j5-KrI" secondAttribute="top" id="c2F-L1-ppU"/>
                                     <constraint firstItem="B36-xJ-18i" firstAttribute="bottom" secondItem="l8I-j5-KrI" secondAttribute="bottom" id="ecu-r8-1cq"/>
                                     <constraint firstItem="B36-xJ-18i" firstAttribute="leading" secondItem="l8I-j5-KrI" secondAttribute="leading" id="hS7-Ld-JgA"/>
                                     <constraint firstItem="l8I-j5-KrI" firstAttribute="centerY" secondItem="KOn-Pc-gRZ" secondAttribute="centerY" id="lpF-FB-FXR"/>
                                     <constraint firstItem="B36-xJ-18i" firstAttribute="trailing" secondItem="l8I-j5-KrI" secondAttribute="trailing" id="pxb-tF-CUy"/>
+                                    <constraint firstItem="qMe-u8-dDO" firstAttribute="centerY" secondItem="KOn-Pc-gRZ" secondAttribute="centerY" id="yV9-oy-EdK"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6PG-Zq-H8X" customClass="FancyView" customModule="SocPrac" customModuleProvider="target">
@@ -1017,7 +1030,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2420" y="-546"/>
+            <point key="canvasLocation" x="2420" y="-546.47676161919048"/>
         </scene>
     </scenes>
     <resources>
@@ -25087,10 +25100,11 @@ AAAEAQAAAAAAAABBAAAAAAAAAAAAAAAAABYDsA
         <image name="profile-img3" width="45" height="45"/>
         <image name="sign-out" width="600" height="600"/>
         <image name="social-icon" width="600" height="600"/>
+        <image name="support" width="600" height="600"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="8vl-ms-SNR"/>
         <segue reference="e6K-Zj-VOO"/>
-        <segue reference="UxQ-2x-QR7"/>
+        <segue reference="S9O-IT-Jc0"/>
     </inferredMetricsTieBreakers>
 </document>

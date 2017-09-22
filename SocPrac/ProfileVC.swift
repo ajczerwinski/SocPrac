@@ -9,8 +9,9 @@
 import UIKit
 import Firebase
 import SwiftKeychainWrapper
+import MessageUI
 
-class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var profileUsernameText: UITextField!
     @IBOutlet weak var profileImageAdd: CircleView!
@@ -68,6 +69,13 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         performSegue(withIdentifier: "backToFeed", sender: nil)
     
     }
+    
+    @IBAction func supportBtnPressed(_ sender: Any) {
+        
+        self.sendEmail()
+        
+    }
+    
     
     @IBAction func noUsernameBackBtn(_ sender: Any) {
         handleAlert(issueType: "missingFields")
@@ -224,6 +232,26 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         self.view.endEditing(true)
     }
     
+    func sendEmail() {
+        
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["socpracios@gmail.com"])
+            mail.setSubject("Reporting issue in SocPrac App")
+            mail.setMessageBody("<p>Please enter details about the issue here</p>", isHTML: true)
+            
+            present(mail, animated: true)
+            
+        } else {
+            handleAlert(issueType: "actionFailed")
+        }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
+    
     // Handle alerts for various user and non-user errors
     private func handleAlert(issueType: String) {
         var alert = UIAlertController()
@@ -242,5 +270,5 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         present(alert, animated: true)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
     }
-
+    
 }
