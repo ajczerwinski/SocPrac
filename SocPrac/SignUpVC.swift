@@ -70,6 +70,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         
     }
     
+    // Save new user to Firebase and seque to Profile page
     func completeSignIn(id: String, userData: Dictionary<String, String>) {
         
         DataService.ds.createFirebaseDBUser(uid: id, userData: userData)

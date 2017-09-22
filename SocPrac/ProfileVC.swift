@@ -29,6 +29,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Get signed-in userId, display/hide UI accordingly
         currentUserId = Auth.auth().currentUser?.uid
         
         imagePicker = UIImagePickerController()
@@ -70,12 +71,12 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
     
     }
     
+    // Mechanism for user to contact support
     @IBAction func supportBtnPressed(_ sender: Any) {
         
         self.sendEmail()
         
     }
-    
     
     @IBAction func noUsernameBackBtn(_ sender: Any) {
         handleAlert(issueType: "missingFields")
@@ -154,6 +155,8 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
     }
     
+    // Helper function that allows user to only update username (without changing profile pic)
+    // and save to Firebase
     func postUsernameToFirebase() {
         
         let user: Dictionary<String, AnyObject> = [
@@ -174,6 +177,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
     }
     
+    // Helper function that updates username and profile image and saves to Firebsae
     func postUsernameAndProfileImgToFirebase(imgUrl: String) {
         let user: Dictionary<String, AnyObject> = [
             "username": profileUsernameText.text! as AnyObject,
@@ -211,6 +215,7 @@ class ProfileVC: UIViewController, UIImagePickerControllerDelegate, UINavigation
         
     }
     
+    // Only allow alphanumeric characters in Username field
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         let set = CharacterSet(charactersIn: "ABCDEFGHIJKLMONPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789").inverted

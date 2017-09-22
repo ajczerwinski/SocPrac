@@ -47,6 +47,8 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Check if user accessing the post detail page is the owner of the post,
+        // update UI accordingly
         if Auth.auth().currentUser?.uid == post?.userId {
             deleteBtnLbl.isHidden = false
             flagBtnLbl.isHidden = true
@@ -258,6 +260,8 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             self.performSegue(withIdentifier: "detailToFeed", sender: nil)
         }
     }
+    
+    // Helper function for updating/editing post from detail page
     func postToFirebase(imgUrl: String) {
         let lastUpdated = String(Date().inMilliseconds())
         
@@ -278,6 +282,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
     }
     
+    // Helper function for adding comment to post
     func postCommentToFirebase() {
         
         let creationDate = String(Date().inMilliseconds())
@@ -298,7 +303,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
     }
     
-    
+    // Delete post
     @IBAction func deleteBtnTapped(_ sender: Any) {
         
         if let postKey = post?.postKey {
@@ -307,7 +312,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
 
     }
 
-
+    // Helper function for deleting post, remove from Firebase
     func deletePost(childToDelete: String) {
 
         let firebaseRef = Database.database().reference().child("posts").child(childToDelete)
@@ -325,6 +330,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
     }
     
+    // Allow user to flag a post and block or report user
     @IBAction func flagBtnTapped(_ sender: Any) {
         
         let alert = UIAlertController(title: "Post Flagged", message: "What would you like to do?", preferredStyle: .actionSheet)
@@ -352,6 +358,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
     }
     
+    // Email function for reporting user
     func sendEmail() {
         
         if MFMailComposeViewController.canSendMail() {

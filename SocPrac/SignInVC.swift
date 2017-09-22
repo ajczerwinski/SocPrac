@@ -36,6 +36,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         
     }
     
+    // If user is already signed in, take them straight to the Feed
     override func viewDidAppear(_ animated: Bool) {
         if let _ = KeychainWrapper.standard.string(forKey: KEY_UID) {
             print("AllenData: ID found in keychain")
@@ -94,6 +95,8 @@ class SignInVC: UIViewController, UITextFieldDelegate {
             }
         })
     }
+    
+    // Authenticate returning user (already has account)
     @IBAction func signInTapped(_ sender: AnyObject) {
         if let email = emailField.text, let pwd = pwdField.text {
             Auth.auth().signIn(withEmail: email, password: pwd, completion: { (user, error) in
@@ -132,8 +135,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
     }
     
     
-    // Turn on observers to listen for keyboard
-    // show and hide functions
+    // Turn on observers to listen for keyboard show and hide functions
     func subscribeToKeyboardNotifications() {
 
         NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillShow:")), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
