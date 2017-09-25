@@ -476,7 +476,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
     }
     
-    func keyboardWillShow(notification: NSNotification) {
+    @objc func keyboardWillShow(notification: NSNotification) {
         
         if view.frame.origin.y != 0 {
             return
@@ -493,7 +493,7 @@ class PostDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    @objc func keyboardWillHide(notification: NSNotification) {
         
         if commentTextField.isFirstResponder {
             view.frame.origin.y = 0

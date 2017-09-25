@@ -2,4 +2,99 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocPrac/FancyView.swift"
+            timestampString = "527809321.329319"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1"
+            endingLineNumber = "1"
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SocPrac.FancyView.__deallocating_deinit"
+                  moduleName = "SocPrac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/allenczerwinski/Desktop/SocPrac/SocPrac/FancyView.swift"
+                  timestampString = "527801259.990925"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SocPrac.FancyView.__allocating_init(frame: __C.CGRect) -&gt; SocPrac.FancyView"
+                  moduleName = "SocPrac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/allenczerwinski/Desktop/SocPrac/SocPrac/FancyView.swift"
+                  timestampString = "527801259.993886"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SocPrac.FancyView.init(frame: __C.CGRect) -&gt; SocPrac.FancyView"
+                  moduleName = "SocPrac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/allenczerwinski/Desktop/SocPrac/SocPrac/FancyView.swift"
+                  timestampString = "527801259.995895"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "178">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SocPrac.FancyView.__allocating_init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;SocPrac.FancyView&gt;"
+                  moduleName = "SocPrac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/allenczerwinski/Desktop/SocPrac/SocPrac/FancyView.swift"
+                  timestampString = "527801259.997677"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SocPrac.FancyView.init(coder: __ObjC.NSCoder) -&gt; Swift.Optional&lt;SocPrac.FancyView&gt;"
+                  moduleName = "SocPrac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/allenczerwinski/Desktop/SocPrac/SocPrac/FancyView.swift"
+                  timestampString = "527801259.999435"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "116">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

@@ -86,7 +86,7 @@ class PostCell: UITableViewCell {
     }
     
     // Firebase - toggle likeImg on/off
-    func likeTapped(sender: UITapGestureRecognizer) {
+    @objc func likeTapped(sender: UITapGestureRecognizer) {
         likesRef.observeSingleEvent(of: .value, with: {
             (snapshot) in
             

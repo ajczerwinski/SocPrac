@@ -152,7 +152,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         
     }
     
-    func keyboardWillShow(notification: NSNotification) {
+    @objc func keyboardWillShow(notification: NSNotification) {
         
         if view.frame.origin.y != 0 {
             return
@@ -168,7 +168,7 @@ class SignInVC: UIViewController, UITextFieldDelegate {
         
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    @objc func keyboardWillHide(notification: NSNotification) {
         
         if emailField.isFirstResponder {
             view.frame.origin.y = 0
