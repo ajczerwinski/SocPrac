@@ -11,6 +11,7 @@ import Firebase
 import FBSDKCoreKit
 import FBSDKLoginKit
 import SwiftKeychainWrapper
+import SwiftyBeaver
 
 class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
@@ -373,6 +374,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                 DataService.ds.REF_USER_IMAGES.child(imgUid).putData(imgData, metadata: metadata) { (metadata, error) in
                     if error != nil {
                         print("AllenError: Unable to upload image to Firebase storage")
+                        
                     } else {
                         print("AllenData: Successfully uploaded image to Firebase storage")
                         let downloadURL = metadata?.downloadURL()?.absoluteString
@@ -388,6 +390,7 @@ class FeedVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         // Check the entered caption text for profanity
         guard let captionWords = captionField.text?.lowercased(), SwearWords.containsSwearWord(text: captionWords, swearWords: SwearWords.hashedSwearWords) == false else {
             print("Looks like there are swear words")
+            SwiftyBeaver.warning("Looks like the user typed a swear word: \(captionField.text)")
             self.handleAlert(issueType: "swearWords")
             return
         }

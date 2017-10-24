@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FBSDKLoginKit
+import SwiftyBeaver
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        setupSwiftyBeaverLogging()
+        
         return true
     }
 
@@ -47,6 +51,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+    
+    func setupSwiftyBeaverLogging() {
+        
+        let console = ConsoleDestination()
+        SwiftyBeaver.addDestination(console)
+        
+        let platform = SBPlatformDestination(appID: "bJPGrw",
+                                             appSecret: "rCHfE3chyxsWugwemv5wapui6t9tgrou",
+                                             encryptionKey: "Hswhfxgobqte6pbIznmeolx3u3yWclew")
+        SwiftyBeaver.addDestination(platform)
+        
     }
 
 

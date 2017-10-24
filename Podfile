@@ -12,5 +12,6 @@ target 'SocPrac' do
   pod 'Firebase/Storage'
   pod 'FBSDKLoginKit'
   pod 'SwiftKeychainWrapper'
+  pod 'SwiftyBeaver'
 
 end
